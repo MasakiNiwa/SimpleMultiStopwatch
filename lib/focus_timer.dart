@@ -50,7 +50,7 @@ class _FocusTimerState extends State<FocusTimer> {
           InkWell(
             child: Text(
               getTimeCount(),
-              style: const TextStyle(fontSize: 30),
+              style: const TextStyle(fontSize: 25),
             ),
             onTap: () {
               if (stopwatch.isRunning) {
@@ -69,7 +69,14 @@ class _FocusTimerState extends State<FocusTimer> {
                 setState(() {});
               },
               child: const Icon(Icons.restart_alt)),
-          const Spacer(),
+          const Text('　'),
+          const Flexible(
+            child: TextField(
+              //maxLength: 10,
+              enabled: true,
+              maxLines: 1,
+            ),
+          ),
         ],
       ),
     );
