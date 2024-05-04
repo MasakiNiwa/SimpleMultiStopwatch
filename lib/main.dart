@@ -26,19 +26,31 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Widget> timers = [];
   void addTimer() {
-    timers.add(
-        Dismissible(key: Key(timers.toString()), child: const FocusTimer()));
+    timers.add(const FocusTimer());
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: timers,
-        ),
+      appBar: AppBar(
+        title: Text(
+            'Simple Multh Timer :  ' + timers.length.toString() + 'timers'),
+        backgroundColor: Colors.lightBlue[100],
       ),
+      body: ListView.builder(
+          itemCount: timers.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Dismissible(
+              key: Key(timers.toString()),
+              onDismissed: (direction) {
+                setState(() {
+                  timers.removeAt(index);
+                });
+              },
+              child: timers[index],
+            );
+          }),
       floatingActionButton:
           ElevatedButton(onPressed: addTimer, child: const Icon(Icons.add)),
     );
