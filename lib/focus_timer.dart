@@ -31,6 +31,12 @@ class _FocusTimerState extends State<FocusTimer> {
     });
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    stopwatch.stop();
+  }
+
   MaterialColor timercolor = Colors.blueGrey;
 
   @override
