@@ -17,18 +17,16 @@ class _FocusTimerState extends State<FocusTimer> {
         ":" +
         (stopwatch.elapsed.inMinutes % 60).toString().padLeft(2, '0') +
         ":" +
-        (stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0') +
-        "." +
-        ((stopwatch.elapsed.inMilliseconds % 1000) ~/ 10)
-            .toString()
-            .padLeft(2, '0');
+        (stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0');
   }
 
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(milliseconds: 10), (Timer timer) {
-      setState(() {});
+    Timer.periodic(const Duration(milliseconds: 100), (Timer timer) {
+      if (stopwatch.isRunning) {
+        setState(() {});
+      }
     });
   }
 
@@ -51,20 +49,27 @@ class _FocusTimerState extends State<FocusTimer> {
             getTimeCount(),
             style: const TextStyle(fontSize: 25),
           ),
+          const Text(
+            "sec",
+            style: TextStyle(fontSize: 15),
+          ),
           const Spacer(),
           ElevatedButton(
               onPressed: () {
                 stopwatch.start();
+                setState(() {});
               },
               child: const Icon(Icons.timer)),
           ElevatedButton(
               onPressed: () {
                 stopwatch.stop();
+                setState(() {});
               },
               child: const Icon(Icons.stop)),
           ElevatedButton(
               onPressed: () {
                 stopwatch.reset();
+                setState(() {});
               },
               child: const Icon(Icons.restart_alt)),
           const Spacer(),
