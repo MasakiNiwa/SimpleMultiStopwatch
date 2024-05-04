@@ -72,7 +72,6 @@ class _FocusTimerState extends State<FocusTimer> {
           const Text('　'),
           const Flexible(
             child: TextField(
-              //maxLength: 10,
               enabled: true,
               maxLines: 1,
             ),
