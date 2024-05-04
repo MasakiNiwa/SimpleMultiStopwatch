@@ -24,9 +24,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Widget> timers = [const FocusTimer()];
+  List<Widget> timers = [];
   void addTimer() {
-    timers.add(const FocusTimer());
+    timers.add(
+        Dismissible(key: Key(timers.toString()), child: const FocusTimer()));
     setState(() {});
   }
 
