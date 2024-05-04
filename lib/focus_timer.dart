@@ -17,7 +17,8 @@ class _FocusTimerState extends State<FocusTimer> {
         ":" +
         (stopwatch.elapsed.inMinutes % 60).toString().padLeft(2, '0') +
         ":" +
-        (stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0');
+        (stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0') +
+        " ";
   }
 
   @override
@@ -30,42 +31,38 @@ class _FocusTimerState extends State<FocusTimer> {
     });
   }
 
+  MaterialColor timercolor = Colors.blueGrey;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.grey,
-          width: 1,
+          color: timercolor,
+          width: 2,
         ),
         borderRadius: BorderRadius.circular(7),
-        color: Colors.lightBlue[100],
       ),
       margin: const EdgeInsets.all(2),
       padding: const EdgeInsets.all(5),
       child: Row(
         children: [
-          Text(
-            getTimeCount(),
-            style: const TextStyle(fontSize: 25),
-          ),
-          const Text(
-            "sec",
-            style: TextStyle(fontSize: 15),
-          ),
-          const Spacer(),
-          ElevatedButton(
-              onPressed: () {
-                stopwatch.start();
-                setState(() {});
-              },
-              child: const Icon(Icons.timer)),
-          ElevatedButton(
-              onPressed: () {
+          InkWell(
+            child: Text(
+              getTimeCount(),
+              style: const TextStyle(fontSize: 30),
+            ),
+            onTap: () {
+              if (stopwatch.isRunning) {
                 stopwatch.stop();
-                setState(() {});
-              },
-              child: const Icon(Icons.stop)),
+                timercolor = Colors.blueGrey;
+              } else {
+                stopwatch.start();
+                timercolor = Colors.deepOrange;
+              }
+              setState(() {});
+            },
+          ),
           ElevatedButton(
               onPressed: () {
                 stopwatch.reset();
