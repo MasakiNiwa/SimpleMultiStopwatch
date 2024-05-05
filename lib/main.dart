@@ -48,6 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   timers.removeAt(index);
                 });
               },
+              background: Container(
+                  color: Colors.red,
+                  child: const Row(children: [Icon(Icons.delete), Spacer()])),
               child: Card(child: timers[index]),
             );
           }),
