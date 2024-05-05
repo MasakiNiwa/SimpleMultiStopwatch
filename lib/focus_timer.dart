@@ -10,6 +10,8 @@ class FocusTimer extends StatefulWidget {
 
 class _FocusTimerState extends State<FocusTimer> {
   final stopwatch = Stopwatch();
+  Timer? timer;
+
   String getTimeCount() {
     return stopwatch.elapsed.inDays.toString().padLeft(2, '0') +
         ":" +
@@ -24,7 +26,7 @@ class _FocusTimerState extends State<FocusTimer> {
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(milliseconds: 100), (Timer timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       if (stopwatch.isRunning) {
         setState(() {});
       }
@@ -35,6 +37,7 @@ class _FocusTimerState extends State<FocusTimer> {
   void dispose() {
     super.dispose();
     stopwatch.stop();
+    timer?.cancel();
   }
 
   MaterialColor timercolor = Colors.blueGrey;
