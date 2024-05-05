@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   timers.removeAt(index);
                 });
               },
-              child: timers[index],
+              child: Card(child: timers[index]),
             );
           }),
       floatingActionButton:

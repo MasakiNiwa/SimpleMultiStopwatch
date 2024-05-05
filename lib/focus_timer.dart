@@ -52,7 +52,6 @@ class _FocusTimerState extends State<FocusTimer> {
         ),
         borderRadius: BorderRadius.circular(7),
       ),
-      margin: const EdgeInsets.all(2),
       padding: const EdgeInsets.all(5),
       child: Row(
         children: [
