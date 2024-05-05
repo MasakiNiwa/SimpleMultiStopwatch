@@ -68,7 +68,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 background: Container(
                     color: Colors.red,
                     child: const Row(children: [Icon(Icons.delete), Spacer()])),
-                child: Card(child: timers[index]),
+                child: Card(
+                  elevation: 3,
+                  child: timers[index],
+                ),
               );
             }),
       ),
