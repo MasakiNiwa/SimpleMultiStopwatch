@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            'Simple Multh Timer :  ' + timers.length.toString() + 'timers'),
+            'Simple Multi Timer :  ' + timers.length.toString() + ' timers'),
         backgroundColor: Colors.lightBlue[100],
       ),
       body: ListView.builder(
