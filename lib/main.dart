@@ -60,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
             itemBuilder: (BuildContext context, int index) {
               return Dismissible(
                 key: timers[index].timerKey,
+                direction: DismissDirection.startToEnd,
                 onDismissed: (direction) {
                   setState(() {
                     timers.removeAt(index);
