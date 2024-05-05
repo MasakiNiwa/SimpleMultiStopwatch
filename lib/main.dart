@@ -37,25 +37,42 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(
             'Simple Multi Timer :  ' + timers.length.toString() + ' timers'),
         backgroundColor: Colors.lightBlue[100],
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              timers.clear();
+              setState(() {});
+            },
+            child: const Icon(Icons.delete_sweep),
+          )
+        ],
       ),
-      body: ListView.builder(
-          itemCount: timers.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Dismissible(
-              key: timers[index].timerKey,
-              onDismissed: (direction) {
-                setState(() {
-                  timers.removeAt(index);
-                });
-              },
-              background: Container(
-                  color: Colors.red,
-                  child: const Row(children: [Icon(Icons.delete), Spacer()])),
-              child: Card(child: timers[index]),
-            );
-          }),
-      floatingActionButton:
-          ElevatedButton(onPressed: addTimer, child: const Icon(Icons.add)),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          timers.clear();
+          setState(() {});
+        },
+        child: ListView.builder(
+            itemCount: timers.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Dismissible(
+                key: timers[index].timerKey,
+                onDismissed: (direction) {
+                  setState(() {
+                    timers.removeAt(index);
+                  });
+                },
+                background: Container(
+                    color: Colors.red,
+                    child: const Row(children: [Icon(Icons.delete), Spacer()])),
+                child: Card(child: timers[index]),
+              );
+            }),
+      ),
+      floatingActionButton: ElevatedButton(
+        onPressed: addTimer,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
