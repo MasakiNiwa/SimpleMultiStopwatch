@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 class FocusTimer extends StatefulWidget {
-  const FocusTimer({super.key});
+  FocusTimer({super.key});
+  final timerKey = UniqueKey();
 
   @override
   State<FocusTimer> createState() => _FocusTimerState();

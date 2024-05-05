@@ -26,7 +26,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<FocusTimer> timers = [];
   void addTimer() {
-    timers.add(const FocusTimer());
+    timers.add(FocusTimer());
     setState(() {});
   }
 
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
           itemCount: timers.length,
           itemBuilder: (BuildContext context, int index) {
             return Dismissible(
-              key: Key(timers[index].toString()),
+              key: timers[index].timerKey,
               onDismissed: (direction) {
                 setState(() {
                   timers.removeAt(index);
