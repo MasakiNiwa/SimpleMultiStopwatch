@@ -25,8 +25,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<FocusTimer> timers = [];
+  final List<GlobalObjectKey<FocusTimerState>> globalTimerKeys = [];
   void addTimer() {
-    timers.add(FocusTimer());
+    FocusTimer atimer = FocusTimer();
+    timers.add(atimer);
+    globalTimerKeys.add(GlobalObjectKey(atimer));
     setState(() {});
   }
 
@@ -64,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onDismissed: (direction) {
                   setState(() {
                     timers.removeAt(index);
+                    globalTimerKeys.removeAt(index);
                   });
                 },
                 background: Container(
@@ -71,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: const Row(children: [Icon(Icons.delete), Spacer()])),
                 child: Card(
                   elevation: 3,
-                  child: timers[index],
+                  child: FocusTimer(key: globalTimerKeys[index]),
                 ),
               );
             }),

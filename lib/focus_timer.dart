@@ -6,10 +6,10 @@ class FocusTimer extends StatefulWidget {
   final timerKey = UniqueKey();
 
   @override
-  State<FocusTimer> createState() => _FocusTimerState();
+  State<FocusTimer> createState() => FocusTimerState();
 }
 
-class _FocusTimerState extends State<FocusTimer> {
+class FocusTimerState extends State<FocusTimer> {
   final stopwatch = Stopwatch();
   Timer? timer;
 
