@@ -38,9 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            ('Simple Multi Stopwatch :  ' +
-                timers.length.toString() +
-                ' timers'),
+            ('Simple Multi Stopwatch :  ${timers.length.toString()} timers'),
             style: const TextStyle(fontSize: 18)),
         backgroundColor: Colors.lightBlue[100],
         actions: [

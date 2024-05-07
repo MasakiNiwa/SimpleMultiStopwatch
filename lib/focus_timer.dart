@@ -52,14 +52,7 @@ class MyStopwatch extends Stopwatch {
 
   @override
   String toString() {
-    return days.toString().padLeft(2, '0') +
-        ":" +
-        hours.toString().padLeft(2, '0') +
-        ":" +
-        minutes.toString().padLeft(2, '0') +
-        ":" +
-        seconds.toString().padLeft(2, '0') +
-        " ";
+    return "${days.toString().padLeft(2, '0')}:${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
   }
 }
 
@@ -125,13 +118,14 @@ class FocusTimerState extends State<FocusTimer> {
               setState(() {});
             },
           ),
+          Container(width: 10),
           ElevatedButton(
               onPressed: () {
                 stopwatch.reset();
                 setState(() {});
               },
               child: const Icon(Icons.restart_alt)),
-          const Text('　'),
+          Container(width: 10),
           Flexible(
             child: TextField(
               controller: textController,
