@@ -47,6 +47,7 @@ class FocusTimer extends StatefulWidget {
 class FocusTimerState extends State<FocusTimer> {
   final stopwatch = MyStopwatch();
   Timer? timer;
+  final textController = TextEditingController();
 
   @override
   void initState() {
@@ -60,9 +61,10 @@ class FocusTimerState extends State<FocusTimer> {
 
   @override
   void dispose() {
-    super.dispose();
     stopwatch.stop();
     timer?.cancel();
+    textController.dispose();
+    super.dispose();
   }
 
   MaterialColor timercolor = Colors.blueGrey;
@@ -103,8 +105,9 @@ class FocusTimerState extends State<FocusTimer> {
               },
               child: const Icon(Icons.restart_alt)),
           const Text('　'),
-          const Flexible(
+          Flexible(
             child: TextField(
+              controller: textController,
               enabled: true,
               maxLines: 1,
             ),
