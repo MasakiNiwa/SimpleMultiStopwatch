@@ -20,11 +20,11 @@ class MyStopwatch extends Stopwatch {
     return elapsed.inSeconds;
   }
 
-  int get day {
+  int get days {
     return elapsed.inDays;
   }
 
-  int get hour {
+  int get hours {
     return elapsed.inHours % 24;
   }
 
@@ -52,7 +52,14 @@ class MyStopwatch extends Stopwatch {
 
   @override
   String toString() {
-    return seconds.toString();
+    return days.toString().padLeft(2, '0') +
+        ":" +
+        hours.toString().padLeft(2, '0') +
+        ":" +
+        minutes.toString().padLeft(2, '0') +
+        ":" +
+        seconds.toString().padLeft(2, '0') +
+        " ";
   }
 }
 
