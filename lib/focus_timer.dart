@@ -2,37 +2,57 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 class MyStopwatch extends Stopwatch {
-  int addSeconds = 0;
+  int offsetSeconds = 0;
 
-  MyStopwatch({this.addSeconds = 0});
+  MyStopwatch({this.offsetSeconds = 0});
 
-  void setTime(int secTime) {
-    addSeconds = secTime;
+  @override
+  Duration get elapsed {
+    return super.elapsed + Duration(seconds: offsetSeconds);
   }
 
-  int getTime() {
-    Duration totalTime;
-    totalTime = super.elapsed + Duration(seconds: addSeconds);
-    return totalTime.inSeconds;
+  @override
+  int get elapsedMilliseconds {
+    return elapsed.inMilliseconds;
+  }
+
+  int get elapsedSeconds {
+    return elapsed.inSeconds;
+  }
+
+  int get day {
+    return elapsed.inDays;
+  }
+
+  int get hour {
+    return elapsed.inHours % 24;
+  }
+
+  int get minutes {
+    return elapsed.inMinutes % 60;
+  }
+
+  int get seconds {
+    return elapsed.inSeconds % 60;
+  }
+
+  void setTime({int seconds = 0}) {
+    offsetSeconds = seconds;
+  }
+
+  void addTime({int seconds = 0}) {
+    offsetSeconds += seconds;
   }
 
   @override
   reset() {
-    setTime(0);
+    setTime(seconds: 0);
     super.reset();
   }
 
-  String getTimeString() {
-    Duration totalTime;
-    totalTime = super.elapsed + Duration(seconds: addSeconds);
-    return totalTime.inDays.toString().padLeft(2, '0') +
-        ":" +
-        (totalTime.inHours % 24).toString().padLeft(2, '0') +
-        ":" +
-        (totalTime.inMinutes % 60).toString().padLeft(2, '0') +
-        ":" +
-        (totalTime.inSeconds % 60).toString().padLeft(2, '0') +
-        " ";
+  @override
+  String toString() {
+    return seconds.toString();
   }
 }
 
@@ -84,7 +104,7 @@ class FocusTimerState extends State<FocusTimer> {
         children: [
           InkWell(
             child: Text(
-              stopwatch.getTimeString(),
+              stopwatch.toString(),
               style: const TextStyle(fontSize: 25),
             ),
             onTap: () {
