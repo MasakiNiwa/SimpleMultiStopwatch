@@ -1,16 +1,18 @@
-# simple_multi_stopwatch
+# Simple Multi Stopwatch
 
-A new Flutter project.
+## 概要(Overview)
+開発中のFlutterプロジェクトです。
+複数のシンプルなストップウォッチを同時利用できるアプリを目指しています。
+This is a Flutter project under development. 
+The goal is to create an app that allows users to use multiple simple stopwatches simultaneously.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 開発状況(Development Status)
+ストップウォッチ部分はある程度完成形に近づいています。
+残りの課題は、
+・アプリの終了と再起動時の状態保存と復元
+・バックグラウンド動作に入った時の対策
+・ドラッグでタイマーを移動できるようにする
+The stopwatch functionality is nearing completion. The remaining tasks are:
+・Saving and restoring state when the app is closed and reopened
+・Handling background operation
+・Making timers draggable
