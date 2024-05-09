@@ -88,8 +88,7 @@ class EditableStopwatch extends Stopwatch {
 
   //EditableStopwatchの表示時間(dd:hh:mm:ss)
   // Display time (dd:hh:mm:ss) of the EditableStopwatch
-  @override
-  String toString() {
+  String timeToString() {
     return "${days.toString().padLeft(2, '0')}:${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
   }
 }
@@ -144,7 +143,7 @@ class FocusTimerState extends State<FocusTimer> {
         children: [
           InkWell(
             child: Text(
-              stopwatch.toString(),
+              stopwatch.timeToString(),
               style: const TextStyle(fontSize: 25),
             ),
             onTap: () {
@@ -161,7 +160,9 @@ class FocusTimerState extends State<FocusTimer> {
           Container(width: 10),
           ElevatedButton(
               onPressed: () {
+                stopwatch.stop();
                 stopwatch.reset();
+                timercolor = Colors.blueGrey;
                 setState(() {});
               },
               child: const Icon(Icons.restart_alt)),
