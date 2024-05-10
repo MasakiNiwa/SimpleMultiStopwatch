@@ -56,27 +56,36 @@ class _MyHomePageState extends State<MyHomePage> {
           timers.clear();
           setState(() {});
         },
-        child: ListView.builder(
-            itemCount: timers.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Dismissible(
-                key: timers[index].timerKey,
-                direction: DismissDirection.startToEnd,
-                onDismissed: (direction) {
-                  setState(() {
-                    timers.removeAt(index);
-                    globalTimerKeys.removeAt(index);
-                  });
-                },
-                background: Container(
-                    color: Colors.red,
-                    child: const Row(children: [Icon(Icons.delete), Spacer()])),
-                child: Card(
-                  elevation: 3,
-                  child: FocusTimer(key: globalTimerKeys[index]),
-                ),
-              );
-            }),
+        child: ReorderableListView.builder(
+          itemCount: timers.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Dismissible(
+              key: timers[index].timerKey,
+              direction: DismissDirection.startToEnd,
+              onDismissed: (direction) {
+                setState(() {
+                  timers.removeAt(index);
+                  globalTimerKeys.removeAt(index);
+                });
+              },
+              background: Container(
+                  color: Colors.red,
+                  child: const Row(children: [Icon(Icons.delete), Spacer()])),
+              child: Card(
+                elevation: 3,
+                child: FocusTimer(key: globalTimerKeys[index]),
+              ),
+            );
+          },
+          onReorder: (int oldIndex, int newIndex) {
+            if (oldIndex < newIndex) {
+              newIndex -= 1;
+            }
+            final GlobalObjectKey<FocusTimerState> itemKey =
+                globalTimerKeys.removeAt(oldIndex);
+            globalTimerKeys.insert(newIndex, itemKey);
+          },
+        ),
       ),
       floatingActionButton: ElevatedButton(
         onPressed: addTimer,
