@@ -13,9 +13,9 @@ class FocusTimer extends StatefulWidget {
 }
 
 class FocusTimerState extends State<FocusTimer> {
-  final stopwatch = EditableStopwatch();
+  final EditableStopwatch stopwatch = EditableStopwatch();
   Timer? timer;
-  final textController = TextEditingController();
+  final TextEditingController textController = TextEditingController();
 
   @override
   void initState() {

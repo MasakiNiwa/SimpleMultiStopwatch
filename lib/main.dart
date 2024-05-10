@@ -27,9 +27,9 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<FocusTimer> timers = [];
   final List<GlobalObjectKey<FocusTimerState>> globalTimerKeys = [];
   void addTimer() {
-    FocusTimer atimer = FocusTimer();
-    timers.add(atimer);
-    globalTimerKeys.add(GlobalObjectKey(atimer));
+    FocusTimer timer = FocusTimer();
+    timers.add(timer);
+    globalTimerKeys.add(GlobalObjectKey(timer));
     setState(() {});
   }
 
@@ -45,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ElevatedButton(
             onPressed: () {
               timers.clear();
+              globalTimerKeys.clear();
               setState(() {});
             },
             child: const Icon(Icons.delete_sweep),
@@ -79,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
           final GlobalObjectKey<FocusTimerState> itemKey =
               globalTimerKeys.removeAt(oldIndex);
           globalTimerKeys.insert(newIndex, itemKey);
+          setState(() {});
         },
       ),
       floatingActionButton: ElevatedButton(
