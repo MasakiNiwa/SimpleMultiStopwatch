@@ -39,6 +39,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  #アプリの状態の保存と復元のために使用します。
+  #Used for saving and restoring the application state.
+  shared_preferences: ^2.2.3
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
