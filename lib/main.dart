@@ -90,16 +90,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.detached:
-        await saveState();
+        // await saveState();
         break;
       case AppLifecycleState.inactive:
         await saveState();
         break;
       case AppLifecycleState.paused:
-        await saveState();
+        // await saveState();
         break;
       case AppLifecycleState.hidden:
-        await saveState();
+        // await saveState();
         break;
       case AppLifecycleState.resumed:
         break;
