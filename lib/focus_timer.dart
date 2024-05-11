@@ -5,8 +5,11 @@ import 'package:simple_multi_stopwatch/editable_stopwatch.dart';
 //ストップウォッチを一つ表示するためのWidget
 // This widget is used to display a stopwatch.
 class FocusTimer extends StatefulWidget {
-  FocusTimer({super.key});
+  final int initialOffsetTime;
+  final String initialText;
   final timerKey = UniqueKey();
+
+  FocusTimer({super.key, this.initialOffsetTime = 0, this.initialText = ""});
 
   @override
   State<FocusTimer> createState() => FocusTimerState();
@@ -20,6 +23,8 @@ class FocusTimerState extends State<FocusTimer> {
   @override
   void initState() {
     super.initState();
+    stopwatch.offsetSeconds = widget.initialOffsetTime;
+    textController.text = widget.initialText;
     timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       if (stopwatch.isRunning) {
         setState(() {});
