@@ -119,6 +119,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             onPressed: () {
               timers.clear();
               globalTimerKeys.clear();
+              timerOffsetList.clear();
+              timerMemoList.clear();
               setState(() {});
             },
             child: const Icon(Icons.delete_sweep),
