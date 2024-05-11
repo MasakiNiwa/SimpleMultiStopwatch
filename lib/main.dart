@@ -24,7 +24,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<FocusTimer> timers = [];
   final List<GlobalObjectKey<FocusTimerState>> globalTimerKeys = [];
   List<String> timerOffsetList = [];
@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  void restoreState() async {
+  Future<void> restoreState() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     timerOffsetList = prefs.getStringList('timer_offset_list') ?? [];
     timerMemoList = prefs.getStringList('timer_memo_list') ?? [];
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  void saveState() async {
+  Future<void> saveState() async {
     timerOffsetList = [];
     timerMemoList = [];
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -67,21 +67,43 @@ class _MyHomePageState extends State<MyHomePage> {
             globalTimerKeys[i].currentState?.textController.text ?? '';
         timerMemoList.add(text);
       }
-      prefs.setStringList('timer_offset_list', timerOffsetList);
-      prefs.setStringList('timer_memo_list', timerMemoList);
     }
+    await prefs.setStringList('timer_offset_list', timerOffsetList);
+    await prefs.setStringList('timer_memo_list', timerMemoList);
   }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     restoreState();
   }
 
   @override
   void dispose() {
     saveState();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.detached:
+        await saveState();
+        break;
+      case AppLifecycleState.inactive:
+        await saveState();
+        break;
+      case AppLifecycleState.paused:
+        await saveState();
+        break;
+      case AppLifecycleState.hidden:
+        await saveState();
+        break;
+      case AppLifecycleState.resumed:
+        break;
+    }
   }
 
   @override
@@ -101,9 +123,6 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: const Icon(Icons.delete_sweep),
           ),
-          ElevatedButton(onPressed: saveState, child: const Icon(Icons.save)),
-          ElevatedButton(
-              onPressed: restoreState, child: const Icon(Icons.restore)),
         ],
       ),
       body: ReorderableListView.builder(
