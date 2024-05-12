@@ -140,8 +140,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  //アプリのライフサイクルを監視して、タイマーの状態を管理します
-  //非アクティブ(inactive)かバックグラウンド(paused)になった時に、タイマーの状態を保存します
+  //アプリのライフサイクルを監視して、アプリの状態を管理します
+  //非アクティブ(inactive)かバックグラウンド(paused)になった時に、アプリの状態を保存します
   //Method to handle app lifecycle changes.
   //Saves the app state when the app becomes inactive or paused.
   @override
