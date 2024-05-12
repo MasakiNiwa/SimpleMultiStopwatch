@@ -9,13 +9,18 @@ class FocusTimer extends StatefulWidget {
   //Property for passing FocusTimer arguments to FocusTimerState.
   final int initialOffsetTime;
   final String initialText;
+  final bool isRunning;
   //どのFocusTimerウィジェットなのか特定するためのUniqueKey
   //UniqueKey for identifying which FocusTimer widget this is.
   final timerKey = UniqueKey();
 
   //引数としてオフセット秒とメモの初期値を受け取ります
   //Constructor that takes initial offset time and initial text as arguments.
-  FocusTimer({super.key, this.initialOffsetTime = 0, this.initialText = ""});
+  FocusTimer(
+      {super.key,
+      this.initialOffsetTime = 0,
+      this.initialText = "",
+      this.isRunning = false});
 
   @override
   State<FocusTimer> createState() => FocusTimerState();
@@ -47,6 +52,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     stopwatch.offsetSeconds = widget.initialOffsetTime;
     textController.text = widget.initialText;
+    if (widget.isRunning) {
+      startFocusTimer();
+    }
     timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       if (stopwatch.isRunning) {
         setState(() {});
