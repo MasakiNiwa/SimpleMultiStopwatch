@@ -40,3 +40,8 @@ Current hypothesis 2: Interference between TextField and ReorderableListView?<br
 現時点の予想：_MyHomePageStateクラスの中で、タイマーの状態を管理する実装が論理的におかしい？<br>
 (2) Sometimes a stopwatch that is not in the initial state appears when the stopwatch addition button is pressed<br>
 Current hypothesis: Is the implementation for managing timer status in the _MyHomePageState class logically incorrect?<br>
+
+## 直近の目標(Next Steps)
+(1)まずはバグを取り除く(Fix bugs)<br>
+(2)実機テスト(Conduct device testing)<br>
+(3)コメントの見直し(Review code comments)<br>

@@ -129,7 +129,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         timerMemoList.add(text);
         bool isrunnning =
             globalTimerKeys[i].currentState?.stopwatch.isRunning ?? false;
-        if (isrunnning) {
+        bool ispaused = globalTimerKeys[i].currentState?.isPaused ?? false;
+        if (isrunnning || ispaused) {
           timerIsRunningList.add("1");
         } else {
           timerIsRunningList.add("0");
