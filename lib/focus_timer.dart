@@ -15,14 +15,16 @@ class FocusTimer extends StatefulWidget {
   State<FocusTimer> createState() => FocusTimerState();
 }
 
-class FocusTimerState extends State<FocusTimer> {
+class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   final EditableStopwatch stopwatch = EditableStopwatch();
   Timer? timer;
   final TextEditingController textController = TextEditingController();
+  MaterialColor timerBorderColor = Colors.blueGrey;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     stopwatch.offsetSeconds = widget.initialOffsetTime;
     textController.text = widget.initialText;
     timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
@@ -37,17 +39,22 @@ class FocusTimerState extends State<FocusTimer> {
     stopwatch.stop();
     timer?.cancel();
     textController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
-  MaterialColor timercolor = Colors.blueGrey;
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+    } else if (state == AppLifecycleState.resumed) {}
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: timercolor,
+          color: timerBorderColor,
           width: 2,
         ),
         borderRadius: BorderRadius.circular(7),
@@ -63,10 +70,10 @@ class FocusTimerState extends State<FocusTimer> {
             onTap: () {
               if (stopwatch.isRunning) {
                 stopwatch.stop();
-                timercolor = Colors.blueGrey;
+                timerBorderColor = Colors.blueGrey;
               } else {
                 stopwatch.start();
-                timercolor = Colors.deepOrange;
+                timerBorderColor = Colors.deepOrange;
               }
               setState(() {});
             },
@@ -76,7 +83,7 @@ class FocusTimerState extends State<FocusTimer> {
               onPressed: () {
                 stopwatch.stop();
                 stopwatch.reset();
-                timercolor = Colors.blueGrey;
+                timerBorderColor = Colors.blueGrey;
                 setState(() {});
               },
               child: const Icon(Icons.restart_alt)),
