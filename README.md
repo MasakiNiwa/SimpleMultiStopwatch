@@ -42,6 +42,6 @@ Current hypothesis 2: Interference between TextField and ReorderableListView?<br
 Current hypothesis: Is the implementation for managing timer status in the _MyHomePageState class logically incorrect?<br>
 
 ## 直近の目標(Next Steps)
-(1)まずはバグを取り除く(Fix bugs)
-(2)実機テスト(Conduct device testing)
-(3)コメントの見直し(Review code comments)
+(1)まずはバグを取り除く(Fix bugs)<br>
+(2)実機テスト(Conduct device testing)<br>
+(3)コメントの見直し(Review code comments)<br>
