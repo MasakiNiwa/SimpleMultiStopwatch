@@ -42,6 +42,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   //Property to switch the color of the widget border between running and stopped stopwatch.
   MaterialColor timerBorderColor = Colors.blueGrey;
 
+  bool isPaused = false;
+  DateTime pauseTime = DateTime.now();
+
   //initStateメソッドをオーバーライドします
   //まず、オフセット秒とメモの初期値を設定します
   //次に、ストップウォッチ動作中は100ミリ秒ごとにウィジェットを更新するように設定しています
@@ -80,13 +83,23 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   }
 
   //タイマーのライフサイクルを監視して、タイマーの状態を管理します
-  //※現在は開発中のため、実際の処理は含まれていません
   //Monitor the timer's lifecycle and manage the timer's state.
-  //Note: Currently under development, so actual processing is not included.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-    } else if (state == AppLifecycleState.resumed) {}
+      if (stopwatch.isRunning) {
+        isPaused = true;
+        pauseTime = DateTime.now();
+        stopFocusTimer();
+      }
+    } else if (state == AppLifecycleState.resumed) {
+      if (isPaused) {
+        stopwatch.addOffsetTime(
+            seconds: DateTime.now().difference(pauseTime).inSeconds);
+        startFocusTimer();
+        isPaused = false;
+      }
+    }
   }
 
   //FoucsTimerウィジェットのストップウォッチを動かします
