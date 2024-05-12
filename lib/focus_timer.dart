@@ -9,13 +9,20 @@ class FocusTimer extends StatefulWidget {
   //Property for passing FocusTimer arguments to FocusTimerState.
   final int initialOffsetTime;
   final String initialText;
+  final bool isRunning;
+  final DateTime closeTime;
   //どのFocusTimerウィジェットなのか特定するためのUniqueKey
   //UniqueKey for identifying which FocusTimer widget this is.
   final timerKey = UniqueKey();
 
   //引数としてオフセット秒とメモの初期値を受け取ります
   //Constructor that takes initial offset time and initial text as arguments.
-  FocusTimer({super.key, this.initialOffsetTime = 0, this.initialText = ""});
+  FocusTimer(
+      {super.key,
+      this.initialOffsetTime = 0,
+      this.initialText = "",
+      this.isRunning = false,
+      required this.closeTime});
 
   @override
   State<FocusTimer> createState() => FocusTimerState();
@@ -35,6 +42,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   //Property to switch the color of the widget border between running and stopped stopwatch.
   MaterialColor timerBorderColor = Colors.blueGrey;
 
+  bool isPaused = false;
+  DateTime pauseTime = DateTime.now();
+
   //initStateメソッドをオーバーライドします
   //まず、オフセット秒とメモの初期値を設定します
   //次に、ストップウォッチ動作中は100ミリ秒ごとにウィジェットを更新するように設定しています
@@ -47,6 +57,11 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     stopwatch.offsetSeconds = widget.initialOffsetTime;
     textController.text = widget.initialText;
+    if (widget.isRunning) {
+      stopwatch.addOffsetTime(
+          seconds: DateTime.now().difference(widget.closeTime).inSeconds);
+      startFocusTimer();
+    }
     timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       if (stopwatch.isRunning) {
         setState(() {});
@@ -68,13 +83,37 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   }
 
   //タイマーのライフサイクルを監視して、タイマーの状態を管理します
-  //※現在は開発中のため、実際の処理は含まれていません
   //Monitor the timer's lifecycle and manage the timer's state.
-  //Note: Currently under development, so actual processing is not included.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-    } else if (state == AppLifecycleState.resumed) {}
+      if (stopwatch.isRunning) {
+        isPaused = true;
+        pauseTime = DateTime.now();
+        stopFocusTimer();
+      }
+    } else if (state == AppLifecycleState.resumed) {
+      if (isPaused) {
+        stopwatch.addOffsetTime(
+            seconds: DateTime.now().difference(pauseTime).inSeconds);
+        startFocusTimer();
+        isPaused = false;
+      }
+    }
+  }
+
+  //FoucsTimerウィジェットのストップウォッチを動かします
+  //Starts the stopwatch of the FocusTimer widget.
+  void startFocusTimer() {
+    stopwatch.start();
+    timerBorderColor = Colors.deepOrange;
+  }
+
+  //FoucsTimerウィジェットのストップウォッチを停止します
+  //Stops the stopwatch of the FocusTimer widget.
+  void stopFocusTimer() {
+    stopwatch.stop();
+    timerBorderColor = Colors.blueGrey;
   }
 
   //ストップウォッチウィジェットを構築します
@@ -99,11 +138,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
             ),
             onTap: () {
               if (stopwatch.isRunning) {
-                stopwatch.stop();
-                timerBorderColor = Colors.blueGrey;
+                stopFocusTimer();
               } else {
-                stopwatch.start();
-                timerBorderColor = Colors.deepOrange;
+                startFocusTimer();
               }
               setState(() {});
             },

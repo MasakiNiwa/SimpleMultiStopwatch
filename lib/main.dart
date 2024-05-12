@@ -45,6 +45,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   //Used for saving and restoring app state.
   List<String> timerOffsetList = [];
   List<String> timerMemoList = [];
+  List<String> timerIsRunningList = [];
+  String closeTime = DateTime.now().toIso8601String();
 
   //追加ボタンが押されたときに呼び出すメソッド
   //FocusTimerのインスタンスと対応するGlobalObjectKeyを作成してリストに追加します
@@ -55,11 +57,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   //Sets the initial values for the timer to 0 seconds and an empty memo.
   //Updates the UI after adding the timer.
   void addTimer() {
-    FocusTimer timer = FocusTimer();
+    FocusTimer timer = FocusTimer(closeTime: DateTime.now());
     timers.add(timer);
     globalTimerKeys.add(GlobalObjectKey(timer));
     timerOffsetList.add("0");
     timerMemoList.add("");
+    timerIsRunningList.add("0");
     setState(() {});
   }
 
@@ -77,11 +80,24 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     timerOffsetList = prefs.getStringList('timer_offset_list') ?? [];
     timerMemoList = prefs.getStringList('timer_memo_list') ?? [];
+    timerIsRunningList = prefs.getStringList('timer_isrunning_list') ?? [];
+    closeTime =
+        prefs.getString('timer_closetime') ?? DateTime.now().toIso8601String();
+
+    if (timerOffsetList.length != timerMemoList.length) {
+      timerOffsetList = [];
+      timerMemoList = [];
+      timerIsRunningList = [];
+    } else if (timerOffsetList.length != timerIsRunningList.length) {
+      timerOffsetList = [];
+      timerMemoList = [];
+      timerIsRunningList = [];
+    }
 
     timers.clear();
     globalTimerKeys.clear();
     for (int i = 0; i < timerMemoList.length; i++) {
-      FocusTimer timer = FocusTimer();
+      FocusTimer timer = FocusTimer(closeTime: DateTime.now());
       timers.add(timer);
       globalTimerKeys.add(GlobalObjectKey(timer));
     }
@@ -101,6 +117,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Future<void> saveState() async {
     timerOffsetList = [];
     timerMemoList = [];
+    timerIsRunningList = [];
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (globalTimerKeys.isNotEmpty) {
       for (int i = 0; i < globalTimerKeys.length; i++) {
@@ -110,10 +127,20 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         String text =
             globalTimerKeys[i].currentState?.textController.text ?? '';
         timerMemoList.add(text);
+        bool isrunnning =
+            globalTimerKeys[i].currentState?.stopwatch.isRunning ?? false;
+        if (isrunnning) {
+          timerIsRunningList.add("1");
+        } else {
+          timerIsRunningList.add("0");
+        }
       }
     }
     await prefs.setStringList('timer_offset_list', timerOffsetList);
     await prefs.setStringList('timer_memo_list', timerMemoList);
+    await prefs.setStringList('timer_isrunning_list', timerIsRunningList);
+    closeTime = DateTime.now().toIso8601String();
+    await prefs.setString('timer_closetime', closeTime);
   }
 
   //initStateメソッドをオーバーライドします
@@ -177,6 +204,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               globalTimerKeys.clear();
               timerOffsetList.clear();
               timerMemoList.clear();
+              timerIsRunningList.clear;
               setState(() {});
             },
             child: const Icon(Icons.delete_sweep),
@@ -204,6 +232,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 key: globalTimerKeys[index],
                 initialOffsetTime: int.parse(timerOffsetList[index]),
                 initialText: timerMemoList[index],
+                isRunning:
+                    (int.parse(timerIsRunningList[index]) == 0 ? false : true),
+                closeTime: DateTime.parse(closeTime),
               ),
             ),
           );
