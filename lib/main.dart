@@ -46,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   List<String> timerOffsetList = [];
   List<String> timerMemoList = [];
   List<String> timerIsRunningList = [];
+  String closeTime = DateTime.now().toIso8601String();
 
   //追加ボタンが押されたときに呼び出すメソッド
   //FocusTimerのインスタンスと対応するGlobalObjectKeyを作成してリストに追加します
@@ -56,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   //Sets the initial values for the timer to 0 seconds and an empty memo.
   //Updates the UI after adding the timer.
   void addTimer() {
-    FocusTimer timer = FocusTimer();
+    FocusTimer timer = FocusTimer(closeTime: DateTime.now());
     timers.add(timer);
     globalTimerKeys.add(GlobalObjectKey(timer));
     timerOffsetList.add("0");
@@ -80,6 +81,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerOffsetList = prefs.getStringList('timer_offset_list') ?? [];
     timerMemoList = prefs.getStringList('timer_memo_list') ?? [];
     timerIsRunningList = prefs.getStringList('timer_isrunning_list') ?? [];
+    closeTime =
+        prefs.getString('timer_closetime') ?? DateTime.now().toIso8601String();
 
     if (timerOffsetList.length != timerMemoList.length) {
       timerOffsetList = [];
@@ -94,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timers.clear();
     globalTimerKeys.clear();
     for (int i = 0; i < timerMemoList.length; i++) {
-      FocusTimer timer = FocusTimer();
+      FocusTimer timer = FocusTimer(closeTime: DateTime.now());
       timers.add(timer);
       globalTimerKeys.add(GlobalObjectKey(timer));
     }
@@ -136,6 +139,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     await prefs.setStringList('timer_offset_list', timerOffsetList);
     await prefs.setStringList('timer_memo_list', timerMemoList);
     await prefs.setStringList('timer_isrunning_list', timerIsRunningList);
+    closeTime = DateTime.now().toIso8601String();
+    await prefs.setString('timer_closetime', closeTime);
   }
 
   //initStateメソッドをオーバーライドします
@@ -229,6 +234,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 initialText: timerMemoList[index],
                 isRunning:
                     (int.parse(timerIsRunningList[index]) == 0 ? false : true),
+                closeTime: DateTime.parse(closeTime),
               ),
             ),
           );
