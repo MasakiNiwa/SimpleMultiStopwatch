@@ -141,23 +141,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   //アプリのライフサイクルを監視して、タイマーの状態を管理します
-  //現在は、非アクティブ(inactive)になった時に、タイマーの状態を保存しています
+  //非アクティブ(inactive)かバックグラウンド(paused)になった時に、タイマーの状態を保存します
   //Method to handle app lifecycle changes.
-  //Saves the app state when the app becomes inactive.
+  //Saves the app state when the app becomes inactive or paused.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    switch (state) {
-      case AppLifecycleState.detached:
-        break;
-      case AppLifecycleState.inactive:
-        await saveState();
-        break;
-      case AppLifecycleState.paused:
-        break;
-      case AppLifecycleState.hidden:
-        break;
-      case AppLifecycleState.resumed:
-        break;
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      await saveState();
     }
   }
 
