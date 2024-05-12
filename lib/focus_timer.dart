@@ -77,6 +77,20 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     } else if (state == AppLifecycleState.resumed) {}
   }
 
+  //FoucsTimerウィジェットのストップウォッチを動かします
+  //Starts the stopwatch of the FocusTimer widget.
+  void startFocusTimer() {
+    stopwatch.start();
+    timerBorderColor = Colors.deepOrange;
+  }
+
+  //FoucsTimerウィジェットのストップウォッチを停止します
+  //Stops the stopwatch of the FocusTimer widget.
+  void stopFocusTimer() {
+    stopwatch.stop();
+    timerBorderColor = Colors.blueGrey;
+  }
+
   //ストップウォッチウィジェットを構築します
   //Build the stopwatch widget.
   @override
@@ -99,11 +113,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
             ),
             onTap: () {
               if (stopwatch.isRunning) {
-                stopwatch.stop();
-                timerBorderColor = Colors.blueGrey;
+                stopFocusTimer();
               } else {
-                stopwatch.start();
-                timerBorderColor = Colors.deepOrange;
+                startFocusTimer();
               }
               setState(() {});
             },
