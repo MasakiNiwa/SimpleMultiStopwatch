@@ -28,12 +28,12 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 (1)頻度は少ないがアプリが停止する<br>
 発生開始時期：ReorderableListViewを使用開始した頃から<br>
 発生状況：短時間でストップウォッチを連続して動かす操作をおこなったときが多い<br>
-現時点の予想１：ReorderableListViewの実装が論理的におかしい？<br>
+現時点の予想１：ReorderableListViewの使い方が論理的におかしい？<br>
 現時点の予想２：TextFieldとReorderableListViewが干渉？<br>
 (1) App crashes infrequently<br>
 Start of occurrence: Around the time ReorderableListView started being used<br>
 Occurrence conditions: Often occurs when multiple stopwatches are operated consecutively in a short period of time<br>
-Current hypothesis 1: Is the implementation of ReorderableListView logically incorrect?<br>
+Current hypothesis 1: Is the usage of ReorderableListView logically incorrect?<br>
 Current hypothesis 2: Interference between TextField and ReorderableListView?<br>
 <br>
 (2)ストップウォッチ追加ボタンを押したときに、初期状態ではないストップウォッチが出てきてしまうことがある<br>
@@ -45,3 +45,8 @@ Current hypothesis: Is the implementation for managing timer status in the _MyHo
 (1)まずはバグを取り除く(Fix bugs)<br>
 (2)実機テスト(Conduct device testing)<br>
 (3)コメントの見直し(Review code comments)<br>
+
+## 今後の目標(Future Goals)
+(1)コードを整理しなおす(Refactor code)<br>
+(2)デザインを見直す(Redesign)<br>
+(3)アプリを公開する(Publish app)<br>
