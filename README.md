@@ -40,6 +40,13 @@ Current hypothesis 2: Interference between TextField and ReorderableListView?<br
 現時点の予想：_MyHomePageStateクラスの中で、タイマーの状態を管理する実装が論理的におかしい？<br>
 (2) Sometimes a stopwatch that is not in the initial state appears when the stopwatch addition button is pressed<br>
 Current hypothesis: Is the implementation for managing timer status in the _MyHomePageState class logically incorrect?<br>
+◆発生条件を発見したかも!(Occurrence conditions discovered!)<br>
+条件1 : inactiveまたはpausedでアプリの状態が保存される<br>
+条件2 : (全削除などで)タイマーの数を条件1で保存した時よりも減らす<br>
+条件3 : この状態で追加ボタンを押すと、条件1で保存していたタイマーを復元してしまう<br>
+Condition 1: The state of the app is saved in inactive or paused<br>
+Condition 2: The number of timers is reduced (e.g., by deleting all) less than the number saved in Condition 1<br>
+Condition 3: Pressing the add button in this state will restore the timer saved in Condition 1<br>
 
 ## 直近の目標(Next Steps)
 (1)まずはバグを取り除く(Fix bugs)<br>
