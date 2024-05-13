@@ -162,6 +162,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
               maxLines: 1,
             ),
           ),
+          Container(width: 25),
         ],
       ),
     );
