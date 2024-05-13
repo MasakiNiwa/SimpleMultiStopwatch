@@ -25,12 +25,12 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 　(Running stopwatches will resume operation upon restart, reflecting the time the app was closed.) <br>
 
 ## 把握しているバグ(Known Bugs)
-★頻度は少ないがアプリが停止する<br>
+★頻度は少ないがアプリが停止する(App crashes infrequently)<br>
+_AssertionError('package:flutter/src/rendering/layer.dart':Failed assertion:line 2692 pos 7:'_debugCheckLeaderBeforeFollower(forwardLayers, inverseLayers)':LeaderLayer anchor must come before FollowerLayer in paint order, but the reverse was true.)<br>
 発生開始時期：ReorderableListViewを使用開始した頃から<br>
 発生状況：短時間でストップウォッチを連続して動かす操作をおこなったときが多い<br>
 現時点の予想１：ReorderableListViewの使い方が論理的におかしい？<br>
 現時点の予想２：TextFieldとReorderableListViewが干渉？<br>
-★ App crashes infrequently<br>
 Start of occurrence: Around the time ReorderableListView started being used<br>
 Occurrence conditions: Often occurs when multiple stopwatches are operated consecutively in a short period of time<br>
 Current hypothesis 1: Is the usage of ReorderableListView logically incorrect?<br>
