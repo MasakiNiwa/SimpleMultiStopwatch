@@ -57,7 +57,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   //Sets the initial values for the timer to 0 seconds and an empty memo.
   //Updates the UI after adding the timer.
   void addTimer() {
-    saveState();
     FocusTimer timer = FocusTimer(closeTime: DateTime.now());
     timers.add(timer);
     globalTimerKeys.add(GlobalObjectKey(timer));
