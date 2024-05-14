@@ -5,6 +5,8 @@
 複数のシンプルなストップウォッチを同時利用できるアプリを目指しています。<br>
 This is a Flutter project under development. <br>
 The goal is to create an app that allows users to use multiple simple stopwatches simultaneously.<br>
+<br>
+![Screenshot](./screenshots/01.png)
 
 ## 使い方(How to Use)
 ・アプリ右下の追加ボタンでストップウォッチを追加 <br>
