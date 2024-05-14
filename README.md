@@ -5,8 +5,9 @@
 複数のシンプルなストップウォッチを同時利用できるアプリを目指しています。<br>
 This is a Flutter project under development. <br>
 The goal is to create an app that allows users to use multiple simple stopwatches simultaneously.<br>
-<br>
-![Screenshot](./screenshots/01.png)
+
+### スクリーンショット(Screenshots)
+<img alt="Screenshot" src="./screenshots/01.png" width="200px">
 
 ## 使い方(How to Use)
 ・アプリ右下の追加ボタンでストップウォッチを追加 <br>
@@ -15,6 +16,8 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 ・Swipe a stopwatch from left to right to delete it. <br>
 ・アプリ右上の削除ボタンでストップウォッチを全削除 <br>
 ・Tap the "Delete All" button in the top right corner of the app to delete all stopwatches. <br>
+・ストップウォッチを上下に移動して並び替え<br>
+・Drag and drop stopwatches to reorder them.<br>
 ・時間表示部分のタップでストップウォッチを開始/停止 <br>
 ・Tap the time display area to start/stop the stopwatch. <br>
 ・リセットボタンでストップウォッチを0に戻す <br>
@@ -27,15 +30,15 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 　(Running stopwatches will resume operation upon restart, reflecting the time the app was closed.) <br>
 
 ## 把握しているバグ(Known Bugs)
-### ★頻度は少ないがアプリが停止する(App crashes infrequently)<br>
+### 頻度は少ないがデバッグ中にアプリが停止する<br>Rare: The app may crash during debugging.
 _AssertionError('package:flutter/src/rendering/layer.dart':Failed assertion:line 2692 pos 7:'_debugCheckLeaderBeforeFollower(forwardLayers, inverseLayers)':LeaderLayer anchor must come before FollowerLayer in paint order, but the reverse was true.)<br>
 <br>
 発生開始時期：ReorderableListViewを使用開始した頃から<br>
-発生状況：短時間でストップウォッチを連続して動かす操作をおこなったときが多い<br>
+発生状況：短時間でストップウォッチを連続して激しく動かす操作をおこなったときが多い<br>
 現時点の予想１：ReorderableListViewの使い方が論理的におかしい？<br>
 現時点の予想２：TextFieldとReorderableListViewが干渉？<br>
 Start of occurrence: Around the time ReorderableListView started being used<br>
-Occurrence conditions: Often occurs when multiple stopwatches are operated consecutively in a short period of time<br>
+Occurrence conditions: Often occurs when multiple stopwatches are manipulated quickly in a short period of time<br>
 Current hypothesis 1: Is the usage of ReorderableListView logically incorrect?<br>
 Current hypothesis 2: Interference between TextField and ReorderableListView?<br>
 
@@ -48,3 +51,11 @@ Current hypothesis 2: Interference between TextField and ReorderableListView?<br
 (1)コードを整理しなおす(Refactor code)<br>
 (2)デザインを見直す(Redesign)<br>
 (3)アプリを公開する(Publish app)<br>
+
+## その他(Additional Notes)
+・まだ開発中のため、不具合が含まれていたらすみません<br>
+・不具合のご指摘や、アドバイス等ありましたらご教授お願いいたします<br>
+・このプロジェクトが誰かの役にたてたら嬉しいです<br>
+・This app is still under development and may contain bugs.<br>
+・Please feel free to report any bugs or suggestions you have.<br>
+・I hope you find this app useful!<br>
