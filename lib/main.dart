@@ -155,15 +155,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     restoreState();
   }
 
-  //disposeメソッドをオーバーライドします
-  //アプリ終了時にデータを保存するようにします
-  //※現時点ではdisposeがうまく呼び出されていないように感じています
-  //Overrides the dispose method.
-  //Disposes of the widget and saves the app state.
-  //Note: Currently, it seems that the dispose method is not being called properly.
   @override
   void dispose() {
-    saveState();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
