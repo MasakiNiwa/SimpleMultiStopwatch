@@ -41,6 +41,9 @@ Start of occurrence: Around the time ReorderableListView started being used<br>
 Occurrence conditions: Often occurs when multiple stopwatches are manipulated quickly in a short period of time<br>
 Current hypothesis 1: Is the usage of ReorderableListView logically incorrect?<br>
 Current hypothesis 2: Interference between TextField and ReorderableListView?<br>
+<br>
+★スワイプと並べ替えが同時に発動するようなタイミングで止まる傾向を発見
+・DismissedとReorderableListViewの干渉を防ぐ対応を考えてみる
 
 ## 直近の目標(Next Steps)
 (1)まずはバグを取り除く(Fix bugs)<br>
