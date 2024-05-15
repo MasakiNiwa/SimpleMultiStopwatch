@@ -6,7 +6,7 @@
 This is a Flutter project under development. <br>
 The goal is to create an app that allows users to use multiple simple stopwatches simultaneously.<br>
 
-### スクリーンショット(Screenshots)
+## スクリーンショット(Screenshots)
 <img alt="Screenshot" src="./screenshots/01.png" width="200px">
 
 ## 使い方(How to Use)
@@ -30,7 +30,7 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 　(Running stopwatches will resume operation upon restart, reflecting the time the app was closed.) <br>
 
 ## 把握しているバグ(Known Bugs)
-### 頻度は少ないがデバッグ中にアプリが停止する<br>Rare: The app may crash during debugging.
+### 頻度は少ないがデバッグ中にアプリが停止する<br>The app may crash during debugging.
 _AssertionError('package:flutter/src/rendering/layer.dart':Failed assertion:line 2692 pos 7:'_debugCheckLeaderBeforeFollower(forwardLayers, inverseLayers)':LeaderLayer anchor must come before FollowerLayer in paint order, but the reverse was true.)<br>
 <br>
 発生開始時期：ReorderableListViewを使用開始した頃から<br>
