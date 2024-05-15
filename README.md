@@ -47,10 +47,15 @@ Current hypothesis 2: Interference between TextField and ReorderableListView?<br
 ★I have discovered a tendency to stop at a timing when swiping and reordering seem to occur simultaneously.<br>
 ・I will consider how to deal with the interference between Dismissed and ReorderableListView.<br>
 
+## 現在の取り組み(Current Work)
+実機テスト中です<br>
+実際に使って改善点を探してみます<br>
+Real device testing is in progress.<br>
+I will try to find improvement points by actually using it.<br>
+
 ## 直近の目標(Next Steps)
 (1)まずはバグを取り除く(Fix bugs)<br>
-(2)実機テスト(Conduct device testing)<br>
-(3)コメントの見直し(Review code comments)<br>
+(2)コメントの見直し(Review code comments)<br>
 
 ## 今後の目標(Future Goals)
 (1)コードを整理しなおす(Refactor code)<br>
