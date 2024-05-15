@@ -215,6 +215,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               setState(() {
                 timers.removeAt(index);
                 globalTimerKeys.removeAt(index);
+                timerOffsetList.removeAt(index);
+                timerMemoList.removeAt(index);
+                timerIsRunningList.removeAt(index);
               });
             },
             background: Container(
