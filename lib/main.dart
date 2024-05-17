@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     if (globalTimerKeys.isNotEmpty) {
       for (int i = 0; i < globalTimerKeys.length; i++) {
         int offset =
-            globalTimerKeys[i].currentState?.stopwatch.elapsedSeconds ?? 0;
+            globalTimerKeys[i].currentState?.stopwatch.elapsedMilliseconds ?? 0;
         timerOffsetList.add(offset.toString());
         String text =
             globalTimerKeys[i].currentState?.textController.text ?? '';

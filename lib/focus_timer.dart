@@ -55,11 +55,12 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    stopwatch.setOffsetTime(seconds: widget.initialOffsetTime);
+    stopwatch.setOffsetTime(milliseconds: widget.initialOffsetTime);
     textController.text = widget.initialText;
     if (widget.isRunning) {
       stopwatch.addOffsetTime(
-          seconds: DateTime.now().difference(widget.closeTime).inSeconds);
+          milliseconds:
+              DateTime.now().difference(widget.closeTime).inMilliseconds);
       startFocusTimer();
     }
     timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
@@ -95,7 +96,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     } else if (state == AppLifecycleState.resumed) {
       if (isPaused) {
         stopwatch.addOffsetTime(
-            seconds: DateTime.now().difference(pauseTime).inSeconds);
+            milliseconds: DateTime.now().difference(pauseTime).inMilliseconds);
         startFocusTimer();
         isPaused = false;
       }

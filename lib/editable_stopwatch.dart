@@ -14,6 +14,10 @@ class EditableStopwatch {
     return elapsed.inSeconds;
   }
 
+  int get elapsedMilliseconds {
+    return elapsed.inMilliseconds;
+  }
+
   int get days {
     return elapsed.inDays;
   }
@@ -48,14 +52,15 @@ class EditableStopwatch {
       int hours = 0,
       int minutes = 0,
       int seconds = 0,
-      int milliseconds = 0}) {
+      int milliseconds = 0,
+      int microseconds = 0}) {
     _offset = Duration(
-      days: days,
-      hours: hours,
-      minutes: minutes,
-      seconds: seconds,
-      milliseconds: milliseconds,
-    );
+        days: days,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds,
+        milliseconds: milliseconds,
+        microseconds: microseconds);
   }
 
   void addOffsetTime(
@@ -63,14 +68,15 @@ class EditableStopwatch {
       int hours = 0,
       int minutes = 0,
       int seconds = 0,
-      int milliseconds = 0}) {
+      int milliseconds = 0,
+      int microseconds = 0}) {
     _offset += Duration(
-      days: days,
-      hours: hours,
-      minutes: minutes,
-      seconds: seconds,
-      milliseconds: milliseconds,
-    );
+        days: days,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds,
+        milliseconds: milliseconds,
+        microseconds: microseconds);
   }
 
   String timeToString() {
