@@ -55,7 +55,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    stopwatch.offsetSeconds = widget.initialOffsetTime;
+    stopwatch.setOffsetTime(seconds: widget.initialOffsetTime);
     textController.text = widget.initialText;
     if (widget.isRunning) {
       stopwatch.addOffsetTime(
