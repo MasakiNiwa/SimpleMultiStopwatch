@@ -7,7 +7,7 @@ import 'package:simple_multi_stopwatch/editable_stopwatch.dart';
 class FocusTimer extends StatefulWidget {
   //FocusTimerの引数をFocusTimerStateに渡すためのプロパティ
   //Property for passing FocusTimer arguments to FocusTimerState.
-  final int initialOffsetTime;
+  final Duration initialOffsetTime;
   final String initialText;
   final bool isRunning;
   final DateTime closeTime;
@@ -19,7 +19,7 @@ class FocusTimer extends StatefulWidget {
   //Constructor that takes initial offset time and initial text as arguments.
   FocusTimer(
       {super.key,
-      this.initialOffsetTime = 0,
+      this.initialOffsetTime = Duration.zero,
       this.initialText = "",
       this.isRunning = false,
       required this.closeTime});
@@ -41,25 +41,25 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   //ストップウォッチ動作時と停止時でウィジェットの外枠の色を切り替えるためのプロパティです
   //Property to switch the color of the widget border between running and stopped stopwatch.
   MaterialColor timerBorderColor = Colors.blueGrey;
-
+  //ストップウォッチispausedの状態に入っているかどうかと、停止した時間を保存するためのプロパティです
+  //Property to indicate whether the stopwatch is paused and to store the time when it was paused.
   bool isPaused = false;
   DateTime pauseTime = DateTime.now();
 
   //initStateメソッドをオーバーライドします
-  //まず、オフセット秒とメモの初期値を設定します
+  //タイマーの初期状態を設定します
   //次に、ストップウォッチ動作中は100ミリ秒ごとにウィジェットを更新するように設定しています
   //Override the initState method.
-  //First, set the initial offset time and initial text.
+  //Set the initial state of the timer.
   //Next, set the widget to update every 100 milliseconds while the stopwatch is running.
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    stopwatch.offsetSeconds = widget.initialOffsetTime;
+    stopwatch.setOffsetTime(widget.initialOffsetTime);
     textController.text = widget.initialText;
     if (widget.isRunning) {
-      stopwatch.addOffsetTime(
-          seconds: DateTime.now().difference(widget.closeTime).inSeconds);
+      stopwatch.addOffsetTime(DateTime.now().difference(widget.closeTime));
       startFocusTimer();
     }
     timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
@@ -94,8 +94,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
       }
     } else if (state == AppLifecycleState.resumed) {
       if (isPaused) {
-        stopwatch.addOffsetTime(
-            seconds: DateTime.now().difference(pauseTime).inSeconds);
+        stopwatch.addOffsetTime(DateTime.now().difference(pauseTime));
         startFocusTimer();
         isPaused = false;
       }
