@@ -38,13 +38,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   //タイマーを特定するために使用します
   //List of GlobalObjectKey objects for each FocusTimer, used to identify timers.
   final List<GlobalObjectKey<FocusTimerState>> globalTimerKeys = [];
-
+  //データ保存用にShared_Preferencesのラッパークラスをインスタンス化します
+  //An instance of the DataStorageFacade class, which is a wrapper around Shared Preferences for data storage.
   final DataStorageFacade dataStorageFacade = DataStorageFacade();
 
-  //タイマーのオフセットとメモのリスト
-  //状態保存と復元に使用します
-  //Lists to store the offset and memo for each timer.
-  //Used for saving and restoring app state.
+  //タイマーの状態のリスト
+  //アプリの状態保存と復元に使用します
+  //List of timer states.
+  //Used to save and restore the app state.
   List<Duration> timerOffsetList = [];
   List<String> timerMemoList = [];
   List<bool> timerIsRunningList = [];
@@ -69,12 +70,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   //保存済みのアプリの状態(保有しているタイマー)を復元するメソッド
-  //Shared_Preferencesを使用します
+  //Shared_PreferencesのラッパークラスであるData_Storage_Facadeを使用します
   //まず最初に、保存をしていたタイマーのオフセット秒とメモのリストを読み込みます
   //読み込んだリストの個数だけFocusTimerインスタンスを作成してメインページ保有リストに追加します
   //※実際にオフセット秒とメモをタイマーに設定するタイミングは、ReorderableListView.builderでWidgetを画面にのせるタイミングになります
   //Method to restore the saved app state (list of timers).
-  //Uses SharedPreferences to retrieve data.
+  //Uses the Data_Storage_Facade, a wrapper class for Shared_Preferences.
   //Initially, retrieves the list of saved timer offset seconds and memos.
   //Creates FocusTimer instances for each item in the retrieved list and adds them to the main page's list.
   //Note: The actual offset seconds and memos are set to the timers when the widgets are displayed on the screen using ReorderableListView.builder.
@@ -107,12 +108,12 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   }
 
   //アプリの状態(保有しているタイマー)を保存するメソッド
-  //Shared_Preferencesを使用します
+  //Shared_PreferencesのラッパークラスであるData_Storage_Facadeを使用します
   //保存時点のタイマーのglobalTimerKeysのリストを使用して処理をおこないます
   //globalTimerKeysの個数だけfor文をまわして、それぞれのkeyからFocusTimerStateのプロパティにアクセスしてタイマーの状態を読み込みます
   //最後に、読み込んだタイマーの状態のリストを保存します
   //Method to save the app state (list of timers).
-  //Uses SharedPreferences to store data.
+  //Uses the Data_Storage_Facade, a wrapper class for Shared_Preferences.
   //Operates using the globalTimerKeys list of timers at the time of saving.
   //Iterates through the globalTimerKeys list, accessing the FocusTimerState properties for each key to retrieve timer state information.
   //Finally, saves the retrieved list of timer state information.

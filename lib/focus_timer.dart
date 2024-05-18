@@ -41,15 +41,16 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   //ストップウォッチ動作時と停止時でウィジェットの外枠の色を切り替えるためのプロパティです
   //Property to switch the color of the widget border between running and stopped stopwatch.
   MaterialColor timerBorderColor = Colors.blueGrey;
-
+  //ストップウォッチispausedの状態に入っているかどうかと、停止した時間を保存するためのプロパティです
+  //Property to indicate whether the stopwatch is paused and to store the time when it was paused.
   bool isPaused = false;
   DateTime pauseTime = DateTime.now();
 
   //initStateメソッドをオーバーライドします
-  //まず、オフセット秒とメモの初期値を設定します
+  //タイマーの初期状態を設定します
   //次に、ストップウォッチ動作中は100ミリ秒ごとにウィジェットを更新するように設定しています
   //Override the initState method.
-  //First, set the initial offset time and initial text.
+  //Set the initial state of the timer.
   //Next, set the widget to update every 100 milliseconds while the stopwatch is running.
   @override
   void initState() {
