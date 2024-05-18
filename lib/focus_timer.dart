@@ -131,9 +131,34 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
       child: Row(
         children: [
           InkWell(
-            child: Text(
-              stopwatch.timeToString(),
-              style: const TextStyle(fontSize: 25),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  stopwatch.elapsed.inHours.toString().padLeft(4, '0'),
+                  style: const TextStyle(fontSize: 25),
+                ),
+                const Text(
+                  'h',
+                  style: TextStyle(fontSize: 12),
+                ),
+                Text(
+                  stopwatch.minutes.toString().padLeft(2, '0'),
+                  style: const TextStyle(fontSize: 25),
+                ),
+                const Text(
+                  'm',
+                  style: TextStyle(fontSize: 12),
+                ),
+                Text(
+                  stopwatch.seconds.toString().padLeft(2, '0'),
+                  style: const TextStyle(fontSize: 25),
+                ),
+                const Text(
+                  's',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
             ),
             onTap: () {
               if (stopwatch.isRunning) {
@@ -161,7 +186,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
               maxLines: 1,
             ),
           ),
-          Container(width: 25),
+          Container(width: 10),
         ],
       ),
     );
