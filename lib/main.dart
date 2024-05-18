@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_multi_stopwatch/focus_timer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_multi_stopwatch/data_storage_facade.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,14 +39,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   //List of GlobalObjectKey objects for each FocusTimer, used to identify timers.
   final List<GlobalObjectKey<FocusTimerState>> globalTimerKeys = [];
 
+  final DataStorageFacade dataStorageFacade = DataStorageFacade();
+
   //タイマーのオフセット(秒)とメモのリスト
   //状態保存と復元に使用します
   //Lists to store the offset (in seconds) and memo for each timer.
   //Used for saving and restoring app state.
-  List<String> timerOffsetList = [];
+  List<int> timerOffsetList = [];
   List<String> timerMemoList = [];
-  List<String> timerIsRunningList = [];
-  String closeTime = DateTime.now().toIso8601String();
+  List<bool> timerIsRunningList = [];
+  DateTime closeTime = DateTime.now();
 
   //追加ボタンが押されたときに呼び出すメソッド
   //FocusTimerのインスタンスと対応するGlobalObjectKeyを作成してリストに追加します
@@ -60,9 +62,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     FocusTimer timer = FocusTimer(closeTime: DateTime.now());
     timers.add(timer);
     globalTimerKeys.add(GlobalObjectKey(timer));
-    timerOffsetList.add("0");
+    timerOffsetList.add(0);
     timerMemoList.add("");
-    timerIsRunningList.add("0");
+    timerIsRunningList.add(false);
     setState(() {});
   }
 
@@ -77,12 +79,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   //Creates FocusTimer instances for each item in the retrieved list and adds them to the main page's list.
   //Note: The actual offset seconds and memos are set to the timers when the widgets are displayed on the screen using ReorderableListView.builder.
   Future<void> restoreState() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    timerOffsetList = prefs.getStringList('timer_offset_list') ?? [];
-    timerMemoList = prefs.getStringList('timer_memo_list') ?? [];
-    timerIsRunningList = prefs.getStringList('timer_isrunning_list') ?? [];
-    closeTime =
-        prefs.getString('timer_closetime') ?? DateTime.now().toIso8601String();
+    timerOffsetList = await dataStorageFacade.getIntList('timer_offset_list');
+    timerMemoList = await dataStorageFacade.getStringList('timer_memo_list');
+    timerIsRunningList =
+        await dataStorageFacade.getBoolList('timer_isrunning_list');
+    closeTime = await dataStorageFacade.getDateTime('timer_closetime');
 
     if (timerOffsetList.length != timerMemoList.length) {
       timerOffsetList = [];
@@ -118,12 +119,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerOffsetList = [];
     timerMemoList = [];
     timerIsRunningList = [];
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
     if (globalTimerKeys.isNotEmpty) {
       for (int i = 0; i < globalTimerKeys.length; i++) {
         int offset =
             globalTimerKeys[i].currentState?.stopwatch.elapsedMilliseconds ?? 0;
-        timerOffsetList.add(offset.toString());
+        timerOffsetList.add(offset);
         String text =
             globalTimerKeys[i].currentState?.textController.text ?? '';
         timerMemoList.add(text);
@@ -131,17 +131,17 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             globalTimerKeys[i].currentState?.stopwatch.isRunning ?? false;
         bool ispaused = globalTimerKeys[i].currentState?.isPaused ?? false;
         if (isrunnning || ispaused) {
-          timerIsRunningList.add("1");
+          timerIsRunningList.add(true);
         } else {
-          timerIsRunningList.add("0");
+          timerIsRunningList.add(false);
         }
       }
     }
-    await prefs.setStringList('timer_offset_list', timerOffsetList);
-    await prefs.setStringList('timer_memo_list', timerMemoList);
-    await prefs.setStringList('timer_isrunning_list', timerIsRunningList);
-    closeTime = DateTime.now().toIso8601String();
-    await prefs.setString('timer_closetime', closeTime);
+    await dataStorageFacade.setIntList('timer_offset_list', timerOffsetList);
+    await dataStorageFacade.setStringList('timer_memo_list', timerMemoList);
+    await dataStorageFacade.setBoolList(
+        'timer_isrunning_list', timerIsRunningList);
+    await dataStorageFacade.setDateTime('timer_closetime', DateTime.now());
   }
 
   //initStateメソッドをオーバーライドします
@@ -227,11 +227,10 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               elevation: 3,
               child: FocusTimer(
                 key: globalTimerKeys[index],
-                initialOffsetTime: int.parse(timerOffsetList[index]),
+                initialOffsetTime: timerOffsetList[index],
                 initialText: timerMemoList[index],
-                isRunning:
-                    (int.parse(timerIsRunningList[index]) == 0 ? false : true),
-                closeTime: DateTime.parse(closeTime),
+                isRunning: timerIsRunningList[index],
+                closeTime: closeTime,
               ),
             ),
           );
