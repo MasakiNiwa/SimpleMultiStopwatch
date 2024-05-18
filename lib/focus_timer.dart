@@ -7,7 +7,7 @@ import 'package:simple_multi_stopwatch/editable_stopwatch.dart';
 class FocusTimer extends StatefulWidget {
   //FocusTimerの引数をFocusTimerStateに渡すためのプロパティ
   //Property for passing FocusTimer arguments to FocusTimerState.
-  final int initialOffsetTime;
+  final Duration initialOffsetTime;
   final String initialText;
   final bool isRunning;
   final DateTime closeTime;
@@ -19,7 +19,7 @@ class FocusTimer extends StatefulWidget {
   //Constructor that takes initial offset time and initial text as arguments.
   FocusTimer(
       {super.key,
-      this.initialOffsetTime = 0,
+      this.initialOffsetTime = Duration.zero,
       this.initialText = "",
       this.isRunning = false,
       required this.closeTime});
@@ -55,12 +55,10 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    stopwatch.setOffsetTime(milliseconds: widget.initialOffsetTime);
+    stopwatch.setOffsetTime(widget.initialOffsetTime);
     textController.text = widget.initialText;
     if (widget.isRunning) {
-      stopwatch.addOffsetTime(
-          milliseconds:
-              DateTime.now().difference(widget.closeTime).inMilliseconds);
+      stopwatch.addOffsetTime(DateTime.now().difference(widget.closeTime));
       startFocusTimer();
     }
     timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
@@ -95,8 +93,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
       }
     } else if (state == AppLifecycleState.resumed) {
       if (isPaused) {
-        stopwatch.addOffsetTime(
-            milliseconds: DateTime.now().difference(pauseTime).inMilliseconds);
+        stopwatch.addOffsetTime(DateTime.now().difference(pauseTime));
         startFocusTimer();
         isPaused = false;
       }

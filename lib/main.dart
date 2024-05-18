@@ -41,11 +41,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   final DataStorageFacade dataStorageFacade = DataStorageFacade();
 
-  //タイマーのオフセット(秒)とメモのリスト
+  //タイマーのオフセットとメモのリスト
   //状態保存と復元に使用します
-  //Lists to store the offset (in seconds) and memo for each timer.
+  //Lists to store the offset and memo for each timer.
   //Used for saving and restoring app state.
-  List<int> timerOffsetList = [];
+  List<Duration> timerOffsetList = [];
   List<String> timerMemoList = [];
   List<bool> timerIsRunningList = [];
   DateTime closeTime = DateTime.now();
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     FocusTimer timer = FocusTimer(closeTime: DateTime.now());
     timers.add(timer);
     globalTimerKeys.add(GlobalObjectKey(timer));
-    timerOffsetList.add(0);
+    timerOffsetList.add(Duration.zero);
     timerMemoList.add("");
     timerIsRunningList.add(false);
     setState(() {});
@@ -79,7 +79,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   //Creates FocusTimer instances for each item in the retrieved list and adds them to the main page's list.
   //Note: The actual offset seconds and memos are set to the timers when the widgets are displayed on the screen using ReorderableListView.builder.
   Future<void> restoreState() async {
-    timerOffsetList = await dataStorageFacade.getIntList('timer_offset_list');
+    timerOffsetList =
+        await dataStorageFacade.getDurationList('timer_offset_list');
     timerMemoList = await dataStorageFacade.getStringList('timer_memo_list');
     timerIsRunningList =
         await dataStorageFacade.getBoolList('timer_isrunning_list');
@@ -121,8 +122,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerIsRunningList = [];
     if (globalTimerKeys.isNotEmpty) {
       for (int i = 0; i < globalTimerKeys.length; i++) {
-        int offset =
-            globalTimerKeys[i].currentState?.stopwatch.elapsedMilliseconds ?? 0;
+        Duration offset =
+            globalTimerKeys[i].currentState?.stopwatch.elapsed ?? Duration.zero;
         timerOffsetList.add(offset);
         String text =
             globalTimerKeys[i].currentState?.textController.text ?? '';
@@ -137,7 +138,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         }
       }
     }
-    await dataStorageFacade.setIntList('timer_offset_list', timerOffsetList);
+    await dataStorageFacade.setDurationList(
+        'timer_offset_list', timerOffsetList);
     await dataStorageFacade.setStringList('timer_memo_list', timerMemoList);
     await dataStorageFacade.setBoolList(
         'timer_isrunning_list', timerIsRunningList);
