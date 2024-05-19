@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_multi_stopwatch/focus_timer.dart';
 import 'package:simple_multi_stopwatch/data_storage_facade.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 void main() {
   runApp(const MyApp());
@@ -211,21 +212,47 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       body: ReorderableListView.builder(
         itemCount: timers.length,
         itemBuilder: (BuildContext context, int index) {
-          return Dismissible(
+          return Slidable(
             key: timers[index].timerKey,
-            direction: DismissDirection.startToEnd,
-            onDismissed: (direction) {
-              setState(() {
-                timers.removeAt(index);
-                globalTimerKeys.removeAt(index);
-                timerOffsetList.removeAt(index);
-                timerMemoList.removeAt(index);
-                timerIsRunningList.removeAt(index);
-              });
-            },
-            background: Container(
-                color: Colors.red,
-                child: const Row(children: [Icon(Icons.delete), Spacer()])),
+            startActionPane: ActionPane(
+              motion: const ScrollMotion(),
+              dismissible: DismissiblePane(onDismissed: () {
+                setState(() {
+                  timers.removeAt(index);
+                  globalTimerKeys.removeAt(index);
+                  timerOffsetList.removeAt(index);
+                  timerMemoList.removeAt(index);
+                  timerIsRunningList.removeAt(index);
+                });
+              }),
+              children: [
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      timers.removeAt(index);
+                      globalTimerKeys.removeAt(index);
+                      timerOffsetList.removeAt(index);
+                      timerMemoList.removeAt(index);
+                      timerIsRunningList.removeAt(index);
+                    });
+                  },
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                  icon: Icons.delete,
+                ),
+              ],
+            ),
+            endActionPane: ActionPane(
+              motion: const ScrollMotion(),
+              children: [
+                SlidableAction(
+                  onPressed: (_) {},
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  icon: Icons.palette,
+                ),
+              ],
+            ),
             child: Card(
               elevation: 3,
               child: FocusTimer(
