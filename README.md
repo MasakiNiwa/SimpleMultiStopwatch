@@ -12,6 +12,8 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 ## 使い方(How to Use)
 ・アプリ右下の追加ボタンでストップウォッチを追加 <br>
 ・Add a stopwatch by tapping the "+" button in the bottom right corner of the app. <br>
+・右から左へのスワイプでストップウォッチの背景色を選択 <br>
+・Swipe a stopwatch from right to left to select the stopwatch background color. <br>
 ・左から右へのスワイプでストップウォッチを一つ削除 <br>
 ・Swipe a stopwatch from left to right to delete it. <br>
 ・アプリ右上の削除ボタンでストップウォッチを全削除 <br>

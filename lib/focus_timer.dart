@@ -2,6 +2,16 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:simple_multi_stopwatch/editable_stopwatch.dart';
 
+Map<int, Color> timerColor = {
+  1: Colors.grey.shade500,
+  2: Colors.yellow.shade200,
+  3: Colors.cyan.shade100,
+  4: const Color.fromRGBO(240, 240, 240, 1),
+  5: Colors.red.shade100,
+  6: Colors.purple.shade200,
+  7: Colors.lightGreen.shade300,
+};
+
 //ストップウォッチを一つ表示するためのWidget
 // This widget is used to display a stopwatch.
 class FocusTimer extends StatefulWidget {
@@ -11,6 +21,7 @@ class FocusTimer extends StatefulWidget {
   final String initialText;
   final bool isRunning;
   final DateTime closeTime;
+  final int backgroundColorIndex;
   //どのFocusTimerウィジェットなのか特定するためのUniqueKey
   //UniqueKey for identifying which FocusTimer widget this is.
   final timerKey = UniqueKey();
@@ -22,7 +33,8 @@ class FocusTimer extends StatefulWidget {
       this.initialOffsetTime = Duration.zero,
       this.initialText = "",
       this.isRunning = false,
-      required this.closeTime});
+      required this.closeTime,
+      this.backgroundColorIndex = 4});
 
   @override
   State<FocusTimer> createState() => FocusTimerState();
@@ -45,6 +57,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   //Property to indicate whether the stopwatch is paused and to store the time when it was paused.
   bool isPaused = false;
   DateTime pauseTime = DateTime.now();
+  //
+  int backgroundColorIndex = 4;
+  Color backgroundColor = timerColor[4] ?? Colors.white;
 
   //initStateメソッドをオーバーライドします
   //タイマーの初期状態を設定します
@@ -58,6 +73,8 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     stopwatch.setOffsetTime(widget.initialOffsetTime);
     textController.text = widget.initialText;
+    backgroundColorIndex = widget.backgroundColorIndex;
+    backgroundColor = timerColor[backgroundColorIndex] ?? Colors.white;
     if (widget.isRunning) {
       stopwatch.addOffsetTime(DateTime.now().difference(widget.closeTime));
       startFocusTimer();
@@ -126,6 +143,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
           width: 2,
         ),
         borderRadius: BorderRadius.circular(7),
+        color: backgroundColor,
       ),
       padding: const EdgeInsets.all(5),
       child: Row(
