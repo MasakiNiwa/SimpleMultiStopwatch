@@ -215,6 +215,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           return Slidable(
             key: timers[index].timerKey,
             startActionPane: ActionPane(
+              extentRatio: 0.25,
               motion: const ScrollMotion(),
               dismissible: DismissiblePane(onDismissed: () {
                 setState(() {
@@ -243,6 +244,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               ],
             ),
             endActionPane: ActionPane(
+              extentRatio: 0.25,
               motion: const ScrollMotion(),
               children: [
                 SlidableAction(
