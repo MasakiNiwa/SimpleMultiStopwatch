@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_multi_stopwatch/focus_timer.dart';
 import 'package:simple_multi_stopwatch/data_storage_facade.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   List<Duration> timerOffsetList = [];
   List<String> timerMemoList = [];
   List<bool> timerIsRunningList = [];
+  List<int> timerColorList = [];
   DateTime closeTime = DateTime.now();
 
   //追加ボタンが押されたときに呼び出すメソッド
@@ -66,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerOffsetList.add(Duration.zero);
     timerMemoList.add("");
     timerIsRunningList.add(false);
+    timerColorList.add(4);
     setState(() {});
   }
 
@@ -85,16 +88,24 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerMemoList = await dataStorageFacade.getStringList('timer_memo_list');
     timerIsRunningList =
         await dataStorageFacade.getBoolList('timer_isrunning_list');
+    timerColorList = await dataStorageFacade.getIntList('timer_color_list');
     closeTime = await dataStorageFacade.getDateTime('timer_closetime');
 
     if (timerOffsetList.length != timerMemoList.length) {
       timerOffsetList = [];
       timerMemoList = [];
       timerIsRunningList = [];
+      timerColorList = [];
     } else if (timerOffsetList.length != timerIsRunningList.length) {
       timerOffsetList = [];
       timerMemoList = [];
       timerIsRunningList = [];
+      timerColorList = [];
+    } else if (timerOffsetList.length != timerColorList.length) {
+      timerOffsetList = [];
+      timerMemoList = [];
+      timerIsRunningList = [];
+      timerColorList = [];
     }
 
     timers.clear();
@@ -121,6 +132,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerOffsetList = [];
     timerMemoList = [];
     timerIsRunningList = [];
+    timerColorList = [];
     if (globalTimerKeys.isNotEmpty) {
       for (int i = 0; i < globalTimerKeys.length; i++) {
         Duration offset =
@@ -129,6 +141,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         String text =
             globalTimerKeys[i].currentState?.textController.text ?? '';
         timerMemoList.add(text);
+        int colorIndex =
+            globalTimerKeys[i].currentState?.backgroundColorIndex ?? 4;
+        timerColorList.add(colorIndex);
         bool isrunnning =
             globalTimerKeys[i].currentState?.stopwatch.isRunning ?? false;
         bool ispaused = globalTimerKeys[i].currentState?.isPaused ?? false;
@@ -144,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     await dataStorageFacade.setStringList('timer_memo_list', timerMemoList);
     await dataStorageFacade.setBoolList(
         'timer_isrunning_list', timerIsRunningList);
+    await dataStorageFacade.setIntList('timer_color_list', timerColorList);
     await dataStorageFacade.setDateTime('timer_closetime', DateTime.now());
   }
 
@@ -192,8 +208,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       appBar: AppBar(
         title: Text(
             ('Simple Multi Stopwatch :  ${timers.length.toString()} timers'),
-            style: const TextStyle(fontSize: 18)),
-        backgroundColor: Colors.lightBlue[100],
+            style: const TextStyle(
+                fontSize: 18, color: Color.fromRGBO(220, 220, 220, 1))),
+        backgroundColor: Colors.black,
         actions: [
           ElevatedButton(
             onPressed: () {
@@ -202,6 +219,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               timerOffsetList.clear();
               timerMemoList.clear();
               timerIsRunningList.clear();
+              timerColorList.clear();
               setState(() {});
             },
             child: const Icon(Icons.delete_sweep),
@@ -211,21 +229,143 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       body: ReorderableListView.builder(
         itemCount: timers.length,
         itemBuilder: (BuildContext context, int index) {
-          return Dismissible(
+          return Slidable(
             key: timers[index].timerKey,
-            direction: DismissDirection.startToEnd,
-            onDismissed: (direction) {
-              setState(() {
-                timers.removeAt(index);
-                globalTimerKeys.removeAt(index);
-                timerOffsetList.removeAt(index);
-                timerMemoList.removeAt(index);
-                timerIsRunningList.removeAt(index);
-              });
-            },
-            background: Container(
-                color: Colors.red,
-                child: const Row(children: [Icon(Icons.delete), Spacer()])),
+            startActionPane: ActionPane(
+              extentRatio: 0.25,
+              motion: const ScrollMotion(),
+              dismissible: DismissiblePane(onDismissed: () {
+                setState(() {
+                  timers.removeAt(index);
+                  globalTimerKeys.removeAt(index);
+                  timerOffsetList.removeAt(index);
+                  timerMemoList.removeAt(index);
+                  timerIsRunningList.removeAt(index);
+                  timerColorList.removeAt(index);
+                });
+              }),
+              children: [
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      timers.removeAt(index);
+                      globalTimerKeys.removeAt(index);
+                      timerOffsetList.removeAt(index);
+                      timerMemoList.removeAt(index);
+                      timerIsRunningList.removeAt(index);
+                      timerColorList.removeAt(index);
+                    });
+                  },
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                  icon: Icons.delete,
+                ),
+              ],
+            ),
+            endActionPane: ActionPane(
+              extentRatio: 0.5,
+              motion: const ScrollMotion(),
+              children: [
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 1;
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          timerColor[1] ?? Colors.white;
+                    });
+                  },
+                  backgroundColor: timerColor[1] ?? Colors.white,
+                  foregroundColor: timerColor[1] ?? Colors.white,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 2;
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          timerColor[2] ?? Colors.white;
+                    });
+                  },
+                  backgroundColor: timerColor[2] ?? Colors.white,
+                  foregroundColor: timerColor[2] ?? Colors.white,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 3;
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          timerColor[3] ?? Colors.white;
+                    });
+                  },
+                  backgroundColor: timerColor[3] ?? Colors.white,
+                  foregroundColor: timerColor[3] ?? Colors.white,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 4;
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          timerColor[4] ?? Colors.white;
+                    });
+                  },
+                  backgroundColor: timerColor[4] ?? Colors.white,
+                  foregroundColor: timerColor[4] ?? Colors.white,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 5;
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          timerColor[5] ?? Colors.white;
+                    });
+                  },
+                  backgroundColor: timerColor[5] ?? Colors.white,
+                  foregroundColor: timerColor[5] ?? Colors.white,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 6;
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          timerColor[6] ?? Colors.white;
+                    });
+                  },
+                  backgroundColor: timerColor[6] ?? Colors.white,
+                  foregroundColor: timerColor[6] ?? Colors.white,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 7;
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          timerColor[7] ?? Colors.white;
+                    });
+                  },
+                  backgroundColor: timerColor[7] ?? Colors.white,
+                  foregroundColor: timerColor[7] ?? Colors.white,
+                  icon: Icons.palette,
+                ),
+              ],
+            ),
             child: Card(
               elevation: 3,
               child: FocusTimer(
@@ -234,6 +374,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 initialText: timerMemoList[index],
                 isRunning: timerIsRunningList[index],
                 closeTime: closeTime,
+                backgroundColorIndex: timerColorList[index],
               ),
             ),
           );
