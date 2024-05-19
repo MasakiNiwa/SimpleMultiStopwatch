@@ -11,6 +11,7 @@ class FocusTimer extends StatefulWidget {
   final String initialText;
   final bool isRunning;
   final DateTime closeTime;
+  final Color backgroundColor;
   //どのFocusTimerウィジェットなのか特定するためのUniqueKey
   //UniqueKey for identifying which FocusTimer widget this is.
   final timerKey = UniqueKey();
@@ -22,7 +23,8 @@ class FocusTimer extends StatefulWidget {
       this.initialOffsetTime = Duration.zero,
       this.initialText = "",
       this.isRunning = false,
-      required this.closeTime});
+      required this.closeTime,
+      this.backgroundColor = const Color.fromRGBO(240, 240, 240, 1)});
 
   @override
   State<FocusTimer> createState() => FocusTimerState();
@@ -45,6 +47,8 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   //Property to indicate whether the stopwatch is paused and to store the time when it was paused.
   bool isPaused = false;
   DateTime pauseTime = DateTime.now();
+  //
+  Color backgroundColor = const Color.fromRGBO(240, 240, 240, 1);
 
   //initStateメソッドをオーバーライドします
   //タイマーの初期状態を設定します
@@ -58,6 +62,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     stopwatch.setOffsetTime(widget.initialOffsetTime);
     textController.text = widget.initialText;
+    backgroundColor = widget.backgroundColor;
     if (widget.isRunning) {
       stopwatch.addOffsetTime(DateTime.now().difference(widget.closeTime));
       startFocusTimer();
@@ -126,6 +131,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
           width: 2,
         ),
         borderRadius: BorderRadius.circular(7),
+        color: backgroundColor,
       ),
       padding: const EdgeInsets.all(5),
       child: Row(

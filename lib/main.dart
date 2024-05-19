@@ -193,8 +193,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       appBar: AppBar(
         title: Text(
             ('Simple Multi Stopwatch :  ${timers.length.toString()} timers'),
-            style: const TextStyle(fontSize: 18)),
-        backgroundColor: Colors.lightBlue[100],
+            style: const TextStyle(
+                fontSize: 18, color: Color.fromRGBO(220, 220, 220, 1))),
+        backgroundColor: Colors.black,
         actions: [
           ElevatedButton(
             onPressed: () {
@@ -244,13 +245,84 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               ],
             ),
             endActionPane: ActionPane(
-              extentRatio: 0.25,
+              extentRatio: 0.5,
               motion: const ScrollMotion(),
               children: [
                 SlidableAction(
-                  onPressed: (_) {},
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          Colors.grey.shade500;
+                    });
+                  },
+                  backgroundColor: Colors.grey.shade500,
+                  foregroundColor: Colors.grey.shade500,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          Colors.yellow.shade200;
+                    });
+                  },
+                  backgroundColor: Colors.yellow.shade200,
+                  foregroundColor: Colors.yellow.shade200,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          Colors.cyan.shade100;
+                    });
+                  },
+                  backgroundColor: Colors.cyan.shade100,
+                  foregroundColor: Colors.cyan.shade100,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          const Color.fromRGBO(240, 240, 240, 1);
+                    });
+                  },
+                  backgroundColor: const Color.fromRGBO(240, 240, 240, 1),
+                  foregroundColor: const Color.fromRGBO(240, 240, 240, 1),
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          Colors.red.shade100;
+                    });
+                  },
+                  backgroundColor: Colors.red.shade100,
+                  foregroundColor: Colors.red.shade100,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          Colors.purple.shade200;
+                    });
+                  },
+                  backgroundColor: Colors.purple.shade200,
+                  foregroundColor: Colors.purple.shade200,
+                  icon: Icons.palette,
+                ),
+                SlidableAction(
+                  onPressed: (_) {
+                    setState(() {
+                      globalTimerKeys[index].currentState?.backgroundColor =
+                          Colors.lightGreen.shade300;
+                    });
+                  },
+                  backgroundColor: Colors.lightGreen.shade300,
+                  foregroundColor: Colors.lightGreen.shade300,
                   icon: Icons.palette,
                 ),
               ],
