@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   List<Duration> timerOffsetList = [];
   List<String> timerMemoList = [];
   List<bool> timerIsRunningList = [];
+  List<int> timerColorList = [];
   DateTime closeTime = DateTime.now();
 
   //追加ボタンが押されたときに呼び出すメソッド
@@ -67,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerOffsetList.add(Duration.zero);
     timerMemoList.add("");
     timerIsRunningList.add(false);
+    timerColorList.add(4);
     setState(() {});
   }
 
@@ -86,16 +88,24 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerMemoList = await dataStorageFacade.getStringList('timer_memo_list');
     timerIsRunningList =
         await dataStorageFacade.getBoolList('timer_isrunning_list');
+    timerColorList = await dataStorageFacade.getIntList('timer_color_list');
     closeTime = await dataStorageFacade.getDateTime('timer_closetime');
 
     if (timerOffsetList.length != timerMemoList.length) {
       timerOffsetList = [];
       timerMemoList = [];
       timerIsRunningList = [];
+      timerColorList = [];
     } else if (timerOffsetList.length != timerIsRunningList.length) {
       timerOffsetList = [];
       timerMemoList = [];
       timerIsRunningList = [];
+      timerColorList = [];
+    } else if (timerOffsetList.length != timerColorList.length) {
+      timerOffsetList = [];
+      timerMemoList = [];
+      timerIsRunningList = [];
+      timerColorList = [];
     }
 
     timers.clear();
@@ -122,6 +132,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerOffsetList = [];
     timerMemoList = [];
     timerIsRunningList = [];
+    timerColorList = [];
     if (globalTimerKeys.isNotEmpty) {
       for (int i = 0; i < globalTimerKeys.length; i++) {
         Duration offset =
@@ -130,6 +141,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         String text =
             globalTimerKeys[i].currentState?.textController.text ?? '';
         timerMemoList.add(text);
+        int colorIndex =
+            globalTimerKeys[i].currentState?.backgroundColorIndex ?? 4;
+        timerColorList.add(colorIndex);
         bool isrunnning =
             globalTimerKeys[i].currentState?.stopwatch.isRunning ?? false;
         bool ispaused = globalTimerKeys[i].currentState?.isPaused ?? false;
@@ -145,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     await dataStorageFacade.setStringList('timer_memo_list', timerMemoList);
     await dataStorageFacade.setBoolList(
         'timer_isrunning_list', timerIsRunningList);
+    await dataStorageFacade.setIntList('timer_color_list', timerColorList);
     await dataStorageFacade.setDateTime('timer_closetime', DateTime.now());
   }
 
@@ -204,6 +219,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               timerOffsetList.clear();
               timerMemoList.clear();
               timerIsRunningList.clear();
+              timerColorList.clear();
               setState(() {});
             },
             child: const Icon(Icons.delete_sweep),
@@ -225,6 +241,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   timerOffsetList.removeAt(index);
                   timerMemoList.removeAt(index);
                   timerIsRunningList.removeAt(index);
+                  timerColorList.removeAt(index);
                 });
               }),
               children: [
@@ -236,6 +253,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       timerOffsetList.removeAt(index);
                       timerMemoList.removeAt(index);
                       timerIsRunningList.removeAt(index);
+                      timerColorList.removeAt(index);
                     });
                   },
                   backgroundColor: Colors.red,
@@ -251,78 +269,99 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 SlidableAction(
                   onPressed: (_) {
                     setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 1;
                       globalTimerKeys[index].currentState?.backgroundColor =
-                          Colors.grey.shade500;
+                          timerColor[1] ?? Colors.white;
                     });
                   },
-                  backgroundColor: Colors.grey.shade500,
-                  foregroundColor: Colors.grey.shade500,
+                  backgroundColor: timerColor[1] ?? Colors.white,
+                  foregroundColor: timerColor[1] ?? Colors.white,
                   icon: Icons.palette,
                 ),
                 SlidableAction(
                   onPressed: (_) {
                     setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 2;
                       globalTimerKeys[index].currentState?.backgroundColor =
-                          Colors.yellow.shade200;
+                          timerColor[2] ?? Colors.white;
                     });
                   },
-                  backgroundColor: Colors.yellow.shade200,
-                  foregroundColor: Colors.yellow.shade200,
+                  backgroundColor: timerColor[2] ?? Colors.white,
+                  foregroundColor: timerColor[2] ?? Colors.white,
                   icon: Icons.palette,
                 ),
                 SlidableAction(
                   onPressed: (_) {
                     setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 3;
                       globalTimerKeys[index].currentState?.backgroundColor =
-                          Colors.cyan.shade100;
+                          timerColor[3] ?? Colors.white;
                     });
                   },
-                  backgroundColor: Colors.cyan.shade100,
-                  foregroundColor: Colors.cyan.shade100,
+                  backgroundColor: timerColor[3] ?? Colors.white,
+                  foregroundColor: timerColor[3] ?? Colors.white,
                   icon: Icons.palette,
                 ),
                 SlidableAction(
                   onPressed: (_) {
                     setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 4;
                       globalTimerKeys[index].currentState?.backgroundColor =
-                          const Color.fromRGBO(240, 240, 240, 1);
+                          timerColor[4] ?? Colors.white;
                     });
                   },
-                  backgroundColor: const Color.fromRGBO(240, 240, 240, 1),
-                  foregroundColor: const Color.fromRGBO(240, 240, 240, 1),
+                  backgroundColor: timerColor[4] ?? Colors.white,
+                  foregroundColor: timerColor[4] ?? Colors.white,
                   icon: Icons.palette,
                 ),
                 SlidableAction(
                   onPressed: (_) {
                     setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 5;
                       globalTimerKeys[index].currentState?.backgroundColor =
-                          Colors.red.shade100;
+                          timerColor[5] ?? Colors.white;
                     });
                   },
-                  backgroundColor: Colors.red.shade100,
-                  foregroundColor: Colors.red.shade100,
+                  backgroundColor: timerColor[5] ?? Colors.white,
+                  foregroundColor: timerColor[5] ?? Colors.white,
                   icon: Icons.palette,
                 ),
                 SlidableAction(
                   onPressed: (_) {
                     setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 6;
                       globalTimerKeys[index].currentState?.backgroundColor =
-                          Colors.purple.shade200;
+                          timerColor[6] ?? Colors.white;
                     });
                   },
-                  backgroundColor: Colors.purple.shade200,
-                  foregroundColor: Colors.purple.shade200,
+                  backgroundColor: timerColor[6] ?? Colors.white,
+                  foregroundColor: timerColor[6] ?? Colors.white,
                   icon: Icons.palette,
                 ),
                 SlidableAction(
                   onPressed: (_) {
                     setState(() {
+                      globalTimerKeys[index]
+                          .currentState
+                          ?.backgroundColorIndex = 7;
                       globalTimerKeys[index].currentState?.backgroundColor =
-                          Colors.lightGreen.shade300;
+                          timerColor[7] ?? Colors.white;
                     });
                   },
-                  backgroundColor: Colors.lightGreen.shade300,
-                  foregroundColor: Colors.lightGreen.shade300,
+                  backgroundColor: timerColor[7] ?? Colors.white,
+                  foregroundColor: timerColor[7] ?? Colors.white,
                   icon: Icons.palette,
                 ),
               ],
@@ -335,6 +374,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 initialText: timerMemoList[index],
                 isRunning: timerIsRunningList[index],
                 closeTime: closeTime,
+                backgroundColorIndex: timerColorList[index],
               ),
             ),
           );

@@ -2,6 +2,16 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:simple_multi_stopwatch/editable_stopwatch.dart';
 
+Map<int, Color> timerColor = {
+  1: Colors.grey.shade500,
+  2: Colors.yellow.shade200,
+  3: Colors.cyan.shade100,
+  4: const Color.fromRGBO(240, 240, 240, 1),
+  5: Colors.red.shade100,
+  6: Colors.purple.shade200,
+  7: Colors.lightGreen.shade300,
+};
+
 //ストップウォッチを一つ表示するためのWidget
 // This widget is used to display a stopwatch.
 class FocusTimer extends StatefulWidget {
@@ -11,7 +21,7 @@ class FocusTimer extends StatefulWidget {
   final String initialText;
   final bool isRunning;
   final DateTime closeTime;
-  final Color backgroundColor;
+  final int backgroundColorIndex;
   //どのFocusTimerウィジェットなのか特定するためのUniqueKey
   //UniqueKey for identifying which FocusTimer widget this is.
   final timerKey = UniqueKey();
@@ -24,7 +34,7 @@ class FocusTimer extends StatefulWidget {
       this.initialText = "",
       this.isRunning = false,
       required this.closeTime,
-      this.backgroundColor = const Color.fromRGBO(240, 240, 240, 1)});
+      this.backgroundColorIndex = 4});
 
   @override
   State<FocusTimer> createState() => FocusTimerState();
@@ -48,7 +58,8 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   bool isPaused = false;
   DateTime pauseTime = DateTime.now();
   //
-  Color backgroundColor = const Color.fromRGBO(240, 240, 240, 1);
+  int backgroundColorIndex = 4;
+  Color backgroundColor = timerColor[4] ?? Colors.white;
 
   //initStateメソッドをオーバーライドします
   //タイマーの初期状態を設定します
@@ -62,7 +73,8 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     stopwatch.setOffsetTime(widget.initialOffsetTime);
     textController.text = widget.initialText;
-    backgroundColor = widget.backgroundColor;
+    backgroundColorIndex = widget.backgroundColorIndex;
+    backgroundColor = timerColor[backgroundColorIndex] ?? Colors.white;
     if (widget.isRunning) {
       stopwatch.addOffsetTime(DateTime.now().difference(widget.closeTime));
       startFocusTimer();
