@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerOffsetList.add(Duration.zero);
     timerMemoList.add("");
     timerIsRunningList.add(false);
-    timerColorList.add(4);
+    timerColorList.add(0);
     setState(() {});
   }
 
@@ -142,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             globalTimerKeys[i].currentState?.textController.text ?? '';
         timerMemoList.add(text);
         int colorIndex =
-            globalTimerKeys[i].currentState?.backgroundColorIndex ?? 4;
+            globalTimerKeys[i].currentState?.backgroundColorIndex ?? 0;
         timerColorList.add(colorIndex);
         bool isrunnning =
             globalTimerKeys[i].currentState?.stopwatch.isRunning ?? false;
@@ -266,104 +266,23 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               extentRatio: 0.5,
               motion: const ScrollMotion(),
               children: [
-                SlidableAction(
-                  onPressed: (_) {
-                    setState(() {
-                      globalTimerKeys[index]
-                          .currentState
-                          ?.backgroundColorIndex = 1;
-                      globalTimerKeys[index].currentState?.backgroundColor =
-                          timerColor[1] ?? Colors.white;
-                    });
-                  },
-                  backgroundColor: timerColor[1] ?? Colors.white,
-                  foregroundColor: timerColor[1] ?? Colors.white,
-                  icon: Icons.palette,
-                ),
-                SlidableAction(
-                  onPressed: (_) {
-                    setState(() {
-                      globalTimerKeys[index]
-                          .currentState
-                          ?.backgroundColorIndex = 2;
-                      globalTimerKeys[index].currentState?.backgroundColor =
-                          timerColor[2] ?? Colors.white;
-                    });
-                  },
-                  backgroundColor: timerColor[2] ?? Colors.white,
-                  foregroundColor: timerColor[2] ?? Colors.white,
-                  icon: Icons.palette,
-                ),
-                SlidableAction(
-                  onPressed: (_) {
-                    setState(() {
-                      globalTimerKeys[index]
-                          .currentState
-                          ?.backgroundColorIndex = 3;
-                      globalTimerKeys[index].currentState?.backgroundColor =
-                          timerColor[3] ?? Colors.white;
-                    });
-                  },
-                  backgroundColor: timerColor[3] ?? Colors.white,
-                  foregroundColor: timerColor[3] ?? Colors.white,
-                  icon: Icons.palette,
-                ),
-                SlidableAction(
-                  onPressed: (_) {
-                    setState(() {
-                      globalTimerKeys[index]
-                          .currentState
-                          ?.backgroundColorIndex = 4;
-                      globalTimerKeys[index].currentState?.backgroundColor =
-                          timerColor[4] ?? Colors.white;
-                    });
-                  },
-                  backgroundColor: timerColor[4] ?? Colors.white,
-                  foregroundColor: timerColor[4] ?? Colors.white,
-                  icon: Icons.palette,
-                ),
-                SlidableAction(
-                  onPressed: (_) {
-                    setState(() {
-                      globalTimerKeys[index]
-                          .currentState
-                          ?.backgroundColorIndex = 5;
-                      globalTimerKeys[index].currentState?.backgroundColor =
-                          timerColor[5] ?? Colors.white;
-                    });
-                  },
-                  backgroundColor: timerColor[5] ?? Colors.white,
-                  foregroundColor: timerColor[5] ?? Colors.white,
-                  icon: Icons.palette,
-                ),
-                SlidableAction(
-                  onPressed: (_) {
-                    setState(() {
-                      globalTimerKeys[index]
-                          .currentState
-                          ?.backgroundColorIndex = 6;
-                      globalTimerKeys[index].currentState?.backgroundColor =
-                          timerColor[6] ?? Colors.white;
-                    });
-                  },
-                  backgroundColor: timerColor[6] ?? Colors.white,
-                  foregroundColor: timerColor[6] ?? Colors.white,
-                  icon: Icons.palette,
-                ),
-                SlidableAction(
-                  onPressed: (_) {
-                    setState(() {
-                      globalTimerKeys[index]
-                          .currentState
-                          ?.backgroundColorIndex = 7;
-                      globalTimerKeys[index].currentState?.backgroundColor =
-                          timerColor[7] ?? Colors.white;
-                    });
-                  },
-                  backgroundColor: timerColor[7] ?? Colors.white,
-                  foregroundColor: timerColor[7] ?? Colors.white,
-                  icon: Icons.palette,
-                ),
+                for (int colorIndex = 0;
+                    colorIndex < timerColor.length;
+                    colorIndex++)
+                  SlidableAction(
+                    onPressed: (_) {
+                      setState(() {
+                        globalTimerKeys[index]
+                            .currentState
+                            ?.backgroundColorIndex = colorIndex;
+                        globalTimerKeys[index].currentState?.backgroundColor =
+                            timerColor[colorIndex];
+                      });
+                    },
+                    backgroundColor: timerColor[colorIndex],
+                    foregroundColor: timerColor[colorIndex],
+                    icon: Icons.palette,
+                  ),
               ],
             ),
             child: Card(
