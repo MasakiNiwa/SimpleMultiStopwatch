@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:simple_multi_stopwatch/editable_stopwatch.dart';
 
-final List<Color> timerColor = [
-  const Color.fromRGBO(240, 240, 240, 1),
-  Colors.red.shade100,
-  Colors.teal.shade100,
-  Colors.grey.shade400,
-  Colors.yellow.shade100,
-  Colors.cyan.shade100,
-  Colors.purple.shade100,
-  Colors.lightGreen.shade100,
-];
-
 //ストップウォッチを一つ表示するためのWidget
 // This widget is used to display a stopwatch.
 class FocusTimer extends StatefulWidget {
+  static final List<Color> timerColorList = [
+    const Color.fromRGBO(240, 240, 240, 1),
+    Colors.red.shade100,
+    Colors.teal.shade100,
+    Colors.grey.shade400,
+    Colors.yellow.shade100,
+    Colors.cyan.shade100,
+    Colors.purple.shade100,
+    Colors.lightGreen.shade100,
+  ];
+
   //FocusTimerの引数をFocusTimerStateに渡すためのプロパティ
   //Property for passing FocusTimer arguments to FocusTimerState.
   final Duration initialOffsetTime;
@@ -60,7 +60,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   DateTime pauseTime = DateTime.now();
   //
   int backgroundColorIndex = 0;
-  Color backgroundColor = timerColor[0];
+  Color backgroundColor = FocusTimer.timerColorList[0];
 
   //initStateメソッドをオーバーライドします
   //タイマーの初期状態を設定します
@@ -75,7 +75,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     stopwatch.setOffsetTime(widget.initialOffsetTime);
     textController.text = widget.initialText;
     backgroundColorIndex = widget.backgroundColorIndex;
-    backgroundColor = timerColor[backgroundColorIndex];
+    backgroundColor = FocusTimer.timerColorList[backgroundColorIndex];
     if (widget.isRunning) {
       stopwatch.addOffsetTime(DateTime.now().difference(widget.closeTime));
       startFocusTimer();

@@ -267,7 +267,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               motion: const ScrollMotion(),
               children: [
                 for (int colorIndex = 0;
-                    colorIndex < timerColor.length;
+                    colorIndex < FocusTimer.timerColorList.length;
                     colorIndex++)
                   SlidableAction(
                     onPressed: (_) {
@@ -276,11 +276,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                             .currentState
                             ?.backgroundColorIndex = colorIndex;
                         globalTimerKeys[index].currentState?.backgroundColor =
-                            timerColor[colorIndex];
+                            FocusTimer.timerColorList[colorIndex];
                       });
                     },
-                    backgroundColor: timerColor[colorIndex],
-                    foregroundColor: timerColor[colorIndex],
+                    backgroundColor: FocusTimer.timerColorList[colorIndex],
+                    foregroundColor: FocusTimer.timerColorList[colorIndex],
                     icon: Icons.palette,
                   ),
               ],
