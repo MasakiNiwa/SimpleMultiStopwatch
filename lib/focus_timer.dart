@@ -222,9 +222,13 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                 children: [
                   Row(
                     children: [
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           stopwatch.addOffsetTime(const Duration(hours: 1));
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          stopwatch.addOffsetTime(const Duration(hours: 100));
                           setState(() {});
                         },
                         child: const Icon(
@@ -234,10 +238,17 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                         ),
                       ),
                       const Text('h'),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           if (stopwatch.elapsed.inHours > 0) {
                             stopwatch.addOffsetTime(const Duration(hours: -1));
+                          }
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          if (stopwatch.elapsed.inHours ~/ 100 > 0) {
+                            stopwatch
+                                .addOffsetTime(const Duration(hours: -100));
                           }
                           setState(() {});
                         },
@@ -251,9 +262,13 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                   ),
                   Row(
                     children: [
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           stopwatch.addOffsetTime(const Duration(minutes: 1));
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          stopwatch.addOffsetTime(const Duration(minutes: 10));
                           setState(() {});
                         },
                         child: const Icon(
@@ -263,11 +278,18 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                         ),
                       ),
                       const Text('m'),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           if (stopwatch.elapsed.inMinutes > 0) {
                             stopwatch
                                 .addOffsetTime(const Duration(minutes: -1));
+                          }
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          if (stopwatch.elapsed.inMinutes ~/ 10 > 0) {
+                            stopwatch
+                                .addOffsetTime(const Duration(minutes: -10));
                           }
                           setState(() {});
                         },
@@ -281,9 +303,13 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                   ),
                   Row(
                     children: [
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           stopwatch.addOffsetTime(const Duration(seconds: 1));
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          stopwatch.addOffsetTime(const Duration(seconds: 10));
                           setState(() {});
                         },
                         child: const Icon(
@@ -293,11 +319,18 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                         ),
                       ),
                       const Text('s'),
-                      InkWell(
+                      GestureDetector(
                         onTap: () {
                           if (stopwatch.elapsed.inSeconds > 0) {
                             stopwatch
                                 .addOffsetTime(const Duration(seconds: -1));
+                          }
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          if (stopwatch.elapsed.inSeconds ~/ 10 > 0) {
+                            stopwatch
+                                .addOffsetTime(const Duration(seconds: -10));
                           }
                           setState(() {});
                         },
