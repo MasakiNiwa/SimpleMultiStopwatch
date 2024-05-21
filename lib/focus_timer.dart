@@ -61,6 +61,8 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   //
   int backgroundColorIndex = 0;
   Color backgroundColor = FocusTimer.timerColorList[0];
+  //
+  bool isVisible = false;
 
   //initStateメソッドをオーバーライドします
   //タイマーの初期状態を設定します
@@ -147,65 +149,168 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
         color: backgroundColor,
       ),
       padding: const EdgeInsets.all(5),
-      child: Row(
+      child: Column(
         children: [
-          InkWell(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  stopwatch.elapsed.inHours.toString().padLeft(4, '0'),
-                  style: const TextStyle(fontSize: 25),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  if (stopwatch.isRunning) {
+                    stopFocusTimer();
+                  } else {
+                    startFocusTimer();
+                  }
+                  setState(() {});
+                },
+                onVerticalDragEnd: (details) {
+                  isVisible = !isVisible;
+                  setState(() {});
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      stopwatch.elapsed.inHours.toString().padLeft(4, '0'),
+                      style: const TextStyle(fontSize: 25),
+                    ),
+                    const Text(
+                      'h',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      stopwatch.minutes.toString().padLeft(2, '0'),
+                      style: const TextStyle(fontSize: 25),
+                    ),
+                    const Text(
+                      'm',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      stopwatch.seconds.toString().padLeft(2, '0'),
+                      style: const TextStyle(fontSize: 25),
+                    ),
+                    const Text(
+                      's',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
                 ),
-                const Text(
-                  'h',
-                  style: TextStyle(fontSize: 12),
+              ),
+              Container(width: 10),
+              ElevatedButton(
+                  onPressed: () {
+                    stopwatch.stop();
+                    stopwatch.reset();
+                    timerBorderColor = Colors.blueGrey;
+                    setState(() {});
+                  },
+                  child: const Icon(Icons.restart_alt)),
+              Container(width: 10),
+              Flexible(
+                child: TextField(
+                  controller: textController,
+                  enabled: true,
+                  maxLines: 1,
                 ),
-                Text(
-                  stopwatch.minutes.toString().padLeft(2, '0'),
-                  style: const TextStyle(fontSize: 25),
-                ),
-                const Text(
-                  'm',
-                  style: TextStyle(fontSize: 12),
-                ),
-                Text(
-                  stopwatch.seconds.toString().padLeft(2, '0'),
-                  style: const TextStyle(fontSize: 25),
-                ),
-                const Text(
-                  's',
-                  style: TextStyle(fontSize: 12),
-                ),
-              ],
-            ),
-            onTap: () {
-              if (stopwatch.isRunning) {
-                stopFocusTimer();
-              } else {
-                startFocusTimer();
-              }
-              setState(() {});
-            },
+              ),
+              Container(width: 10),
+            ],
           ),
-          Container(width: 10),
-          ElevatedButton(
-              onPressed: () {
-                stopwatch.stop();
-                stopwatch.reset();
-                timerBorderColor = Colors.blueGrey;
-                setState(() {});
-              },
-              child: const Icon(Icons.restart_alt)),
-          Container(width: 10),
-          Flexible(
-            child: TextField(
-              controller: textController,
-              enabled: true,
-              maxLines: 1,
-            ),
-          ),
-          Container(width: 10),
+          Visibility(
+              visible: isVisible,
+              child: Row(
+                children: [
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          stopwatch.addOffsetTime(const Duration(hours: 1));
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_up,
+                          size: 30,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const Text('h'),
+                      InkWell(
+                        onTap: () {
+                          if (stopwatch.elapsed.inHours > 0) {
+                            stopwatch.addOffsetTime(const Duration(hours: -1));
+                          }
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_down,
+                          size: 30,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          stopwatch.addOffsetTime(const Duration(minutes: 1));
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_up,
+                          size: 30,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const Text('m'),
+                      InkWell(
+                        onTap: () {
+                          if (stopwatch.elapsed.inMinutes > 0) {
+                            stopwatch
+                                .addOffsetTime(const Duration(minutes: -1));
+                          }
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_down,
+                          size: 30,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          stopwatch.addOffsetTime(const Duration(seconds: 1));
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_up,
+                          size: 30,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const Text('s'),
+                      InkWell(
+                        onTap: () {
+                          if (stopwatch.elapsed.inSeconds > 0) {
+                            stopwatch
+                                .addOffsetTime(const Duration(seconds: -1));
+                          }
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_down,
+                          size: 30,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )),
         ],
       ),
     );
