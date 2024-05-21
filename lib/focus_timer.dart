@@ -8,7 +8,7 @@ class FocusTimer extends StatefulWidget {
   static final List<Color> timerColorList = [
     const Color.fromRGBO(240, 240, 240, 1),
     Colors.red.shade100,
-    Colors.teal.shade100,
+    Colors.indigo.shade100,
     Colors.grey.shade400,
     Colors.yellow.shade100,
     Colors.cyan.shade100,
@@ -61,6 +61,17 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   //
   int backgroundColorIndex = 0;
   Color backgroundColor = FocusTimer.timerColorList[0];
+  //
+  bool optionIsVisible = false;
+  //
+  Duration targetTime = Duration.zero;
+  double get progress {
+    if (targetTime.inSeconds == 0 || stopwatch.elapsed == Duration.zero) {
+      return 0.0;
+    } else {
+      return stopwatch.elapsed.inSeconds / targetTime.inSeconds;
+    }
+  }
 
   //initStateメソッドをオーバーライドします
   //タイマーの初期状態を設定します
@@ -147,65 +158,270 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
         color: backgroundColor,
       ),
       padding: const EdgeInsets.all(5),
-      child: Row(
+      child: Column(
         children: [
-          InkWell(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  stopwatch.elapsed.inHours.toString().padLeft(4, '0'),
-                  style: const TextStyle(fontSize: 25),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  if (stopwatch.isRunning) {
+                    stopFocusTimer();
+                  } else {
+                    startFocusTimer();
+                  }
+                  setState(() {});
+                },
+                onVerticalDragEnd: (details) {
+                  optionIsVisible = !optionIsVisible;
+                  setState(() {});
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      stopwatch.elapsed.inHours.toString().padLeft(4, '0'),
+                      style: const TextStyle(fontSize: 25),
+                    ),
+                    const Text(
+                      'h',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      stopwatch.minutes.toString().padLeft(2, '0'),
+                      style: const TextStyle(fontSize: 25),
+                    ),
+                    const Text(
+                      'm',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Text(
+                      stopwatch.seconds.toString().padLeft(2, '0'),
+                      style: const TextStyle(fontSize: 25),
+                    ),
+                    const Text(
+                      's',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
                 ),
-                const Text(
-                  'h',
-                  style: TextStyle(fontSize: 12),
+              ),
+              Container(width: 10),
+              ElevatedButton(
+                  onPressed: () {
+                    stopwatch.stop();
+                    stopwatch.reset();
+                    timerBorderColor = Colors.blueGrey;
+                    setState(() {});
+                  },
+                  child: const Icon(Icons.restart_alt)),
+              Container(width: 10),
+              Flexible(
+                child: TextField(
+                  controller: textController,
+                  enabled: true,
+                  maxLines: 1,
                 ),
-                Text(
-                  stopwatch.minutes.toString().padLeft(2, '0'),
-                  style: const TextStyle(fontSize: 25),
-                ),
-                const Text(
-                  'm',
-                  style: TextStyle(fontSize: 12),
-                ),
-                Text(
-                  stopwatch.seconds.toString().padLeft(2, '0'),
-                  style: const TextStyle(fontSize: 25),
-                ),
-                const Text(
-                  's',
-                  style: TextStyle(fontSize: 12),
-                ),
-              ],
-            ),
-            onTap: () {
-              if (stopwatch.isRunning) {
-                stopFocusTimer();
-              } else {
-                startFocusTimer();
-              }
-              setState(() {});
-            },
+              ),
+              Container(width: 10),
+            ],
           ),
-          Container(width: 10),
-          ElevatedButton(
-              onPressed: () {
-                stopwatch.stop();
-                stopwatch.reset();
-                timerBorderColor = Colors.blueGrey;
-                setState(() {});
-              },
-              child: const Icon(Icons.restart_alt)),
-          Container(width: 10),
-          Flexible(
-            child: TextField(
-              controller: textController,
-              enabled: true,
-              maxLines: 1,
-            ),
-          ),
-          Container(width: 10),
+          SizedBox(height: 2, child: LinearProgressIndicator(value: progress)),
+          Visibility(
+              visible: optionIsVisible,
+              child: Row(
+                children: [
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          stopwatch.addOffsetTime(const Duration(hours: 1));
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          stopwatch.addOffsetTime(const Duration(hours: 100));
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_up,
+                          size: 30,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const Text('h'),
+                      GestureDetector(
+                        onTap: () {
+                          if (stopwatch.elapsed.inHours > 0) {
+                            stopwatch.addOffsetTime(const Duration(hours: -1));
+                          }
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          if (stopwatch.elapsed.inHours ~/ 100 > 0) {
+                            stopwatch
+                                .addOffsetTime(const Duration(hours: -100));
+                          }
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_down,
+                          size: 30,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          stopwatch.addOffsetTime(const Duration(minutes: 1));
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          stopwatch.addOffsetTime(const Duration(minutes: 10));
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_up,
+                          size: 30,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const Text('m'),
+                      GestureDetector(
+                        onTap: () {
+                          if (stopwatch.elapsed.inMinutes > 0) {
+                            stopwatch
+                                .addOffsetTime(const Duration(minutes: -1));
+                          }
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          if (stopwatch.elapsed.inMinutes ~/ 10 > 0) {
+                            stopwatch
+                                .addOffsetTime(const Duration(minutes: -10));
+                          }
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_down,
+                          size: 30,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          stopwatch.addOffsetTime(const Duration(seconds: 1));
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          stopwatch.addOffsetTime(const Duration(seconds: 10));
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_up,
+                          size: 30,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      const Text('s'),
+                      GestureDetector(
+                        onTap: () {
+                          if (stopwatch.elapsed.inSeconds > 0) {
+                            stopwatch
+                                .addOffsetTime(const Duration(seconds: -1));
+                          }
+                          setState(() {});
+                        },
+                        onLongPressUp: () {
+                          if (stopwatch.elapsed.inSeconds ~/ 10 > 0) {
+                            stopwatch
+                                .addOffsetTime(const Duration(seconds: -10));
+                          }
+                          setState(() {});
+                        },
+                        child: const Icon(
+                          Icons.arrow_drop_down,
+                          size: 30,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  const Text(
+                    'Target:',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      targetTime += const Duration(minutes: 1);
+                      setState(() {});
+                    },
+                    onLongPressUp: () {
+                      targetTime += const Duration(hours: 1);
+                      setState(() {});
+                    },
+                    child: const Icon(
+                      Icons.arrow_drop_up,
+                      size: 25,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  GestureDetector(
+                    onDoubleTap: () {
+                      targetTime = Duration.zero;
+                      setState(() {});
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          targetTime.inHours.toString().padLeft(2, '0'),
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                        const Text(
+                          'h',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        Text(
+                          (targetTime.inMinutes % 60)
+                              .toString()
+                              .padLeft(2, '0'),
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                        const Text(
+                          'm',
+                          style: TextStyle(fontSize: 10),
+                        )
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (targetTime.inMinutes > 0) {
+                        targetTime -= const Duration(minutes: 1);
+                      }
+                      setState(() {});
+                    },
+                    onLongPressUp: () {
+                      if (targetTime.inHours > 0) {
+                        targetTime -= const Duration(hours: 1);
+                      }
+                      setState(() {});
+                    },
+                    child: const Icon(
+                      Icons.arrow_drop_down,
+                      size: 25,
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
+              )),
         ],
       ),
     );
