@@ -8,7 +8,7 @@ class FocusTimer extends StatefulWidget {
   static final List<Color> timerColorList = [
     const Color.fromRGBO(240, 240, 240, 1),
     Colors.red.shade100,
-    Colors.teal.shade100,
+    Colors.indigo.shade100,
     Colors.grey.shade400,
     Colors.yellow.shade100,
     Colors.cyan.shade100,
