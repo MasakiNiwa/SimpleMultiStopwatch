@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   List<String> timerMemoList = [];
   List<bool> timerIsRunningList = [];
   List<int> timerColorList = [];
+  List<Duration> targetTimeList = [];
   DateTime closeTime = DateTime.now();
 
   //追加ボタンが押されたときに呼び出すメソッド
@@ -69,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerMemoList.add("");
     timerIsRunningList.add(false);
     timerColorList.add(0);
+    targetTimeList.add(Duration.zero);
     setState(() {});
   }
 
@@ -89,6 +91,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerIsRunningList =
         await dataStorageFacade.getBoolList('timer_isrunning_list');
     timerColorList = await dataStorageFacade.getIntList('timer_color_list');
+    targetTimeList =
+        await dataStorageFacade.getDurationList('timer_targettime_list');
     closeTime = await dataStorageFacade.getDateTime('timer_closetime');
 
     if (timerOffsetList.length != timerMemoList.length) {
@@ -96,16 +100,25 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       timerMemoList = [];
       timerIsRunningList = [];
       timerColorList = [];
+      targetTimeList = [];
     } else if (timerOffsetList.length != timerIsRunningList.length) {
       timerOffsetList = [];
       timerMemoList = [];
       timerIsRunningList = [];
       timerColorList = [];
+      targetTimeList = [];
     } else if (timerOffsetList.length != timerColorList.length) {
       timerOffsetList = [];
       timerMemoList = [];
       timerIsRunningList = [];
       timerColorList = [];
+      targetTimeList = [];
+    } else if (timerOffsetList.length != targetTimeList.length) {
+      timerOffsetList = [];
+      timerMemoList = [];
+      timerIsRunningList = [];
+      timerColorList = [];
+      targetTimeList = [];
     }
 
     timers.clear();
@@ -133,6 +146,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     timerMemoList = [];
     timerIsRunningList = [];
     timerColorList = [];
+    targetTimeList = [];
     if (globalTimerKeys.isNotEmpty) {
       for (int i = 0; i < globalTimerKeys.length; i++) {
         Duration offset =
@@ -144,6 +158,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         int colorIndex =
             globalTimerKeys[i].currentState?.backgroundColorIndex ?? 0;
         timerColorList.add(colorIndex);
+        Duration targetTime =
+            globalTimerKeys[i].currentState?.targetTime ?? Duration.zero;
+        targetTimeList.add(targetTime);
         bool isrunnning =
             globalTimerKeys[i].currentState?.stopwatch.isRunning ?? false;
         bool ispaused = globalTimerKeys[i].currentState?.isPaused ?? false;
@@ -160,6 +177,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     await dataStorageFacade.setBoolList(
         'timer_isrunning_list', timerIsRunningList);
     await dataStorageFacade.setIntList('timer_color_list', timerColorList);
+    await dataStorageFacade.setDurationList(
+        'timer_targettime_list', targetTimeList);
     await dataStorageFacade.setDateTime('timer_closetime', DateTime.now());
   }
 
@@ -220,6 +239,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               timerMemoList.clear();
               timerIsRunningList.clear();
               timerColorList.clear();
+              targetTimeList.clear();
               setState(() {});
             },
             child: const Icon(Icons.delete_sweep),
@@ -242,6 +262,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   timerMemoList.removeAt(index);
                   timerIsRunningList.removeAt(index);
                   timerColorList.removeAt(index);
+                  targetTimeList.removeAt(index);
                 });
               }),
               children: [
@@ -254,6 +275,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       timerMemoList.removeAt(index);
                       timerIsRunningList.removeAt(index);
                       timerColorList.removeAt(index);
+                      targetTimeList.removeAt(index);
                     });
                   },
                   backgroundColor: Colors.red,
@@ -294,6 +316,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 isRunning: timerIsRunningList[index],
                 closeTime: closeTime,
                 backgroundColorIndex: timerColorList[index],
+                targetTime: targetTimeList[index],
               ),
             ),
           );
