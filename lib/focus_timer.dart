@@ -232,7 +232,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
               Container(width: 10),
             ],
           ),
-          SizedBox(height: 2, child: LinearProgressIndicator(value: progress)),
+          SizedBox(height: 3, child: LinearProgressIndicator(value: progress)),
           Visibility(
               visible: optionIsVisible,
               child: Row(
@@ -360,10 +360,15 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                     ],
                   ),
                   const Spacer(),
-                  const Text(
-                    'Target:',
-                    style: TextStyle(fontSize: 12),
+                  const Icon(
+                    Icons.timer_sharp,
+                    color: Colors.redAccent,
+                    size: 20,
                   ),
+                  // const Text(
+                  //   'Target :',
+                  //   style: TextStyle(fontSize: 12),
+                  // ),
                   GestureDetector(
                     onTap: () {
                       targetTime += const Duration(minutes: 1);

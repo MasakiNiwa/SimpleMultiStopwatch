@@ -225,10 +225,17 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            ('Simple Multi Stopwatch :  ${timers.length.toString()} timers'),
-            style: const TextStyle(
-                fontSize: 18, color: Color.fromRGBO(220, 220, 220, 1))),
+        title: Row(
+          children: [
+            Text(('Simple Multi Stopwatch :  ${timers.length.toString()} '),
+                style: const TextStyle(
+                    fontSize: 18, color: Color.fromRGBO(240, 240, 240, 1))),
+            const Icon(
+              Icons.timer_sharp,
+              color: Colors.cyanAccent,
+            ),
+          ],
+        ),
         backgroundColor: Colors.black,
         actions: [
           ElevatedButton(
