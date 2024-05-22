@@ -176,8 +176,11 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                   setState(() {});
                 },
                 onVerticalDragEnd: (details) {
-                  optionIsVisible = !optionIsVisible;
-                  setState(() {});
+                  if ((optionIsVisible && details.primaryVelocity! < 0) ||
+                      (!optionIsVisible && details.primaryVelocity! > 0)) {
+                    optionIsVisible = !optionIsVisible;
+                    setState(() {});
+                  }
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
