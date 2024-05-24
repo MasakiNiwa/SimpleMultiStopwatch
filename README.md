@@ -37,8 +37,10 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 (Running stopwatches will resume operation upon restart, reflecting the time the app was closed.) <br>
 
 ## 現在の取り組み(Current Work)
-実機テスト中です<br>
-Real device testing is in progress.<br>
+・実機テスト中です<br>
+・Real device testing is in progress.<br>
+・アプリ公開に必要な準備の調査を始めました<br>
+・Research into the preparations necessary for app release has begun.<br>
 
 ## 直近の目標(Next Steps)
 (1)コメントの見直し(Review code comments)<br>
@@ -47,11 +49,11 @@ Real device testing is in progress.<br>
 (4)アプリを公開する(Publish app)<br>
 
 ## その他(Additional Notes)
-・まだ開発中のため、不具合が含まれていたらすみません<br>
-・不具合のご指摘や、アドバイス等ありましたらご教授お願いいたします<br>
+・まだ開発中のため、不具合が含まれている可能性があります<br>
+・ご意見、ご感想、バグ報告など、お気軽にお寄せください<br>
 ・このプロジェクトが誰かの役にたてたら嬉しいです<br>
 ・This app is still under development and may contain bugs.<br>
-・Please feel free to report any bugs or suggestions you have.<br>
+・Please feel free to share your feedback, bug reports, or suggestions.<br>
 ・I hope you find this app useful!<br>
 
 ## About
