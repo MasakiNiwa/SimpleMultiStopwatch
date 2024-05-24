@@ -61,3 +61,4 @@ This app uses Flutter and other packages with the following versions:<br>
 ・Shared Preferences: 2.2.3 (BSD 3-Clause)<br>
 ・Flutter Slidable: 3.1.0 (MIT)<br>
 ・Flutter Launcher Icons: 0.13.1 (MIT)<br>
+・Change App Package Name: 1.1.0 (MIT)<br>
