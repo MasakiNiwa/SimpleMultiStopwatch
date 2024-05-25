@@ -1,6 +1,6 @@
 # Simple Multi Stopwatch
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://en.wikipedia.org/wiki/MIT_License)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](https://en.wikipedia.org/wiki/MIT_License)
 [![Flutter version](https://img.shields.io/badge/Flutter-3.22.1-blue)](https://flutter.dev/)
 
 ## 概要(Overview)
@@ -77,12 +77,17 @@ Researching the necessary preparations for app release.<br>
 (4)アプリを公開する(Publish app)<br>
 
 ## その他(Additional Notes)
-・まだ開発中のため、不具合が含まれている可能性があります<br>
-・ご意見、ご感想、バグ報告など、お気軽にお寄せください<br>
-・このプロジェクトが誰かの役にたてたら嬉しいです<br>
-・This app is still under development and may contain bugs.<br>
-・Please feel free to share your feedback, bug reports, or suggestions.<br>
-・I hope you find this app useful!<br>
+まだ開発中のため、不具合が含まれている可能性があります<br>
+This project is currently under development and may contain bugs.<br>
+<br>
+ご意見、ご感想、バグ報告など、お気軽にIssuesにお寄せください<br>
+(英語のみ、もしくは、母国語+英語翻訳でお願いいたします)<br>
+Please feel free to open an issue to share feedback, suggestions, or bug reports.<br>
+(English only, or your native language plus an English translation is appreciated.)<br>
+<br>
+このプロジェクトが誰かの役にたてたら嬉しいです<br>
+I hope this project is helpful to someone!<br>
+<br>
 
 ## About
 このアプリはMITライセンスを採用しています。<br>
