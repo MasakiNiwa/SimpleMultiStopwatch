@@ -13,6 +13,30 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 <img alt="Screenshot01" src="./screenshots/01.png" width="200px">
 <img alt="Screenshot02" src="./screenshots/02.png" width="200px">
 
+## インストール方法(Installation Instructions)
+
+### 前提条件(Prerequisites)
+Flutter SDKのインストールなど、Flutter開発環境を作成してください<br>
+Set up your Flutter development environment, including installing the Flutter SDK.<br>
+
+### 手順(Steps)
+(1)リポジトリのクローン(Clone the repository)<br>
+git clone https://github.com/MasakiNiwa/SimpleMultiStopwatch.git<br>
+<br>
+(2)依存関係のインストール(Install dependencies)<br>
+cd (Project directory)<br>
+flutter pub get<br>
+<br>
+(3)アプリの実行(Run the app)<br>
+flutter run<br>
+
+### 動かせなくなったとき(Troubleshooting)
+(1)プロジェクトをきれいにする(Clean the project)<br>
+flutter clean<br>
+<br>
+(2)プロジェクトを再構築(Rebuild the project)<br>
+flutter pub get<br>
+
 ## 使い方(How to Use)
 ・アプリ右下の追加ボタンでストップウォッチを追加 <br>
 ・Add a stopwatch by tapping the "+" button in the bottom right corner of the app. <br>
