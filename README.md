@@ -1,7 +1,7 @@
 # Simple Multi Stopwatch
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Flutter version](https://img.shields.io/badge/Flutter-3.22.1-blue)](https://flutter.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]
+[![Flutter version](https://img.shields.io/badge/Flutter-3.22.1-blue)]
 
 ## 概要(Overview)
 開発中のFlutterプロジェクトです。<br>
