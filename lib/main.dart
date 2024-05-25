@@ -224,15 +224,30 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+          child: ListView(
+        children: <Widget>[
+          ListTile(
+            title: const Text('Licenses'),
+            onTap: () {
+              showLicensePage(
+                context: context,
+                applicationName: 'Simple Multi Stopwatch',
+              );
+            },
+          )
+        ],
+      )),
       appBar: AppBar(
         title: Row(
           children: [
             Text(('Simple Multi Stopwatch :  ${timers.length.toString()} '),
                 style: const TextStyle(
-                    fontSize: 18, color: Color.fromRGBO(240, 240, 240, 1))),
+                    fontSize: 17, color: Color.fromRGBO(240, 240, 240, 1))),
             const Icon(
               Icons.timer_sharp,
               color: Colors.cyanAccent,
+              size: 17,
             ),
           ],
         ),
