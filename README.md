@@ -1,5 +1,8 @@
 # Simple Multi Stopwatch
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://en.wikipedia.org/wiki/MIT_License)
+[![Flutter version](https://img.shields.io/badge/Flutter-3.22.1-blue)](https://flutter.dev/)
+
 ## 概要(Overview)
 開発中のFlutterプロジェクトです。<br>
 複数のシンプルなストップウォッチを同時利用できるアプリを目指しています。<br>
@@ -38,7 +41,10 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 
 ## 現在の取り組み(Current Work)
 実機テスト中です<br>
-Real device testing is in progress.<br>
+機能の使いやすさの見直しとコードの見直しをおこなっています<br>
+アプリ公開に必要な準備の調査を始めました<br>
+Currently undergoing real device testing and reviewing the usability of functions and code.<br>
+Researching the necessary preparations for app release.<br>
 
 ## 直近の目標(Next Steps)
 (1)コメントの見直し(Review code comments)<br>
@@ -47,16 +53,21 @@ Real device testing is in progress.<br>
 (4)アプリを公開する(Publish app)<br>
 
 ## その他(Additional Notes)
-・まだ開発中のため、不具合が含まれていたらすみません<br>
-・不具合のご指摘や、アドバイス等ありましたらご教授お願いいたします<br>
+・まだ開発中のため、不具合が含まれている可能性があります<br>
+・ご意見、ご感想、バグ報告など、お気軽にお寄せください<br>
 ・このプロジェクトが誰かの役にたてたら嬉しいです<br>
 ・This app is still under development and may contain bugs.<br>
-・Please feel free to report any bugs or suggestions you have.<br>
+・Please feel free to share your feedback, bug reports, or suggestions.<br>
 ・I hope you find this app useful!<br>
 
 ## About
+このアプリはMITライセンスを採用しています。<br>
+This app is licensed under the MIT License.<br>
+<br>
 Flutterとその他パッケージを次のバージョンで使用しています<br>
 This app uses Flutter and other packages with the following versions:<br>
 ・Flutter: 3.22.1 (BSD 3-Clause)<br>
 ・Shared Preferences: 2.2.3 (BSD 3-Clause)<br>
 ・Flutter Slidable: 3.1.0 (MIT)<br>
+・Flutter Launcher Icons: 0.13.1 (MIT)<br>
+・Change App Package Name: 1.1.0 (MIT)<br>
