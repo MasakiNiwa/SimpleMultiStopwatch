@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2024 Masaki28
+Copyright (c) 2024 MasakiNiwa
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

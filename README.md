@@ -1,5 +1,8 @@
 # Simple Multi Stopwatch
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Flutter version](https://img.shields.io/badge/Flutter-3.22.1-blue)](https://flutter.dev/)
+
 ## 概要(Overview)
 開発中のFlutterプロジェクトです。<br>
 複数のシンプルなストップウォッチを同時利用できるアプリを目指しています。<br>
@@ -40,9 +43,8 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 実機テスト中です<br>
 機能の使いやすさの見直しとコードの見直しをおこなっています<br>
 アプリ公開に必要な準備の調査を始めました<br>
-Real device testing is in progress.<br>
-Reviewing the usability of functions and the code.<br>
-Research into the preparations necessary for app release has begun.<br>
+Currently undergoing real device testing and reviewing the usability of functions and code.<br>
+Researching the necessary preparations for app release.<br>
 
 ## 直近の目標(Next Steps)
 (1)コメントの見直し(Review code comments)<br>
@@ -59,6 +61,9 @@ Research into the preparations necessary for app release has begun.<br>
 ・I hope you find this app useful!<br>
 
 ## About
+このアプリはMITライセンスを採用しています。<br>
+This app is licensed under the MIT License.<br>
+<br>
 Flutterとその他パッケージを次のバージョンで使用しています<br>
 This app uses Flutter and other packages with the following versions:<br>
 ・Flutter: 3.22.1 (BSD 3-Clause)<br>
