@@ -152,6 +152,10 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   //Build the stopwatch widget.
   @override
   Widget build(BuildContext context) {
+    final Size widgetSize = MediaQuery.of(context).size;
+    final double fontSizeL = widgetSize.width * 0.053;
+    final double fontSizeM = fontSizeL * 18 / 25;
+    final double fontSizeS = fontSizeL * 12 / 25;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -187,32 +191,32 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                   children: [
                     Text(
                       stopwatch.elapsed.inHours.toString().padLeft(4, '0'),
-                      style: const TextStyle(fontSize: 25),
+                      style: TextStyle(fontSize: fontSizeL),
                     ),
-                    const Text(
+                    Text(
                       'h',
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: fontSizeS),
                     ),
                     Text(
                       stopwatch.minutes.toString().padLeft(2, '0'),
-                      style: const TextStyle(fontSize: 25),
+                      style: TextStyle(fontSize: fontSizeL),
                     ),
-                    const Text(
+                    Text(
                       'm',
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: fontSizeS),
                     ),
                     Text(
                       stopwatch.seconds.toString().padLeft(2, '0'),
-                      style: const TextStyle(fontSize: 25),
+                      style: TextStyle(fontSize: fontSizeL),
                     ),
-                    const Text(
+                    Text(
                       's',
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: fontSizeS),
                     ),
                   ],
                 ),
               ),
-              Container(width: 10),
+              Container(width: fontSizeS),
               ElevatedButton(
                   onPressed: () {
                     stopwatch.stop();
@@ -221,7 +225,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                     setState(() {});
                   },
                   child: const Icon(Icons.restart_alt)),
-              Container(width: 10),
+              Container(width: fontSizeS),
               Flexible(
                 child: TextField(
                   controller: textController,
@@ -229,7 +233,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                   maxLines: 1,
                 ),
               ),
-              Container(width: 10),
+              Container(width: fontSizeS),
             ],
           ),
           SizedBox(height: 3, child: LinearProgressIndicator(value: progress)),
@@ -248,13 +252,16 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           stopwatch.addOffsetTime(const Duration(hours: 100));
                           setState(() {});
                         },
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_drop_up,
-                          size: 30,
+                          size: fontSizeL,
                           color: Colors.blue,
                         ),
                       ),
-                      const Text('h'),
+                      Text(
+                        'h',
+                        style: TextStyle(fontSize: fontSizeM),
+                      ),
                       GestureDetector(
                         onTap: () {
                           if (stopwatch.elapsed.inHours > 0) {
@@ -269,9 +276,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           }
                           setState(() {});
                         },
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_drop_down,
-                          size: 30,
+                          size: fontSizeL,
                           color: Colors.red,
                         ),
                       ),
@@ -288,13 +295,16 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           stopwatch.addOffsetTime(const Duration(minutes: 10));
                           setState(() {});
                         },
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_drop_up,
-                          size: 30,
+                          size: fontSizeL,
                           color: Colors.blue,
                         ),
                       ),
-                      const Text('m'),
+                      Text(
+                        'm',
+                        style: TextStyle(fontSize: fontSizeM),
+                      ),
                       GestureDetector(
                         onTap: () {
                           if (stopwatch.elapsed.inMinutes > 0) {
@@ -310,9 +320,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           }
                           setState(() {});
                         },
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_drop_down,
-                          size: 30,
+                          size: fontSizeL,
                           color: Colors.red,
                         ),
                       ),
@@ -329,13 +339,16 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           stopwatch.addOffsetTime(const Duration(seconds: 10));
                           setState(() {});
                         },
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_drop_up,
-                          size: 30,
+                          size: fontSizeL,
                           color: Colors.blue,
                         ),
                       ),
-                      const Text('s'),
+                      Text(
+                        's',
+                        style: TextStyle(fontSize: fontSizeM),
+                      ),
                       GestureDetector(
                         onTap: () {
                           if (stopwatch.elapsed.inSeconds > 0) {
@@ -351,24 +364,20 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           }
                           setState(() {});
                         },
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_drop_down,
-                          size: 30,
+                          size: fontSizeL,
                           color: Colors.red,
                         ),
                       ),
                     ],
                   ),
                   const Spacer(),
-                  const Icon(
+                  Icon(
                     Icons.timer_sharp,
                     color: Colors.redAccent,
-                    size: 20,
+                    size: fontSizeM,
                   ),
-                  // const Text(
-                  //   'Target :',
-                  //   style: TextStyle(fontSize: 12),
-                  // ),
                   GestureDetector(
                     onTap: () {
                       targetTime += const Duration(minutes: 1);
@@ -378,9 +387,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                       targetTime += const Duration(hours: 1);
                       setState(() {});
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.arrow_drop_up,
-                      size: 25,
+                      size: fontSizeL,
                       color: Colors.blue,
                     ),
                   ),
@@ -394,21 +403,21 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                       children: [
                         Text(
                           targetTime.inHours.toString().padLeft(2, '0'),
-                          style: const TextStyle(fontSize: 15),
+                          style: TextStyle(fontSize: fontSizeM),
                         ),
-                        const Text(
+                        Text(
                           'h',
-                          style: TextStyle(fontSize: 10),
+                          style: TextStyle(fontSize: fontSizeS),
                         ),
                         Text(
                           (targetTime.inMinutes % 60)
                               .toString()
                               .padLeft(2, '0'),
-                          style: const TextStyle(fontSize: 15),
+                          style: TextStyle(fontSize: fontSizeM),
                         ),
-                        const Text(
+                        Text(
                           'm',
-                          style: TextStyle(fontSize: 10),
+                          style: TextStyle(fontSize: fontSizeS),
                         )
                       ],
                     ),
@@ -426,9 +435,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                       }
                       setState(() {});
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.arrow_drop_down,
-                      size: 25,
+                      size: fontSizeL,
                       color: Colors.red,
                     ),
                   ),
