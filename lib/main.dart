@@ -223,6 +223,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   //(3)FloatingActionButton to add a new timer.
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double fontSize = screenSize.width * 0.038;
     return Scaffold(
       drawer: Drawer(
           child: ListView(
@@ -242,12 +244,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         title: Row(
           children: [
             Text(('Simple Multi Stopwatch :  ${timers.length.toString()} '),
-                style: const TextStyle(
-                    fontSize: 17, color: Color.fromRGBO(240, 240, 240, 1))),
-            const Icon(
+                style: TextStyle(
+                    fontSize: fontSize,
+                    color: const Color.fromRGBO(240, 240, 240, 1))),
+            Icon(
               Icons.timer_sharp,
               color: Colors.cyanAccent,
-              size: 17,
+              size: fontSize,
             ),
           ],
         ),

@@ -71,10 +71,10 @@ Currently undergoing real device testing and reviewing the usability of function
 Researching the necessary preparations for app release.<br>
 
 ## 直近の目標(Next Steps)
-(1)コメントの見直し(Review code comments)<br>
-(2)コードを整理しなおす(Refactor code)<br>
-(3)デザインを見直す(Redesign)<br>
-(4)アプリを公開する(Publish app)<br>
+・コメントの見直し(Review code comments)<br>
+・コードを整理しなおす(Refactor code)<br>
+・デザインを見直す(Redesign)<br>
+・アプリを公開する(Publish app)<br>
 
 ## その他(Additional Notes)
 まだ開発中のため、不具合が含まれている可能性があります<br>
