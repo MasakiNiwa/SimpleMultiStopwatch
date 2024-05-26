@@ -81,9 +81,9 @@ Researching the necessary preparations for app release.<br>
 This project is currently under development and may contain bugs.<br>
 <br>
 ご意見、ご感想、バグ報告など、お気軽にIssuesにお寄せください<br>
-(英語のみ、もしくは、母国語+英語翻訳でお願いいたします)<br>
+(GeminiでAI翻訳して対応しますので、英語のみ、もしくは、母国語ともし可能ならば英語翻訳を添えて書いていただけると嬉しいです)<br>
 Please feel free to open an issue to share feedback, suggestions, or bug reports.<br>
-(English only, or your native language plus an English translation is appreciated.)<br>
+(I will use Gemini AI translation to respond, so please write in English only, or if possible, include an English translation along with your native language.)<br>
 <br>
 このプロジェクトが誰かの役にたてたら嬉しいです<br>
 I hope this project is helpful to someone!<br>
