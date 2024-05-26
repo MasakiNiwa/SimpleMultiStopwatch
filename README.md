@@ -78,14 +78,14 @@ Researching the necessary preparations for app release.<br>
 
 ## その他(Additional Notes)
 まだ開発中のため、不具合が含まれている可能性があります<br>
-This project is currently under development and may contain bugs.<br>
-<br>
 ご意見、ご感想、バグ報告など、お気軽にIssuesにお寄せください<br>
-(GeminiでAI翻訳して対応しますので、英語のみ、もしくは、母国語ともし可能ならば英語翻訳を添えて書いていただけると嬉しいです)<br>
-Please feel free to open an issue to share feedback, suggestions, or bug reports.<br>
-(I will use Gemini AI translation to respond, so please write in English only, or if possible, include an English translation along with your native language.)<br>
-<br>
+AI翻訳を駆使して対応いたします<br>
+英語もしくは母国語(可能ならば英語翻訳を添えて)書いていただけましたら嬉しいです<br>
 このプロジェクトが誰かの役にたてたら嬉しいです<br>
+This project is currently under development and may contain bugs.<br>
+Please feel free to open an issue to share feedback, suggestions, or bug reports.<br>
+I will do my best to respond using AI translation tools.<br>
+I would appreciate it if you could write in English or your native language (with an English translation if possible).<br>
 I hope this project is helpful to someone!<br>
 <br>
 
