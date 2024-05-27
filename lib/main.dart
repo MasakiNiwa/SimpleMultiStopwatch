@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }
@@ -224,7 +225,21 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    final double fontSize = screenSize.width * 0.038;
+
+    double getFontSize() {
+      double size;
+      if (screenSize.width >= 410) {
+        size = screenSize.width * 0.040;
+      } else if (screenSize.width >= 360) {
+        size = screenSize.width * 0.038;
+      } else {
+        size = screenSize.width * 0.034;
+      }
+      return size;
+    }
+
+    final double fontSize = getFontSize();
+
     return Scaffold(
       drawer: Drawer(
           child: ListView(
