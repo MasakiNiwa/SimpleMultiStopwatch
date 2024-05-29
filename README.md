@@ -64,17 +64,10 @@ flutter pub get<br>
 (Running stopwatches will resume operation upon restart, reflecting the time the app was closed.) <br>
 
 ## 現在の取り組み(Current Work)
-実機テスト中です<br>
+Google Playにて公開に向けて内部テスト中です<br>
 機能の使いやすさの見直しとコードの見直しをおこなっています<br>
-アプリ公開に必要な準備の調査を始めました<br>
-Currently undergoing real device testing and reviewing the usability of functions and code.<br>
-Researching the necessary preparations for app release.<br>
-
-## 直近の目標(Next Steps)
-・コメントの見直し(Review code comments)<br>
-・コードを整理しなおす(Refactor code)<br>
-・デザインを見直す(Redesign)<br>
-・アプリを公開する(Publish app)<br>
+The app is currently undergoing internal testing on Google Play in preparation for release.<br>
+I'm reviewing the usability of the features and refactoring the code.<br>
 
 ## その他(Additional Notes)
 まだ開発中のため、不具合が含まれている可能性があります<br>
