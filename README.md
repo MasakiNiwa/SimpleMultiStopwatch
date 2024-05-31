@@ -6,6 +6,7 @@
 ## 概要(Overview)
 開発中のFlutterプロジェクトです。<br>
 複数のシンプルなストップウォッチを同時利用できるアプリを目指しています。<br>
+<br>
 This is a Flutter project under development. <br>
 The goal is to create an app that allows users to use multiple simple stopwatches simultaneously.<br>
 
@@ -66,16 +67,20 @@ flutter pub get<br>
 ## 現在の取り組み(Current Work)
 Google Playにて公開に向けて内部テスト中です<br>
 機能の使いやすさの見直しとコードの見直しをおこなっています<br>
+<br>
 The app is currently undergoing internal testing on Google Play in preparation for release.<br>
 I'm reviewing the usability of the features and refactoring the code.<br>
 
 ## その他(Additional Notes)
 まだ開発中のため、不具合が含まれている可能性があります<br>
-ご意見、ご感想、バグ報告など、お気軽にIssuesにお寄せください<br>
+ご意見、ご感想、バグ報告など、お気軽にIssuesまたはメールでお寄せください<br>
+masaki28.dev@gmail.com<br>
 このプロジェクトが誰かの役にたちましたら嬉しいです<br>
+<br>
 This project is currently under development and may contain bugs.<br>
-Please feel free to open an issue to share feedback, suggestions, or bug reports.<br>
+Please feel free to share your feedback, thoughts, and bug reports through Issues or email.<br>
 (I will do my best to respond using AI translation tools.)<br>
+masaki28.dev@gmail.com<br>
 I hope this project is helpful to someone!<br>
 
 ## About
