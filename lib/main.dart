@@ -263,9 +263,23 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const MarkdownViewerScreen(
-                          filePath: 'docs/privacy_policy.md')));
+                            filePath: 'docs/privacy_policy.md',
+                            contents: 'Privacy Policy',
+                          )));
             },
-          )
+          ),
+          ListTile(
+            title: const Text('Contributing'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MarkdownViewerScreen(
+                            filePath: 'CONTRIBUTING.md',
+                            contents: 'Contributing',
+                          )));
+            },
+          ),
         ],
       )),
       appBar: AppBar(

@@ -4,14 +4,16 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 class MarkdownViewerScreen extends StatelessWidget {
   final String filePath;
+  final String contents;
 
-  const MarkdownViewerScreen({required this.filePath, super.key});
+  const MarkdownViewerScreen(
+      {required this.filePath, required this.contents, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Privacy Policy'),
+        title: Text(contents),
       ),
       body: FutureBuilder(
         future: rootBundle.loadString(filePath),
