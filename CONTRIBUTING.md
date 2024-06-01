@@ -46,7 +46,7 @@ https://github.com/MasakiNiwa/SimpleMultiStopwatch
 皆様からの温かいご支援をいただけますと幸いです。  
 ご意見・ご感想・バグ報告、開発の仕方やGitHubはこう使うんだよ等、なんでもご指摘ください。
 
-### ライセンス
+### ・ライセンス
 
 このプロジェクトは、MIT Lisenseを採用しています。
 
