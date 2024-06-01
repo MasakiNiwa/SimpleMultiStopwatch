@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_multi_stopwatch/focus_timer.dart';
 import 'package:simple_multi_stopwatch/data_storage_facade.dart';
+import 'package:simple_multi_stopwatch/markdown_viewer_screen.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 void main() {
@@ -253,6 +254,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 applicationIcon:
                     Image.asset('assets/icon/icon.png', width: 50, height: 50),
               );
+            },
+          ),
+          ListTile(
+            title: const Text('Privacy policy'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MarkdownViewerScreen(
+                          filePath: 'docs/privacy_policy.md')));
             },
           )
         ],
