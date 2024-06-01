@@ -12,7 +12,7 @@ The App does not directly collect any personal information from users.
 
 #### 2. How We Use Information
 
-The App does not collect personal information from users, so there is no use of such information.
+The App does not collect personal information from users, so there is no use of such information.  
 Usage information provided by the app store is used for the following purposes:
 - To provide and improve the features and services of the App
 - To provide support to users
@@ -25,7 +25,7 @@ The App will not share user information with third parties except in the followi
 
 #### 4. Security
 
-The App does not collect personal information from users.
+The App does not collect personal information from users.  
 Usage information that may be provided by the app store is subject to appropriate access controls to prevent access by third parties.
 
 #### 5. Changes to This Privacy Policy
@@ -34,7 +34,7 @@ This Privacy Policy may be changed without notice. Any changes to this Privacy P
 
 #### 6. Contact Us
 
-If you have any questions regarding this Privacy Policy, please contact us at the following address:
+If you have any questions regarding this Privacy Policy, please contact us at the following address:  
 masaki28.dev@gmail.com
 
 ---
@@ -47,12 +47,12 @@ masaki28.dev@gmail.com
 
 本アプリは、アプリストア（例:Google Play）から、アプリの改善およびサポート対応を目的として、以下の情報を収集する場合があります。
 - クラッシュレポート
-- 利用統計情報（例：アプリの起動回数、使用頻度）
+- 利用統計情報（例：アプリの起動回数、使用頻度）  
 本アプリは、ユーザーから個人情報を直接収集することはありません。
 
 #### 2.情報の利用目的
 
-本アプリは、ユーザーから個人情報を収集しないため、情報の利用はありません。
+本アプリは、ユーザーから個人情報を収集しないため、情報の利用はありません。  
 アプリストアより提供を受けた使用情報は以下の目的で使用します。
 - アプリの機能およびサービスの提供・改善
 - ユーザーへのサポート対応
@@ -65,7 +65,7 @@ masaki28.dev@gmail.com
 
 #### 4.セキュリティ
 
-本アプリは、ユーザーから個人情報を収集しません。
+本アプリは、ユーザーから個人情報を収集しません。  
 アプリストアより提供されることがある使用情報については、第3者がアクセスできないよう適切なアクセス管理をおこないます。
 
 #### 5.プライバシーポリシーの変更
@@ -74,5 +74,5 @@ masaki28.dev@gmail.com
 
 #### 6.お問い合わせ
 
-本プライバシーポリシーに関するお問い合わせは、以下の連絡先までお願いいたします。
+本プライバシーポリシーに関するお問い合わせは、以下の連絡先までお願いいたします。  
 masaki28.dev@gmail.com
