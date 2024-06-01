@@ -75,9 +75,12 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     }
   }
 
+  //
+  Timer? adjustTimer;
+
   //initStateメソッドをオーバーライドします
   //タイマーの初期状態を設定します
-  //次に、ストップウォッチ動作中は100ミリ秒ごとにウィジェットを更新するように設定しています
+  //次に、ストップウォッチ動作中は50ミリ秒ごとにウィジェットを更新するように設定しています
   //Override the initState method.
   //Set the initial state of the timer.
   //Next, set the widget to update every 100 milliseconds while the stopwatch is running.
@@ -95,7 +98,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
       stopwatch.addOffsetTime(DateTime.now().difference(widget.closeTime));
       startFocusTimer();
     }
-    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
       if (stopwatch.isRunning) {
         setState(() {});
       }
@@ -110,6 +113,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
   void dispose() {
     stopwatch.stop();
     timer?.cancel();
+    adjustTimer?.cancel();
     textController.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
@@ -148,14 +152,38 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     timerBorderColor = Colors.blueGrey;
   }
 
+  void adjustTimerOnPressed({required Duration timespan}) {
+    adjustTimer =
+        Timer.periodic(const Duration(milliseconds: 100), (adjustTimer) {
+      if (timespan > Duration.zero ||
+          (timespan < Duration.zero && stopwatch.elapsed >= timespan.abs())) {
+        stopwatch.addOffsetTime(timespan);
+        setState(() {});
+      }
+    });
+  }
+
+  void adjustTargetTimeOnPressed({required Duration timespan}) {
+    adjustTimer =
+        Timer.periodic(const Duration(milliseconds: 100), (adjustTimer) {
+      if (timespan > Duration.zero ||
+          (timespan < Duration.zero && targetTime >= timespan.abs())) {
+        targetTime += timespan;
+        setState(() {});
+      }
+    });
+  }
+
   //ストップウォッチウィジェットを構築します
   //Build the stopwatch widget.
   @override
   Widget build(BuildContext context) {
+    //画面サイズでフォントサイズ等を調整
     final Size widgetSize = MediaQuery.of(context).size;
     final double fontSizeL = widgetSize.width * 0.053;
     final double fontSizeM = fontSizeL * 18 / 25;
     final double fontSizeS = fontSizeL * 12 / 25;
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -245,12 +273,62 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          stopwatch.addOffsetTime(const Duration(hours: 100));
+                          setState(() {});
+                        },
+                        onLongPressStart: (details) {
+                          adjustTimerOnPressed(
+                              timespan: const Duration(hours: 100));
+                        },
+                        onLongPressEnd: (details) {
+                          adjustTimer?.cancel();
+                        },
+                        child: Icon(
+                          Icons.arrow_drop_up,
+                          size: fontSizeL,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      Text(
+                        '100h',
+                        style: TextStyle(fontSize: fontSizeS),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          if (stopwatch.elapsed.inHours > 100) {
+                            stopwatch
+                                .addOffsetTime(const Duration(hours: -100));
+                          }
+                          setState(() {});
+                        },
+                        onLongPressStart: (details) {
+                          adjustTimerOnPressed(
+                              timespan: const Duration(hours: -100));
+                        },
+                        onLongPressEnd: (details) {
+                          adjustTimer?.cancel();
+                        },
+                        child: Icon(
+                          Icons.arrow_drop_down,
+                          size: fontSizeL,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
                           stopwatch.addOffsetTime(const Duration(hours: 1));
                           setState(() {});
                         },
-                        onLongPressUp: () {
-                          stopwatch.addOffsetTime(const Duration(hours: 100));
-                          setState(() {});
+                        onLongPressStart: (details) {
+                          adjustTimerOnPressed(
+                              timespan: const Duration(hours: 1));
+                        },
+                        onLongPressEnd: (details) {
+                          adjustTimer?.cancel();
                         },
                         child: Icon(
                           Icons.arrow_drop_up,
@@ -269,12 +347,12 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           }
                           setState(() {});
                         },
-                        onLongPressUp: () {
-                          if (stopwatch.elapsed.inHours ~/ 100 > 0) {
-                            stopwatch
-                                .addOffsetTime(const Duration(hours: -100));
-                          }
-                          setState(() {});
+                        onLongPressStart: (details) {
+                          adjustTimerOnPressed(
+                              timespan: const Duration(hours: -1));
+                        },
+                        onLongPressEnd: (details) {
+                          adjustTimer?.cancel();
                         },
                         child: Icon(
                           Icons.arrow_drop_down,
@@ -291,9 +369,12 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           stopwatch.addOffsetTime(const Duration(minutes: 1));
                           setState(() {});
                         },
-                        onLongPressUp: () {
-                          stopwatch.addOffsetTime(const Duration(minutes: 10));
-                          setState(() {});
+                        onLongPressStart: (details) {
+                          adjustTimerOnPressed(
+                              timespan: const Duration(minutes: 1));
+                        },
+                        onLongPressEnd: (details) {
+                          adjustTimer?.cancel();
                         },
                         child: Icon(
                           Icons.arrow_drop_up,
@@ -313,12 +394,12 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           }
                           setState(() {});
                         },
-                        onLongPressUp: () {
-                          if (stopwatch.elapsed.inMinutes ~/ 10 > 0) {
-                            stopwatch
-                                .addOffsetTime(const Duration(minutes: -10));
-                          }
-                          setState(() {});
+                        onLongPressStart: (details) {
+                          adjustTimerOnPressed(
+                              timespan: const Duration(minutes: -1));
+                        },
+                        onLongPressEnd: (details) {
+                          adjustTimer?.cancel();
                         },
                         child: Icon(
                           Icons.arrow_drop_down,
@@ -335,9 +416,12 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           stopwatch.addOffsetTime(const Duration(seconds: 1));
                           setState(() {});
                         },
-                        onLongPressUp: () {
-                          stopwatch.addOffsetTime(const Duration(seconds: 10));
-                          setState(() {});
+                        onLongPressStart: (details) {
+                          adjustTimerOnPressed(
+                              timespan: const Duration(seconds: 1));
+                        },
+                        onLongPressEnd: (details) {
+                          adjustTimer?.cancel();
                         },
                         child: Icon(
                           Icons.arrow_drop_up,
@@ -357,12 +441,12 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           }
                           setState(() {});
                         },
-                        onLongPressUp: () {
-                          if (stopwatch.elapsed.inSeconds ~/ 10 > 0) {
-                            stopwatch
-                                .addOffsetTime(const Duration(seconds: -10));
-                          }
-                          setState(() {});
+                        onLongPressStart: (details) {
+                          adjustTimerOnPressed(
+                              timespan: const Duration(seconds: -1));
+                        },
+                        onLongPressEnd: (details) {
+                          adjustTimer?.cancel();
                         },
                         child: Icon(
                           Icons.arrow_drop_down,
@@ -379,21 +463,6 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                     size: fontSizeM,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      targetTime += const Duration(minutes: 1);
-                      setState(() {});
-                    },
-                    onLongPressUp: () {
-                      targetTime += const Duration(hours: 1);
-                      setState(() {});
-                    },
-                    child: Icon(
-                      Icons.arrow_drop_up,
-                      size: fontSizeL,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  GestureDetector(
                     onDoubleTap: () {
                       targetTime = Duration.zero;
                       setState(() {});
@@ -402,7 +471,7 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          targetTime.inHours.toString().padLeft(2, '0'),
+                          targetTime.inHours.toString().padLeft(4, '0'),
                           style: TextStyle(fontSize: fontSizeM),
                         ),
                         Text(
@@ -422,24 +491,101 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                       ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      if (targetTime.inMinutes > 0) {
-                        targetTime -= const Duration(minutes: 1);
-                      }
-                      setState(() {});
-                    },
-                    onLongPressUp: () {
-                      if (targetTime.inHours > 0) {
-                        targetTime -= const Duration(hours: 1);
-                      }
-                      setState(() {});
-                    },
-                    child: Icon(
-                      Icons.arrow_drop_down,
-                      size: fontSizeL,
-                      color: Colors.red,
-                    ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              targetTime += const Duration(hours: 1);
+                              setState(() {});
+                            },
+                            onLongPressStart: (details) {
+                              adjustTargetTimeOnPressed(
+                                  timespan: const Duration(hours: 1));
+                            },
+                            onLongPressEnd: (details) {
+                              adjustTimer?.cancel();
+                            },
+                            child: Icon(
+                              Icons.arrow_drop_up,
+                              size: fontSizeL,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          Text(
+                            'h',
+                            style: TextStyle(fontSize: fontSizeS),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (targetTime.inMinutes > 0) {
+                                targetTime -= const Duration(hours: 1);
+                              }
+                              setState(() {});
+                            },
+                            onLongPressStart: (details) {
+                              adjustTargetTimeOnPressed(
+                                  timespan: const Duration(hours: -1));
+                            },
+                            onLongPressEnd: (details) {
+                              adjustTimer?.cancel();
+                            },
+                            child: Icon(
+                              Icons.arrow_drop_down,
+                              size: fontSizeL,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              targetTime += const Duration(minutes: 1);
+                              setState(() {});
+                            },
+                            onLongPressStart: (details) {
+                              adjustTargetTimeOnPressed(
+                                  timespan: const Duration(minutes: 1));
+                            },
+                            onLongPressEnd: (details) {
+                              adjustTimer?.cancel();
+                            },
+                            child: Icon(
+                              Icons.arrow_drop_up,
+                              size: fontSizeL,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          Text(
+                            'm',
+                            style: TextStyle(fontSize: fontSizeS),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (targetTime.inMinutes > 0) {
+                                targetTime -= const Duration(minutes: 1);
+                              }
+                              setState(() {});
+                            },
+                            onLongPressStart: (details) {
+                              adjustTargetTimeOnPressed(
+                                  timespan: const Duration(minutes: -1));
+                            },
+                            onLongPressEnd: (details) {
+                              adjustTimer?.cancel();
+                            },
+                            child: Icon(
+                              Icons.arrow_drop_down,
+                              size: fontSizeL,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               )),

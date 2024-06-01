@@ -250,6 +250,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               showLicensePage(
                 context: context,
                 applicationName: 'Simple Multi Stopwatch',
+                applicationIcon:
+                    Image.asset('assets/icon/icon.png', width: 50, height: 50),
               );
             },
           )
