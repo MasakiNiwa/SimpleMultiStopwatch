@@ -267,232 +267,9 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
           SizedBox(height: 3, child: LinearProgressIndicator(value: progress)),
           Visibility(
               visible: optionIsVisible,
-              child: Row(
+              child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              stopwatch
-                                  .addOffsetTime(const Duration(hours: 100));
-                              setState(() {});
-                            },
-                            onLongPressStart: (details) {
-                              adjustTimerOnPressed(
-                                  timespan: const Duration(hours: 100));
-                            },
-                            onLongPressEnd: (details) {
-                              adjustTimer?.cancel();
-                            },
-                            child: Icon(
-                              Icons.double_arrow_sharp,
-                              size: fontSizeS,
-                              color: Colors.blue,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              stopwatch.addOffsetTime(const Duration(hours: 1));
-                              setState(() {});
-                            },
-                            onLongPressStart: (details) {
-                              adjustTimerOnPressed(
-                                  timespan: const Duration(hours: 1));
-                            },
-                            onLongPressEnd: (details) {
-                              adjustTimer?.cancel();
-                            },
-                            child: Icon(
-                              Icons.arrow_drop_up,
-                              size: fontSizeL,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        'h',
-                        style: TextStyle(fontSize: fontSizeM),
-                      ),
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              if (stopwatch.elapsed.inHours >= 100) {
-                                stopwatch
-                                    .addOffsetTime(const Duration(hours: -100));
-                              }
-                              setState(() {});
-                            },
-                            onLongPressStart: (details) {
-                              adjustTimerOnPressed(
-                                  timespan: const Duration(hours: -100));
-                            },
-                            onLongPressEnd: (details) {
-                              adjustTimer?.cancel();
-                            },
-                            child: Icon(
-                              Icons.double_arrow_sharp,
-                              size: fontSizeS,
-                              color: Colors.red,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (stopwatch.elapsed.inHours > 0) {
-                                stopwatch
-                                    .addOffsetTime(const Duration(hours: -1));
-                              }
-                              setState(() {});
-                            },
-                            onLongPressStart: (details) {
-                              adjustTimerOnPressed(
-                                  timespan: const Duration(hours: -1));
-                            },
-                            onLongPressEnd: (details) {
-                              adjustTimer?.cancel();
-                            },
-                            child: Icon(
-                              Icons.arrow_drop_down,
-                              size: fontSizeL,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          stopwatch.addOffsetTime(const Duration(minutes: 1));
-                          setState(() {});
-                        },
-                        onLongPressStart: (details) {
-                          adjustTimerOnPressed(
-                              timespan: const Duration(minutes: 1));
-                        },
-                        onLongPressEnd: (details) {
-                          adjustTimer?.cancel();
-                        },
-                        child: Icon(
-                          Icons.arrow_drop_up,
-                          size: fontSizeL,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      Text(
-                        'm',
-                        style: TextStyle(fontSize: fontSizeM),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          if (stopwatch.elapsed.inMinutes > 0) {
-                            stopwatch
-                                .addOffsetTime(const Duration(minutes: -1));
-                          }
-                          setState(() {});
-                        },
-                        onLongPressStart: (details) {
-                          adjustTimerOnPressed(
-                              timespan: const Duration(minutes: -1));
-                        },
-                        onLongPressEnd: (details) {
-                          adjustTimer?.cancel();
-                        },
-                        child: Icon(
-                          Icons.arrow_drop_down,
-                          size: fontSizeL,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          stopwatch.addOffsetTime(const Duration(seconds: 1));
-                          setState(() {});
-                        },
-                        onLongPressStart: (details) {
-                          adjustTimerOnPressed(
-                              timespan: const Duration(seconds: 1));
-                        },
-                        onLongPressEnd: (details) {
-                          adjustTimer?.cancel();
-                        },
-                        child: Icon(
-                          Icons.arrow_drop_up,
-                          size: fontSizeL,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      Text(
-                        's',
-                        style: TextStyle(fontSize: fontSizeM),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          if (stopwatch.elapsed.inSeconds > 0) {
-                            stopwatch
-                                .addOffsetTime(const Duration(seconds: -1));
-                          }
-                          setState(() {});
-                        },
-                        onLongPressStart: (details) {
-                          adjustTimerOnPressed(
-                              timespan: const Duration(seconds: -1));
-                        },
-                        onLongPressEnd: (details) {
-                          adjustTimer?.cancel();
-                        },
-                        child: Icon(
-                          Icons.arrow_drop_down,
-                          size: fontSizeL,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Icon(
-                    Icons.timer_sharp,
-                    color: Colors.redAccent,
-                    size: fontSizeM,
-                  ),
-                  GestureDetector(
-                    onDoubleTap: () {
-                      targetTime = Duration.zero;
-                      setState(() {});
-                    },
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          targetTime.inHours.toString().padLeft(4, '0'),
-                          style: TextStyle(fontSize: fontSizeM),
-                        ),
-                        Text(
-                          'h',
-                          style: TextStyle(fontSize: fontSizeS),
-                        ),
-                        Text(
-                          (targetTime.inMinutes % 60)
-                              .toString()
-                              .padLeft(2, '0'),
-                          style: TextStyle(fontSize: fontSizeM),
-                        ),
-                        Text(
-                          'm',
-                          style: TextStyle(fontSize: fontSizeS),
-                        )
-                      ],
-                    ),
-                  ),
+                  Container(height: 7),
                   Row(
                     children: [
                       Row(
@@ -501,11 +278,12 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  targetTime += const Duration(hours: 100);
+                                  stopwatch.addOffsetTime(
+                                      const Duration(hours: 100));
                                   setState(() {});
                                 },
                                 onLongPressStart: (details) {
-                                  adjustTargetTimeOnPressed(
+                                  adjustTimerOnPressed(
                                       timespan: const Duration(hours: 100));
                                 },
                                 onLongPressEnd: (details) {
@@ -513,17 +291,19 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                                 },
                                 child: Icon(
                                   Icons.double_arrow_sharp,
-                                  size: fontSizeS,
+                                  size: fontSizeM,
                                   color: Colors.blue,
                                 ),
                               ),
+                              Container(height: 5),
                               GestureDetector(
                                 onTap: () {
-                                  targetTime += const Duration(hours: 1);
+                                  stopwatch
+                                      .addOffsetTime(const Duration(hours: 1));
                                   setState(() {});
                                 },
                                 onLongPressStart: (details) {
-                                  adjustTargetTimeOnPressed(
+                                  adjustTimerOnPressed(
                                       timespan: const Duration(hours: 1));
                                 },
                                 onLongPressEnd: (details) {
@@ -545,13 +325,14 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  if (targetTime.inHours >= 100) {
-                                    targetTime -= const Duration(hours: 100);
+                                  if (stopwatch.elapsed.inHours >= 100) {
+                                    stopwatch.addOffsetTime(
+                                        const Duration(hours: -100));
                                   }
                                   setState(() {});
                                 },
                                 onLongPressStart: (details) {
-                                  adjustTargetTimeOnPressed(
+                                  adjustTimerOnPressed(
                                       timespan: const Duration(hours: -100));
                                 },
                                 onLongPressEnd: (details) {
@@ -559,19 +340,21 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                                 },
                                 child: Icon(
                                   Icons.double_arrow_sharp,
-                                  size: fontSizeS,
+                                  size: fontSizeM,
                                   color: Colors.red,
                                 ),
                               ),
+                              Container(height: 5),
                               GestureDetector(
                                 onTap: () {
-                                  if (targetTime.inHours > 0) {
-                                    targetTime -= const Duration(hours: 1);
+                                  if (stopwatch.elapsed.inHours > 0) {
+                                    stopwatch.addOffsetTime(
+                                        const Duration(hours: -1));
                                   }
                                   setState(() {});
                                 },
                                 onLongPressStart: (details) {
-                                  adjustTargetTimeOnPressed(
+                                  adjustTimerOnPressed(
                                       timespan: const Duration(hours: -1));
                                 },
                                 onLongPressEnd: (details) {
@@ -591,11 +374,12 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              targetTime += const Duration(minutes: 1);
+                              stopwatch
+                                  .addOffsetTime(const Duration(minutes: 1));
                               setState(() {});
                             },
                             onLongPressStart: (details) {
-                              adjustTargetTimeOnPressed(
+                              adjustTimerOnPressed(
                                   timespan: const Duration(minutes: 1));
                             },
                             onLongPressEnd: (details) {
@@ -613,13 +397,14 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                           ),
                           GestureDetector(
                             onTap: () {
-                              if (targetTime.inMinutes > 0) {
-                                targetTime -= const Duration(minutes: 1);
+                              if (stopwatch.elapsed.inMinutes > 0) {
+                                stopwatch
+                                    .addOffsetTime(const Duration(minutes: -1));
                               }
                               setState(() {});
                             },
                             onLongPressStart: (details) {
-                              adjustTargetTimeOnPressed(
+                              adjustTimerOnPressed(
                                   timespan: const Duration(minutes: -1));
                             },
                             onLongPressEnd: (details) {
@@ -630,6 +415,235 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
                               size: fontSizeL,
                               color: Colors.red,
                             ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              stopwatch
+                                  .addOffsetTime(const Duration(seconds: 1));
+                              setState(() {});
+                            },
+                            onLongPressStart: (details) {
+                              adjustTimerOnPressed(
+                                  timespan: const Duration(seconds: 1));
+                            },
+                            onLongPressEnd: (details) {
+                              adjustTimer?.cancel();
+                            },
+                            child: Icon(
+                              Icons.arrow_drop_up,
+                              size: fontSizeL,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          Text(
+                            's',
+                            style: TextStyle(fontSize: fontSizeM),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (stopwatch.elapsed.inSeconds > 0) {
+                                stopwatch
+                                    .addOffsetTime(const Duration(seconds: -1));
+                              }
+                              setState(() {});
+                            },
+                            onLongPressStart: (details) {
+                              adjustTimerOnPressed(
+                                  timespan: const Duration(seconds: -1));
+                            },
+                            onLongPressEnd: (details) {
+                              adjustTimer?.cancel();
+                            },
+                            child: Icon(
+                              Icons.arrow_drop_down,
+                              size: fontSizeL,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.timer_sharp,
+                        color: Colors.redAccent,
+                        size: fontSizeM,
+                      ),
+                      GestureDetector(
+                        onDoubleTap: () {
+                          targetTime = Duration.zero;
+                          setState(() {});
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              targetTime.inHours.toString().padLeft(4, '0'),
+                              style: TextStyle(fontSize: fontSizeM),
+                            ),
+                            Text(
+                              'h',
+                              style: TextStyle(fontSize: fontSizeS),
+                            ),
+                            Text(
+                              (targetTime.inMinutes % 60)
+                                  .toString()
+                                  .padLeft(2, '0'),
+                              style: TextStyle(fontSize: fontSizeM),
+                            ),
+                            Text(
+                              'm',
+                              style: TextStyle(fontSize: fontSizeS),
+                            )
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      targetTime += const Duration(hours: 100);
+                                      setState(() {});
+                                    },
+                                    onLongPressStart: (details) {
+                                      adjustTargetTimeOnPressed(
+                                          timespan: const Duration(hours: 100));
+                                    },
+                                    onLongPressEnd: (details) {
+                                      adjustTimer?.cancel();
+                                    },
+                                    child: Icon(
+                                      Icons.double_arrow_sharp,
+                                      size: fontSizeM,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                  Container(height: 5),
+                                  GestureDetector(
+                                    onTap: () {
+                                      targetTime += const Duration(hours: 1);
+                                      setState(() {});
+                                    },
+                                    onLongPressStart: (details) {
+                                      adjustTargetTimeOnPressed(
+                                          timespan: const Duration(hours: 1));
+                                    },
+                                    onLongPressEnd: (details) {
+                                      adjustTimer?.cancel();
+                                    },
+                                    child: Icon(
+                                      Icons.arrow_drop_up,
+                                      size: fontSizeL,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                'h',
+                                style: TextStyle(fontSize: fontSizeM),
+                              ),
+                              Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (targetTime.inHours >= 100) {
+                                        targetTime -=
+                                            const Duration(hours: 100);
+                                      }
+                                      setState(() {});
+                                    },
+                                    onLongPressStart: (details) {
+                                      adjustTargetTimeOnPressed(
+                                          timespan:
+                                              const Duration(hours: -100));
+                                    },
+                                    onLongPressEnd: (details) {
+                                      adjustTimer?.cancel();
+                                    },
+                                    child: Icon(
+                                      Icons.double_arrow_sharp,
+                                      size: fontSizeM,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  Container(height: 5),
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (targetTime.inHours > 0) {
+                                        targetTime -= const Duration(hours: 1);
+                                      }
+                                      setState(() {});
+                                    },
+                                    onLongPressStart: (details) {
+                                      adjustTargetTimeOnPressed(
+                                          timespan: const Duration(hours: -1));
+                                    },
+                                    onLongPressEnd: (details) {
+                                      adjustTimer?.cancel();
+                                    },
+                                    child: Icon(
+                                      Icons.arrow_drop_down,
+                                      size: fontSizeL,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  targetTime += const Duration(minutes: 1);
+                                  setState(() {});
+                                },
+                                onLongPressStart: (details) {
+                                  adjustTargetTimeOnPressed(
+                                      timespan: const Duration(minutes: 1));
+                                },
+                                onLongPressEnd: (details) {
+                                  adjustTimer?.cancel();
+                                },
+                                child: Icon(
+                                  Icons.arrow_drop_up,
+                                  size: fontSizeL,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              Text(
+                                'm',
+                                style: TextStyle(fontSize: fontSizeM),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  if (targetTime.inMinutes > 0) {
+                                    targetTime -= const Duration(minutes: 1);
+                                  }
+                                  setState(() {});
+                                },
+                                onLongPressStart: (details) {
+                                  adjustTargetTimeOnPressed(
+                                      timespan: const Duration(minutes: -1));
+                                },
+                                onLongPressEnd: (details) {
+                                  adjustTimer?.cancel();
+                                },
+                                child: Icon(
+                                  Icons.arrow_drop_down,
+                                  size: fontSizeL,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
