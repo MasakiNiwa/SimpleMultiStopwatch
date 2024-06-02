@@ -318,6 +318,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           ],
         ),
         body: ReorderableListView.builder(
+          shrinkWrap: true,
           itemCount: timers.length,
           itemBuilder: (BuildContext context, int index) {
             return Slidable(
