@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:simple_multi_stopwatch/focus_timer.dart';
 import 'package:simple_multi_stopwatch/data_storage_facade.dart';
 import 'package:simple_multi_stopwatch/markdown_viewer_screen.dart';
@@ -41,6 +42,20 @@ class TabPageState extends State<TabPage>
   List<int> timerColorList = [];
   List<Duration> targetTimeList = [];
   DateTime closeTime = DateTime.now();
+
+  Timer? timer;
+  String totalTime = '0000:00:00';
+  void changeTotalTime() {
+    setState(() {
+      Duration total = Duration.zero;
+      for (int i = 0; i < globalTimerKeys.length; i++) {
+        total +=
+            globalTimerKeys[i].currentState?.stopwatch.elapsed ?? Duration.zero;
+      }
+      totalTime =
+          "${(total.inHours % 24).toString().padLeft(4, '0')}:${(total.inMinutes % 60).toString().padLeft(2, '0')}:${(total.inSeconds % 60).toString().padLeft(2, '0')}";
+    });
+  }
 
   //追加ボタンが押されたときに呼び出すメソッド
   //FocusTimerのインスタンスと対応するGlobalObjectKeyを作成してリストに追加します
@@ -197,10 +212,14 @@ class TabPageState extends State<TabPage>
     WidgetsBinding.instance.addObserver(this);
     pageIndex = widget.pageIndex;
     restoreState();
+    timer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+      changeTotalTime();
+    });
   }
 
   @override
   void dispose() {
+    timer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -290,7 +309,7 @@ class TabPageState extends State<TabPage>
       appBar: AppBar(
         title: Row(
           children: [
-            Text('Simple Multi Stopwatch: ${timers.length.toString()}',
+            Text(timers.length.toString(),
                 style: TextStyle(
                     fontSize: fontSize,
                     color: const Color.fromRGBO(240, 240, 240, 1))),
@@ -299,6 +318,10 @@ class TabPageState extends State<TabPage>
               color: Colors.cyanAccent,
               size: fontSize,
             ),
+            Text('  Total Time: $totalTime',
+                style: TextStyle(
+                    fontSize: fontSize,
+                    color: const Color.fromRGBO(240, 240, 240, 1))),
           ],
         ),
         backgroundColor: Colors.black,
