@@ -5,13 +5,19 @@ import 'package:simple_multi_stopwatch/markdown_viewer_screen.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TabPage extends StatefulWidget {
-  const TabPage({super.key});
+  final int pageIndex;
+
+  const TabPage({super.key, required this.pageIndex});
 
   @override
   State<TabPage> createState() => TabPageState();
 }
 
-class TabPageState extends State<TabPage> with WidgetsBindingObserver {
+class TabPageState extends State<TabPage>
+    with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   //タブページが保有するタイマーのリスト
   //List to store the FocusTimer objects maintained by the TabPage.
   final List<FocusTimer> timers = [];
@@ -22,6 +28,8 @@ class TabPageState extends State<TabPage> with WidgetsBindingObserver {
   //データ保存用にShared_Preferencesのラッパークラスをインスタンス化します
   //An instance of the DataStorageFacade class, which is a wrapper around Shared Preferences for data storage.
   final DataStorageFacade dataStorageFacade = DataStorageFacade();
+  //
+  int pageIndex = 0;
 
   //タイマーの状態のリスト
   //アプリの状態保存と復元に使用します
@@ -76,15 +84,18 @@ class TabPageState extends State<TabPage> with WidgetsBindingObserver {
   //Creates FocusTimer instances for each item in the retrieved list and adds them to the TabPage's list.
   //Note: The actual offset seconds and memos are set to the timers when the widgets are displayed on the screen using ReorderableListView.builder.
   Future<void> restoreState() async {
-    timerOffsetList =
-        await dataStorageFacade.getDurationList('timer_offset_list');
-    timerMemoList = await dataStorageFacade.getStringList('timer_memo_list');
-    timerIsRunningList =
-        await dataStorageFacade.getBoolList('timer_isrunning_list');
-    timerColorList = await dataStorageFacade.getIntList('timer_color_list');
-    targetTimeList =
-        await dataStorageFacade.getDurationList('timer_targettime_list');
-    closeTime = await dataStorageFacade.getDateTime('timer_closetime');
+    timerOffsetList = await dataStorageFacade
+        .getDurationList('timer_offset_list_page$pageIndex');
+    timerMemoList =
+        await dataStorageFacade.getStringList('timer_memo_list_page$pageIndex');
+    timerIsRunningList = await dataStorageFacade
+        .getBoolList('timer_isrunning_list_page$pageIndex');
+    timerColorList =
+        await dataStorageFacade.getIntList('timer_color_list_page$pageIndex');
+    targetTimeList = await dataStorageFacade
+        .getDurationList('timer_targettime_list_page$pageIndex');
+    closeTime =
+        await dataStorageFacade.getDateTime('timer_closetime_page$pageIndex');
 
     if (timerOffsetList.length != timerMemoList.length) {
       timerOffsetList = [];
@@ -163,14 +174,17 @@ class TabPageState extends State<TabPage> with WidgetsBindingObserver {
       }
     }
     await dataStorageFacade.setDurationList(
-        'timer_offset_list', timerOffsetList);
-    await dataStorageFacade.setStringList('timer_memo_list', timerMemoList);
+        'timer_offset_list_page$pageIndex', timerOffsetList);
+    await dataStorageFacade.setStringList(
+        'timer_memo_list_page$pageIndex', timerMemoList);
     await dataStorageFacade.setBoolList(
-        'timer_isrunning_list', timerIsRunningList);
-    await dataStorageFacade.setIntList('timer_color_list', timerColorList);
+        'timer_isrunning_list_page$pageIndex', timerIsRunningList);
+    await dataStorageFacade.setIntList(
+        'timer_color_list_page$pageIndex', timerColorList);
     await dataStorageFacade.setDurationList(
-        'timer_targettime_list', targetTimeList);
-    await dataStorageFacade.setDateTime('timer_closetime', DateTime.now());
+        'timer_targettime_list_page$pageIndex', targetTimeList);
+    await dataStorageFacade.setDateTime(
+        'timer_closetime_page$pageIndex', DateTime.now());
   }
 
   //initStateメソッドをオーバーライドします
@@ -181,6 +195,7 @@ class TabPageState extends State<TabPage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    pageIndex = widget.pageIndex;
     restoreState();
   }
 
@@ -214,6 +229,7 @@ class TabPageState extends State<TabPage> with WidgetsBindingObserver {
   //(3)FloatingActionButton to add a new timer.
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final Size screenSize = MediaQuery.of(context).size;
 
     double getFontSize() {

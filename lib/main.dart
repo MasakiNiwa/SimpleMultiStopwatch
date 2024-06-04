@@ -26,7 +26,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-  int tabCount = 1;
+  int tabCount = 7;
   late TabController _tabController;
   @override
   void initState() {
@@ -69,8 +69,8 @@ class _MyHomePageState extends State<MyHomePage>
           ),
           body: TabBarView(
             controller: _tabController,
-            children: const [
-              TabPage(),
+            children: [
+              for (int i = 0; i < tabCount; i++) TabPage(pageIndex: i),
             ],
           ),
         ),
