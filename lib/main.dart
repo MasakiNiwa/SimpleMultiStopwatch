@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           body: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               for (int i = 0; i < tabCount; i++) TabPage(pageIndex: i),
             ],
