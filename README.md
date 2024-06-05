@@ -1,3 +1,11 @@
+### 告知(Announcement)
+現在Google Play(android)での公開に向けてクローズドテストにご協力いただける方をDiscussionsで募集しています。<br>
+ぜひお力をお貸しください。<br>
+<br>
+I am currently looking for participants for a closed test on Discussions to help me prepare for release on Google Play (Android). <br>
+I would appreciate your cooperation.<br>
+<br>
+
 # Simple Multi Stopwatch
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](https://en.wikipedia.org/wiki/MIT_License)
@@ -63,13 +71,6 @@ flutter pub get<br>
 (動いていたストップウォッチは、アプリを閉じていた時間も反映して、再起動時に動作を再開します) <br>
 ・The stopwatch state is saved even when the app is closed and restored when it is restarted. <br>
 (Running stopwatches will resume operation upon restart, reflecting the time the app was closed.) <br>
-
-## 現在の取り組み(Current Work)
-Google Playにて公開に向けて内部テスト中です<br>
-機能の使いやすさの見直しとコードの見直しをおこなっています<br>
-<br>
-The app is currently undergoing internal testing on Google Play in preparation for release.<br>
-I'm reviewing the usability of the features and refactoring the code.<br>
 
 ## その他(Additional Notes)
 まだ開発中のため、不具合が含まれている可能性があります<br>
