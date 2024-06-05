@@ -53,7 +53,7 @@ class TabPageState extends State<TabPage>
             globalTimerKeys[i].currentState?.stopwatch.elapsed ?? Duration.zero;
       }
       totalTime =
-          "${(total.inHours % 24).toString().padLeft(4, '0')}:${(total.inMinutes % 60).toString().padLeft(2, '0')}:${(total.inSeconds % 60).toString().padLeft(2, '0')}";
+          "${total.inHours.toString().padLeft(4, '0')}:${(total.inMinutes % 60).toString().padLeft(2, '0')}:${(total.inSeconds % 60).toString().padLeft(2, '0')}";
     });
   }
 
