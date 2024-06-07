@@ -1,4 +1,3 @@
-### 告知(Announcement)
 現在Google Play(android)でクローズドテストを実施中です。<br>
 詳細はDiscussionsをご覧ください。<br>
 <br>
@@ -14,9 +13,11 @@ Please see Discussions for more details.<br>
 ## 概要(Overview)
 開発中のFlutterプロジェクトです。<br>
 複数のシンプルなストップウォッチを同時利用できるアプリを目指しています。<br>
+学習時間・作業時間などの把握に使用できます。<br>
 <br>
 This is a Flutter project under development. <br>
 The goal is to create an app that allows users to use multiple simple stopwatches simultaneously.<br>
+It can be used to track learning time, work time, etc. <br>
 
 ## スクリーンショット(Screenshots)
 <img alt="Screenshot01" src="./screenshots/01.png" width="200px">
