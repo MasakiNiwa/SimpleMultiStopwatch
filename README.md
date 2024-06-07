@@ -1,9 +1,9 @@
 ### 告知(Announcement)
-現在Google Play(android)での公開に向けてクローズドテストにご協力いただける方をDiscussionsで募集しています。<br>
-ぜひお力をお貸しください。<br>
+現在Google Play(android)でクローズドテストを実施中です。<br>
+詳細はDiscussionsをご覧ください。<br>
 <br>
-I am currently looking for participants for a closed test on Discussions to help me prepare for release on Google Play (Android). <br>
-I would appreciate your cooperation.<br>
+I am currently conducting a closed test on Google Play (Android).<br>
+Please see Discussions for more details.<br>
 <br>
 
 # Simple Multi Stopwatch

@@ -304,6 +304,18 @@ class TabPageState extends State<TabPage>
                           )));
             },
           ),
+          ListTile(
+            title: const Text('Contributors'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MarkdownViewerScreen(
+                            filePath: 'CONTRIBUTORS.md',
+                            contents: 'Contributors',
+                          )));
+            },
+          ),
         ],
       )),
       appBar: AppBar(
@@ -419,7 +431,7 @@ class TabPageState extends State<TabPage>
         },
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: addTimer, child: const Icon(Icons.add)),
+          heroTag: null, onPressed: addTimer, child: const Icon(Icons.add)),
     );
   }
 }
