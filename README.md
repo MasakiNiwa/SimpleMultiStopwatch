@@ -74,12 +74,10 @@ flutter pub get<br>
 (Running stopwatches will resume operation upon restart, reflecting the time the app was closed.) <br>
 
 ## その他(Additional Notes)
-まだ開発中のため、不具合が含まれている可能性があります<br>
 ご意見、ご感想、バグ報告など、お気軽にIssuesやDiscussionsまたはメールでお寄せください<br>
 masaki28.dev@gmail.com<br>
 このプロジェクトが誰かの役にたちましたら嬉しいです<br>
 <br>
-This project is currently under development and may contain bugs.<br>
 Please feel free to share your feedback, thoughts, and bug reports through Issues, Discussions or email.<br>
 (I will do my best to respond using AI translation tools.)<br>
 masaki28.dev@gmail.com<br>
