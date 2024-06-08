@@ -1,10 +1,3 @@
-現在Google Play(android)でクローズドテストを実施中です。<br>
-詳細はDiscussionsをご覧ください。<br>
-<br>
-I am currently conducting a closed test on Google Play (Android).<br>
-Please see Discussions for more details.<br>
-<br>
-
 # Simple Multi Stopwatch
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](https://en.wikipedia.org/wiki/MIT_License)
@@ -73,15 +66,13 @@ flutter pub get<br>
 ・The stopwatch state is saved even when the app is closed and restored when it is restarted. <br>
 (Running stopwatches will resume operation upon restart, reflecting the time the app was closed.) <br>
 
-## その他(Additional Notes)
+## お願い(Feedback)
 ご意見、ご感想、バグ報告など、お気軽にIssuesやDiscussionsまたはメールでお寄せください<br>
 masaki28.dev@gmail.com<br>
-このプロジェクトが誰かの役にたちましたら嬉しいです<br>
 <br>
 Please feel free to share your feedback, thoughts, and bug reports through Issues, Discussions or email.<br>
 (I will do my best to respond using AI translation tools.)<br>
 masaki28.dev@gmail.com<br>
-I hope this project is helpful to someone!<br>
 
 ## About
 このアプリはMITライセンスを採用しています。<br>
@@ -95,3 +86,11 @@ This app uses Flutter and other packages with the following versions:<br>
 ・Flutter Launcher Icons: 0.13.1 (MIT)<br>
 ・Flutter Markdown: 0.7.1 (BSD 3-Clause)<br>
 ・Change App Package Name: 1.1.0 (MIT)<br>
+
+## 最後に(Additional Information)
+現在Google Play(android)でクローズドテストを実施中です。<br>
+詳細はDiscussionsをご覧ください。<br>
+<br>
+I am currently conducting a closed test on Google Play (Android).<br>
+Please see Discussions for more details.<br>
+<br>
