@@ -1,3 +1,6 @@
 Thank you for your contribution.
 
-[Closed beta testers]
+---
+
+## Closed beta testers  
+1.

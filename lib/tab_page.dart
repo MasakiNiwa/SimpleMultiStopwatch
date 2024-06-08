@@ -280,42 +280,10 @@ class TabPageState extends State<TabPage>
               );
             },
           ),
-          ListTile(
-            title: const Text('Privacy policy'),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MarkdownViewerScreen(
-                            filePath: 'docs/privacy_policy.md',
-                            contents: 'Privacy Policy',
-                          )));
-            },
-          ),
-          ListTile(
-            title: const Text('Contributing'),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MarkdownViewerScreen(
-                            filePath: 'CONTRIBUTING.md',
-                            contents: 'Contributing',
-                          )));
-            },
-          ),
-          ListTile(
-            title: const Text('Contributors'),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MarkdownViewerScreen(
-                            filePath: 'CONTRIBUTORS.md',
-                            contents: 'Contributors',
-                          )));
-            },
-          ),
+          const MarkdownListTile(
+              name: 'Privacy Policy', path: 'docs/privacy_policy.md'),
+          const MarkdownListTile(name: 'Contributing', path: 'CONTRIBUTING.md'),
+          const MarkdownListTile(name: 'Contributors', path: 'CONTRIBUTORS.md'),
         ],
       )),
       appBar: AppBar(
@@ -432,6 +400,33 @@ class TabPageState extends State<TabPage>
       ),
       floatingActionButton: FloatingActionButton(
           heroTag: null, onPressed: addTimer, child: const Icon(Icons.add)),
+    );
+  }
+}
+
+class MarkdownListTile extends StatelessWidget {
+  final String name;
+  final String path;
+
+  const MarkdownListTile({
+    super.key,
+    required this.name,
+    required this.path,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(name),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MarkdownViewerScreen(
+                      filePath: path,
+                      contents: name,
+                    )));
+      },
     );
   }
 }
