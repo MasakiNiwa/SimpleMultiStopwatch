@@ -11,6 +11,17 @@ class DataStorageFacade {
   //This ensures a single instance is used throughout the app
   static SharedPreferences? _prefs;
 
+  Future<void> setInt(String key, int data) async {
+    _prefs ??= await SharedPreferences.getInstance();
+    _prefs!.setInt(key, data);
+  }
+
+  Future<int> getInt(String key) async {
+    _prefs ??= await SharedPreferences.getInstance();
+    int temp = _prefs!.getInt(key) ?? 0;
+    return temp;
+  }
+
   //StringList型の保存
   //Saves a list of strings
   Future<void> setStringList(String key, List<String> data) async {
