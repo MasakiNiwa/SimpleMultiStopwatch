@@ -96,6 +96,23 @@ class TabPageState extends State<TabPage>
     }
   }
 
+  void sortTimersByElapsedTime() {
+    globalTimerKeys.sort((a, b) =>
+        (b.currentState?.stopwatch.elapsed ?? Duration.zero)
+            .compareTo((a.currentState?.stopwatch.elapsed ?? Duration.zero)));
+  }
+
+  void sortTimersByName() {
+    globalTimerKeys.sort((a, b) => (a.currentState?.textController.text ?? "")
+        .compareTo((b.currentState?.textController.text ?? "")));
+  }
+
+  void sortTimersByActive() {
+    globalTimerKeys.sort((a, b) =>
+        ((b.currentState?.stopwatch.isRunning ?? false) ? 1 : 0).compareTo(
+            ((a.currentState?.stopwatch.isRunning ?? false) ? 1 : 0)));
+  }
+
   //保存済みのアプリの状態(保有しているタイマー)を復元するメソッド
   //Shared_PreferencesのラッパークラスであるData_Storage_Facadeを使用します
   //まず最初に、保存をしていたタイマーのオフセット秒とメモのリストを読み込みます
@@ -333,6 +350,27 @@ class TabPageState extends State<TabPage>
                   height: 40,
                   child: Row(
                     children: [
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 8.0),
+                          ),
+                          onPressed: sortTimersByActive,
+                          child: const Icon(Icons.moving_outlined)),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 8.0),
+                          ),
+                          onPressed: sortTimersByElapsedTime,
+                          child: const Icon(Icons.sort_sharp)),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 8.0),
+                          ),
+                          onPressed: sortTimersByName,
+                          child: const Icon(Icons.sort_by_alpha_sharp)),
                       const Spacer(),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
