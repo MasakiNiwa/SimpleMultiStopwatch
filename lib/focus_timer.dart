@@ -174,6 +174,13 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
     });
   }
 
+  void resetFocusTimer() {
+    stopwatch.stop();
+    stopwatch.reset();
+    timerBorderColor = Colors.blueGrey;
+    setState(() {});
+  }
+
   //ストップウォッチウィジェットを構築します
   //Build the stopwatch widget.
   @override
@@ -246,12 +253,11 @@ class FocusTimerState extends State<FocusTimer> with WidgetsBindingObserver {
               ),
               Container(width: fontSizeS),
               ElevatedButton(
-                  onPressed: () {
-                    stopwatch.stop();
-                    stopwatch.reset();
-                    timerBorderColor = Colors.blueGrey;
-                    setState(() {});
-                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 8.0),
+                  ),
+                  onPressed: resetFocusTimer,
                   child: const Icon(Icons.restart_alt)),
               Container(width: fontSizeS),
               Flexible(

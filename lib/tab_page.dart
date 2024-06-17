@@ -31,6 +31,8 @@ class TabPageState extends State<TabPage>
   final DataStorageFacade dataStorageFacade = DataStorageFacade();
   //
   int pageIndex = 0;
+  //
+  bool _showBottom = false;
 
   //タイマーの状態のリスト
   //アプリの状態保存と復元に使用します
@@ -86,6 +88,46 @@ class TabPageState extends State<TabPage>
     timerColorList.clear();
     targetTimeList.clear();
     setState(() {});
+  }
+
+  void startTimers() {
+    for (int i = 0; i < globalTimerKeys.length; i++) {
+      globalTimerKeys[i].currentState?.startFocusTimer();
+    }
+  }
+
+  void stopTimers() {
+    for (int i = 0; i < globalTimerKeys.length; i++) {
+      globalTimerKeys[i].currentState?.stopFocusTimer();
+    }
+  }
+
+  void resetTimers() {
+    for (int i = 0; i < globalTimerKeys.length; i++) {
+      globalTimerKeys[i].currentState?.resetFocusTimer();
+    }
+  }
+
+  void sortTimersByElapsedTime() {
+    globalTimerKeys.sort((a, b) =>
+        (b.currentState?.stopwatch.elapsed ?? Duration.zero)
+            .compareTo((a.currentState?.stopwatch.elapsed ?? Duration.zero)));
+  }
+
+  void sortTimersByName() {
+    globalTimerKeys.sort((a, b) => (a.currentState?.textController.text ?? "")
+        .compareTo((b.currentState?.textController.text ?? "")));
+  }
+
+  void sortTimersByActive() {
+    globalTimerKeys.sort((a, b) =>
+        ((b.currentState?.stopwatch.isRunning ?? false) ? 1 : 0).compareTo(
+            ((a.currentState?.stopwatch.isRunning ?? false) ? 1 : 0)));
+  }
+
+  void sortTimersByColor() {
+    globalTimerKeys.sort((a, b) => (a.currentState?.backgroundColorIndex ?? 0)
+        .compareTo((b.currentState?.backgroundColorIndex ?? 0)));
   }
 
   //保存済みのアプリの状態(保有しているタイマー)を復元するメソッド
@@ -249,6 +291,7 @@ class TabPageState extends State<TabPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     final Size screenSize = MediaQuery.of(context).size;
 
     double getFontSize() {
@@ -305,12 +348,79 @@ class TabPageState extends State<TabPage>
           ],
         ),
         backgroundColor: Colors.black,
+        toolbarHeight: fontSize * 3,
         actions: [
-          ElevatedButton(
-            onPressed: clearTimers,
-            child: const Icon(Icons.delete_sweep),
+          IconButton(
+            onPressed: () {
+              _showBottom = !_showBottom;
+            },
+            icon: _showBottom
+                ? Icon(Icons.toggle_on, size: fontSize * 2)
+                : Icon(Icons.toggle_off, size: fontSize * 2),
+            color: Colors.white,
           ),
         ],
+        bottom: _showBottom
+            ? PreferredSize(
+                preferredSize: Size.fromHeight(fontSize * 2.5),
+                child: Container(
+                  color: Colors.black,
+                  height: fontSize * 2.5,
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: sortTimersByActive,
+                        icon: const Icon(Icons.moving_outlined),
+                        color: Colors.deepOrange,
+                        iconSize: fontSize,
+                      ),
+                      IconButton(
+                        onPressed: sortTimersByElapsedTime,
+                        icon: const Icon(Icons.sort_sharp),
+                        color: Colors.white,
+                        iconSize: fontSize,
+                      ),
+                      IconButton(
+                        onPressed: sortTimersByName,
+                        icon: const Icon(Icons.sort_by_alpha_sharp),
+                        color: Colors.greenAccent,
+                        iconSize: fontSize,
+                      ),
+                      IconButton(
+                        onPressed: sortTimersByColor,
+                        icon: const Icon(Icons.color_lens),
+                        color: Colors.limeAccent,
+                        iconSize: fontSize,
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: startTimers,
+                        icon: const Icon(Icons.play_arrow),
+                        color: Colors.cyanAccent,
+                        iconSize: fontSize,
+                      ),
+                      IconButton(
+                        onPressed: stopTimers,
+                        icon: const Icon(Icons.stop),
+                        color: Colors.white,
+                        iconSize: fontSize,
+                      ),
+                      IconButton(
+                        onPressed: resetTimers,
+                        icon: const Icon(Icons.restart_alt),
+                        color: Colors.yellowAccent,
+                        iconSize: fontSize,
+                      ),
+                      IconButton(
+                        onPressed: clearTimers,
+                        icon: const Icon(Icons.delete_sweep),
+                        color: Colors.redAccent,
+                        iconSize: fontSize,
+                      ),
+                    ],
+                  ),
+                ))
+            : null,
       ),
       body: ReorderableListView.builder(
         shrinkWrap: true,
