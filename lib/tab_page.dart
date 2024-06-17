@@ -90,7 +90,19 @@ class TabPageState extends State<TabPage>
     setState(() {});
   }
 
+  void startTimers() {
+    for (int i = 0; i < globalTimerKeys.length; i++) {
+      globalTimerKeys[i].currentState?.startFocusTimer();
+    }
+  }
+
   void stopTimers() {
+    for (int i = 0; i < globalTimerKeys.length; i++) {
+      globalTimerKeys[i].currentState?.stopFocusTimer();
+    }
+  }
+
+  void resetTimers() {
     for (int i = 0; i < globalTimerKeys.length; i++) {
       globalTimerKeys[i].currentState?.resetFocusTimer();
     }
@@ -111,6 +123,11 @@ class TabPageState extends State<TabPage>
     globalTimerKeys.sort((a, b) =>
         ((b.currentState?.stopwatch.isRunning ?? false) ? 1 : 0).compareTo(
             ((a.currentState?.stopwatch.isRunning ?? false) ? 1 : 0)));
+  }
+
+  void sortTimersByColor() {
+    globalTimerKeys.sort((a, b) => (a.currentState?.backgroundColorIndex ?? 0)
+        .compareTo((b.currentState?.backgroundColorIndex ?? 0)));
   }
 
   //保存済みのアプリの状態(保有しているタイマー)を復元するメソッド
@@ -331,6 +348,7 @@ class TabPageState extends State<TabPage>
           ],
         ),
         backgroundColor: Colors.black,
+        toolbarHeight: fontSize * 3,
         actions: [
           IconButton(
             onPressed: () {
@@ -339,146 +357,164 @@ class TabPageState extends State<TabPage>
             icon: _showBottom
                 ? Icon(Icons.toggle_on, size: fontSize * 2)
                 : Icon(Icons.toggle_off, size: fontSize * 2),
+            color: Colors.white,
           ),
         ],
       ),
-      body: Column(
-        children: [
-          _showBottom
-              ? Container(
-                  color: Colors.black,
-                  height: 40,
-                  child: Row(
-                    children: [
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 8.0),
-                          ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _showBottom
+                ? Container(
+                    color: Colors.black,
+                    height: fontSize * 2.5,
+                    child: Row(
+                      children: [
+                        IconButton(
                           onPressed: sortTimersByActive,
-                          child: const Icon(Icons.moving_outlined)),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 8.0),
-                          ),
+                          icon: const Icon(Icons.moving_outlined),
+                          color: Colors.deepOrange,
+                          iconSize: fontSize,
+                        ),
+                        IconButton(
                           onPressed: sortTimersByElapsedTime,
-                          child: const Icon(Icons.sort_sharp)),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 8.0),
-                          ),
+                          icon: const Icon(Icons.sort_sharp),
+                          color: Colors.white,
+                          iconSize: fontSize,
+                        ),
+                        IconButton(
                           onPressed: sortTimersByName,
-                          child: const Icon(Icons.sort_by_alpha_sharp)),
-                      const Spacer(),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 8.0),
-                          ),
+                          icon: const Icon(Icons.sort_by_alpha_sharp),
+                          color: Colors.greenAccent,
+                          iconSize: fontSize,
+                        ),
+                        IconButton(
+                          onPressed: sortTimersByColor,
+                          icon: const Icon(Icons.color_lens),
+                          color: Colors.limeAccent,
+                          iconSize: fontSize,
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          onPressed: startTimers,
+                          icon: const Icon(Icons.play_arrow),
+                          color: Colors.cyanAccent,
+                          iconSize: fontSize,
+                        ),
+                        IconButton(
                           onPressed: stopTimers,
-                          child: const Icon(Icons.stop)),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 8.0),
-                          ),
+                          icon: const Icon(Icons.stop),
+                          color: Colors.white,
+                          iconSize: fontSize,
+                        ),
+                        IconButton(
+                          onPressed: resetTimers,
+                          icon: const Icon(Icons.restart_alt),
+                          color: Colors.yellowAccent,
+                          iconSize: fontSize,
+                        ),
+                        IconButton(
                           onPressed: clearTimers,
-                          child: const Icon(Icons.delete_sweep)),
-                    ],
-                  ),
-                )
-              : Container(height: 0),
-          ReorderableListView.builder(
-            shrinkWrap: true,
-            itemCount: timers.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Slidable(
-                key: timers[index].timerKey,
-                startActionPane: ActionPane(
-                  extentRatio: 0.25,
-                  motion: const ScrollMotion(),
-                  dismissible: DismissiblePane(onDismissed: () {
-                    setState(() {
-                      timers.removeAt(index);
-                      globalTimerKeys.removeAt(index);
-                      timerOffsetList.removeAt(index);
-                      timerMemoList.removeAt(index);
-                      timerIsRunningList.removeAt(index);
-                      timerColorList.removeAt(index);
-                      targetTimeList.removeAt(index);
-                    });
-                  }),
-                  children: [
-                    SlidableAction(
-                      onPressed: (_) {
-                        setState(() {
-                          timers.removeAt(index);
-                          globalTimerKeys.removeAt(index);
-                          timerOffsetList.removeAt(index);
-                          timerMemoList.removeAt(index);
-                          timerIsRunningList.removeAt(index);
-                          timerColorList.removeAt(index);
-                          targetTimeList.removeAt(index);
-                        });
-                      },
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      icon: Icons.delete,
+                          icon: const Icon(Icons.delete_sweep),
+                          color: Colors.redAccent,
+                          iconSize: fontSize,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                endActionPane: ActionPane(
-                  extentRatio: 0.5,
-                  motion: const ScrollMotion(),
-                  children: [
-                    for (int colorIndex = 0;
-                        colorIndex < FocusTimer.timerColorList.length;
-                        colorIndex++)
+                  )
+                : Container(height: 0),
+            ReorderableListView.builder(
+              shrinkWrap: true,
+              itemCount: timers.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Slidable(
+                  key: timers[index].timerKey,
+                  startActionPane: ActionPane(
+                    extentRatio: 0.25,
+                    motion: const ScrollMotion(),
+                    dismissible: DismissiblePane(onDismissed: () {
+                      setState(() {
+                        timers.removeAt(index);
+                        globalTimerKeys.removeAt(index);
+                        timerOffsetList.removeAt(index);
+                        timerMemoList.removeAt(index);
+                        timerIsRunningList.removeAt(index);
+                        timerColorList.removeAt(index);
+                        targetTimeList.removeAt(index);
+                      });
+                    }),
+                    children: [
                       SlidableAction(
                         onPressed: (_) {
                           setState(() {
-                            globalTimerKeys[index]
-                                .currentState
-                                ?.backgroundColorIndex = colorIndex;
-                            globalTimerKeys[index]
-                                    .currentState
-                                    ?.backgroundColor =
-                                FocusTimer.timerColorList[colorIndex];
+                            timers.removeAt(index);
+                            globalTimerKeys.removeAt(index);
+                            timerOffsetList.removeAt(index);
+                            timerMemoList.removeAt(index);
+                            timerIsRunningList.removeAt(index);
+                            timerColorList.removeAt(index);
+                            targetTimeList.removeAt(index);
                           });
                         },
-                        backgroundColor: FocusTimer.timerColorList[colorIndex],
-                        foregroundColor: FocusTimer.timerColorList[colorIndex],
-                        icon: Icons.palette,
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        icon: Icons.delete,
                       ),
-                  ],
-                ),
-                child: Card(
-                  elevation: 3,
-                  child: FocusTimer(
-                    key: globalTimerKeys[index],
-                    initialOffsetTime: timerOffsetList[index],
-                    initialText: timerMemoList[index],
-                    isRunning: timerIsRunningList[index],
-                    closeTime: closeTime,
-                    backgroundColorIndex: timerColorList[index],
-                    targetTime: targetTimeList[index],
+                    ],
                   ),
-                ),
-              );
-            },
-            onReorder: (int oldIndex, int newIndex) {
-              if (oldIndex < newIndex) {
-                newIndex -= 1;
-              }
-              final GlobalObjectKey<FocusTimerState> itemKey =
-                  globalTimerKeys.removeAt(oldIndex);
-              globalTimerKeys.insert(newIndex, itemKey);
-              setState(() {});
-            },
-          ),
-        ],
+                  endActionPane: ActionPane(
+                    extentRatio: 0.5,
+                    motion: const ScrollMotion(),
+                    children: [
+                      for (int colorIndex = 0;
+                          colorIndex < FocusTimer.timerColorList.length;
+                          colorIndex++)
+                        SlidableAction(
+                          onPressed: (_) {
+                            setState(() {
+                              globalTimerKeys[index]
+                                  .currentState
+                                  ?.backgroundColorIndex = colorIndex;
+                              globalTimerKeys[index]
+                                      .currentState
+                                      ?.backgroundColor =
+                                  FocusTimer.timerColorList[colorIndex];
+                            });
+                          },
+                          backgroundColor:
+                              FocusTimer.timerColorList[colorIndex],
+                          foregroundColor:
+                              FocusTimer.timerColorList[colorIndex],
+                          icon: Icons.palette,
+                        ),
+                    ],
+                  ),
+                  child: Card(
+                    elevation: 3,
+                    child: FocusTimer(
+                      key: globalTimerKeys[index],
+                      initialOffsetTime: timerOffsetList[index],
+                      initialText: timerMemoList[index],
+                      isRunning: timerIsRunningList[index],
+                      closeTime: closeTime,
+                      backgroundColorIndex: timerColorList[index],
+                      targetTime: targetTimeList[index],
+                    ),
+                  ),
+                );
+              },
+              onReorder: (int oldIndex, int newIndex) {
+                if (oldIndex < newIndex) {
+                  newIndex -= 1;
+                }
+                final GlobalObjectKey<FocusTimerState> itemKey =
+                    globalTimerKeys.removeAt(oldIndex);
+                globalTimerKeys.insert(newIndex, itemKey);
+                setState(() {});
+              },
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
           heroTag: null, onPressed: addTimer, child: const Icon(Icons.add)),
