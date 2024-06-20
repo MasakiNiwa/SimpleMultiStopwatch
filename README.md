@@ -13,8 +13,10 @@ The goal is to create an app that allows users to use multiple simple stopwatche
 It can be used to track learning time, work time, etc. <br>
 
 ## スクリーンショット(Screenshots)
-<img alt="Screenshot01" src="./screenshots/01.png" width="200px">
-<img alt="Screenshot02" src="./screenshots/02.png" width="200px">
+<img alt="Screenshot01" src="./screenshots/01.png" width="150px">
+<img alt="Screenshot02" src="./screenshots/02.png" width="150px">
+<img alt="Screenshot03" src="./screenshots/03.png" width="150px">
+<img alt="Screenshot04" src="./screenshots/04.png" width="150px">
 
 ## インストール方法(Installation Instructions)
 
@@ -86,11 +88,3 @@ This app uses Flutter and other packages with the following versions:<br>
 ・Flutter Launcher Icons: 0.13.1 (MIT)<br>
 ・Flutter Markdown: 0.7.1 (BSD 3-Clause)<br>
 ・Change App Package Name: 1.1.0 (MIT)<br>
-
-## 最後に(Additional Information)
-現在Google Play(android)でクローズドテストを実施中です。<br>
-詳細はDiscussionsをご覧ください。<br>
-<br>
-I am currently conducting a closed test on Google Play (Android).<br>
-Please see Discussions for more details.<br>
-<br>
