@@ -33,6 +33,7 @@ class TabPageState extends State<TabPage>
   int pageIndex = 0;
   //
   bool _showBottom = false;
+  bool _timeModeOfAppbar = true;
 
   //タイマーの状態のリスト
   //アプリの状態保存と復元に使用します
@@ -47,15 +48,24 @@ class TabPageState extends State<TabPage>
 
   Timer? timer;
   String totalTime = '0000:00:00';
+  String averageTime = '0000:00:00';
   void changeTotalTime() {
     setState(() {
       Duration total = Duration.zero;
+      Duration average = Duration.zero;
       for (int i = 0; i < globalTimerKeys.length; i++) {
         total +=
             globalTimerKeys[i].currentState?.stopwatch.elapsed ?? Duration.zero;
       }
       totalTime =
           "${total.inHours.toString().padLeft(4, '0')}:${(total.inMinutes % 60).toString().padLeft(2, '0')}:${(total.inSeconds % 60).toString().padLeft(2, '0')}";
+      if (globalTimerKeys.isNotEmpty) {
+        average = total * (1 / globalTimerKeys.length);
+      } else {
+        average = Duration.zero;
+      }
+      averageTime =
+          "${average.inHours.toString().padLeft(4, '0')}:${(average.inMinutes % 60).toString().padLeft(2, '0')}:${(average.inSeconds % 60).toString().padLeft(2, '0')}";
     });
   }
 
@@ -341,10 +351,23 @@ class TabPageState extends State<TabPage>
               color: Colors.cyanAccent,
               size: fontSize,
             ),
-            Text('  Total Time: $totalTime',
-                style: TextStyle(
-                    fontSize: fontSize,
-                    color: const Color.fromRGBO(240, 240, 240, 1))),
+            // Text('  Total Time: $totalTime',
+            //     style: TextStyle(
+            //         fontSize: fontSize,
+            //         color: const Color.fromRGBO(240, 240, 240, 1))),
+            TextButton(
+                onPressed: () {
+                  _timeModeOfAppbar = !_timeModeOfAppbar;
+                },
+                child: _timeModeOfAppbar
+                    ? Text('  Total Time: $totalTime',
+                        style: TextStyle(
+                            fontSize: fontSize,
+                            color: const Color.fromRGBO(240, 240, 240, 1)))
+                    : Text('  Average Time: $averageTime',
+                        style: TextStyle(
+                            fontSize: fontSize,
+                            color: const Color.fromRGBO(240, 240, 240, 1)))),
           ],
         ),
         backgroundColor: Colors.black,
