@@ -351,10 +351,6 @@ class TabPageState extends State<TabPage>
               color: Colors.cyanAccent,
               size: fontSize,
             ),
-            // Text('  Total Time: $totalTime',
-            //     style: TextStyle(
-            //         fontSize: fontSize,
-            //         color: const Color.fromRGBO(240, 240, 240, 1))),
             TextButton(
                 onPressed: () {
                   _timeModeOfAppbar = !_timeModeOfAppbar;
@@ -399,8 +395,8 @@ class TabPageState extends State<TabPage>
                       ),
                       IconButton(
                         onPressed: sortTimersByElapsedTime,
-                        icon: const Icon(Icons.sort_sharp),
-                        color: Colors.white,
+                        icon: const Icon(Icons.access_time_sharp),
+                        color: Colors.cyanAccent,
                         iconSize: fontSize,
                       ),
                       IconButton(
